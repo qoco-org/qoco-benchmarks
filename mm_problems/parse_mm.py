@@ -22,65 +22,38 @@ import clarabel
 
 
 def parse_mm_qcos(mm_data):
-    n = len(mm_data["lb"])
-    Q = mm_data["Q"]
-    Amm = mm_data["A"]
-    c = np.squeeze(mm_data["c"], axis=1)
-    rl = np.squeeze(mm_data["rl"], axis=1)
-    ru = np.squeeze(mm_data["ru"], axis=1)
-    lb = np.squeeze(mm_data["lb"], axis=1)
-    ub = np.squeeze(mm_data["ub"], axis=1)
+    P, c, A, l, u = parse_mm_osqp(mm_data)
 
-    P = Q
+    eq_idx = np.where(l == u)[0]
+    ineq_idx = np.where(l != u)[0]
 
-    eq_idx = np.where(ru == rl)[0]
-    bnd_idx = np.where(ru != rl)[0]
+    Aeq = A[eq_idx]
+    beq = l[eq_idx]
 
-    # Parse out equality constraints.
-    b = ru[eq_idx]
-    A = Amm[eq_idx, :]
-    Amm = Amm[bnd_idx, :]
-    ru = ru[bnd_idx]
-    rl = rl[bnd_idx]
+    Aineq = A[ineq_idx]
+    uineq = u[ineq_idx]
+    lineq = l[ineq_idx]
 
-    # Parse lower bound to remove +inf.
-    Glb = -np.eye(n)
-    idx = np.where(lb != -np.inf)
-    Glb = Glb[idx]
-    hlb = lb[idx]
+    Aineq = sp.sparse.vstack((Aineq, -Aineq))
+    bineq = np.hstack((uineq, -lineq))
 
-    # Parse upper bound to remove +inf.
-    Gub = np.eye(n)
-    idx = np.where(ub != np.inf)
-    Gub = Gub[idx]
-    hub = ub[idx]
+    # Drop inf
+    idx = np.where(bineq == np.inf)
+    Aineq = Aineq[idx]
+    bineq = bineq[idx]
 
-    # Parse inequality constraints to remove (+/-) inf
-    idx = np.where(rl != -np.inf)
-    Grl = Amm[idx]
-    hrl = rl[idx]
+    p = Aeq.shape[0]
+    m = Aineq.shape[0]
+    n = Aeq.shape[1]
 
-    idx = np.where(ru != np.inf)
-    Gru = Amm[idx]
-    hru = ru[idx]
+    A = sp.sparse.vstack((Aeq, Aineq))
+    b = np.hstack((beq, bineq))
 
-    G = sp.sparse.vstack(
-        (sp.sparse.csc_matrix(Glb), sp.sparse.csc_matrix(Gub), Grl, Gru)
-    )
-    h = np.hstack((hlb, hub, hrl, hru))
-
-    p = A.shape[0]
-    m = G.shape[0]
     l = m
     nsoc = 0
     q = []
 
-    G = G if m > 0 else None
-    h = h if m > 0 else None
-    A = A if p > 0 else None
-    b = b if p > 0 else None
-
-    return n, m, p, P, c, A, b, G, h, l, nsoc, q
+    return n, m, p, P, c, Aeq, beq, Aineq, bineq, l, nsoc, q
 
 
 def parse_mm_osqp(mm_data):
@@ -107,58 +80,32 @@ def parse_mm_osqp(mm_data):
     return P, q, A, l, u
 
 def parse_mm_clarabel(mm_data):
-    n = len(mm_data["lb"])
-    Q = mm_data["Q"]
-    Amm = mm_data["A"]
-    q = np.squeeze(mm_data["c"], axis=1)
-    rl = np.squeeze(mm_data["rl"], axis=1)
-    ru = np.squeeze(mm_data["ru"], axis=1)
-    lb = np.squeeze(mm_data["lb"], axis=1)
-    ub = np.squeeze(mm_data["ub"], axis=1)
 
-    P = Q
+    P, q, A, l, u = parse_mm_osqp(mm_data)
 
-    eq_idx = np.where(ru == rl)[0]
-    bnd_idx = np.where(ru != rl)[0]
+    eq_idx = np.where(l == u)[0]
+    ineq_idx = np.where(l != u)[0]
 
-    # Parse out equality constraints.
-    b = ru[eq_idx]
-    A = Amm[eq_idx, :]
-    Amm = Amm[bnd_idx, :]
-    ru = ru[bnd_idx]
-    rl = rl[bnd_idx]
+    Aeq = A[eq_idx]
+    beq = l[eq_idx]
 
-    # Parse lower bound to remove +inf.
-    Glb = -np.eye(n)
-    idx = np.where(lb != -np.inf)
-    Glb = Glb[idx]
-    hlb = lb[idx]
+    Aineq = A[ineq_idx]
+    uineq = u[ineq_idx]
+    lineq = l[ineq_idx]
 
-    # Parse upper bound to remove +inf.
-    Gub = np.eye(n)
-    idx = np.where(ub != np.inf)
-    Gub = Gub[idx]
-    hub = ub[idx]
+    Aineq = sp.sparse.vstack((Aineq, -Aineq))
+    bineq = np.hstack((uineq, -lineq))
 
-    # Parse inequality constraints to remove (+/-) inf
-    idx = np.where(rl != -np.inf)
-    Grl = Amm[idx]
-    hrl = rl[idx]
+    # Drop inf
+    idx = np.where(bineq == np.inf)
+    Aineq = Aineq[idx]
+    bineq = bineq[idx]
 
-    idx = np.where(ru != np.inf)
-    Gru = Amm[idx]
-    hru = ru[idx]
+    p = Aeq.shape[0]
+    m = Aineq.shape[0]
 
-    G = sp.sparse.vstack(
-        (sp.sparse.csc_matrix(Glb), sp.sparse.csc_matrix(Gub), Grl, Gru)
-    )
-    h = np.hstack((hlb, hub, hrl, hru))
-
-    p = A.shape[0]
-    m = G.shape[0]
-
-    A = sp.sparse.vstack((A, -G))
-    b = np.hstack((b, -h))
+    A = sp.sparse.vstack((Aeq, Aineq))
+    b = np.hstack((beq, bineq))
 
     cones = [clarabel.ZeroConeT(p),
              clarabel.NonnegativeConeT(m)]
