@@ -5,7 +5,7 @@ import scipy as sp
 # Parses QP from Maros-Meszaros standard form to QCOS standard form
 #
 # Maros-Meszaros standard form
-#   minimize    0.5 x'Qx + c'x
+#   minimize    (1/2) x'Qx + c'x
 #   subject to  rl <= Ax <= ru
 #               lb <=  x <= ub
 #
@@ -15,7 +15,7 @@ import scipy as sp
 #            Gx <= h
 
 
-def parse_mm(mm_data):
+def parse_mm_qcos(mm_data):
     n = len(mm_data["lb"])
     Q = mm_data["Q"]
     Amm = mm_data["A"]
@@ -75,3 +75,20 @@ def parse_mm(mm_data):
     b = b if p > 0 else None
 
     return n, m, p, P, c, A, b, G, h, l, nsoc, q
+
+def parse_mm_osqp(mm_data):
+    n = len(mm_data["lb"])
+    P = mm_data["Q"]
+    q = np.squeeze(mm_data["c"], axis=1)
+
+    Amm = mm_data["A"]
+    rl = np.squeeze(mm_data["rl"], axis=1)
+    ru = np.squeeze(mm_data["ru"], axis=1)
+    lb = np.squeeze(mm_data["lb"], axis=1)
+    ub = np.squeeze(mm_data["ub"], axis=1)
+
+    A = sp.sparse.vstack((sp.sparse.eye(n), Amm))
+    l = np.hstack((lb, rl))
+    u = np.hstack((ub, ru))
+
+    return P, q, A, l, u
