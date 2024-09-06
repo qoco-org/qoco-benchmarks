@@ -111,3 +111,36 @@ def parse_mm_clarabel(mm_data):
     cones = [clarabel.ZeroConeT(p), clarabel.NonnegativeConeT(m)]
 
     return P, q, A, b, cones
+
+
+def parse_mm_piqp(mm_data):
+
+    n = len(mm_data["lb"])
+    P = mm_data["Q"]
+    c = np.squeeze(mm_data["c"], axis=1)
+
+    Amm = mm_data["A"]
+    rl = np.squeeze(mm_data["rl"], axis=1)
+    ru = np.squeeze(mm_data["ru"], axis=1)
+    x_lb = np.squeeze(mm_data["lb"], axis=1)
+    x_ub = np.squeeze(mm_data["ub"], axis=1)
+
+    eq_idx = np.where(rl == ru)[0]
+    ineq_idx = np.where(rl != ru)[0]
+
+    Aeq = Amm[eq_idx]
+    beq = rl[eq_idx]
+
+    Aineq = Amm[ineq_idx]
+    uineq = rl[ineq_idx]
+    lineq = ru[ineq_idx]
+
+    Aineq = sp.sparse.vstack((Aineq, -Aineq))
+    bineq = np.hstack((uineq, -lineq))
+
+    # Drop inf
+    idx = np.where(bineq == np.inf)
+    G = Aineq[idx]
+    h = bineq[idx]
+
+    return P, c, Aeq, beq, G, h, x_lb, x_ub
