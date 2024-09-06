@@ -79,6 +79,7 @@ def parse_mm_osqp(mm_data):
 
     return P, q, A, l, u
 
+
 def parse_mm_clarabel(mm_data):
 
     P, q, A, l, u = parse_mm_osqp(mm_data)
@@ -107,7 +108,6 @@ def parse_mm_clarabel(mm_data):
     A = sp.sparse.vstack((Aeq, Aineq))
     b = np.hstack((beq, bineq))
 
-    cones = [clarabel.ZeroConeT(p),
-             clarabel.NonnegativeConeT(m)]
+    cones = [clarabel.ZeroConeT(p), clarabel.NonnegativeConeT(m)]
 
     return P, q, A, b, cones

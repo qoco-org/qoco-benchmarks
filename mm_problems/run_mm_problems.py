@@ -41,7 +41,7 @@ for file_path in directory.iterdir():
             solve_time_sec=res_osqp.info.solve_time,
             pres=res_osqp.info.pri_res,
             dres=res_osqp.info.dua_res,
-            obj=res_osqp.info.obj_val
+            obj=res_osqp.info.obj_val,
         )
 
         settings = clarabel.DefaultSettings()
@@ -51,12 +51,12 @@ for file_path in directory.iterdir():
         settings.verbose = False
 
         P, q, A, b, cones = parse_mm_clarabel(mat)
-        solver = clarabel.DefaultSolver(P,q,A,b,cones,settings)
+        solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
         res_clarabel = solver.solve()
         solve_dict_clarabel[problem_name] = SimpleNamespace(
             status=str(res_clarabel.status),
             solve_time_sec=res_clarabel.solve_time,
-            obj=res_clarabel.obj_val
+            obj=res_clarabel.obj_val,
         )
 
 with open("mm_qcos_40k.pkl", "wb") as f:
