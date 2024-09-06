@@ -27,7 +27,7 @@ for file_path in directory.iterdir():
         m = osqp.OSQP()
         m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=1e-7, eps_rel=1e-7, verbose=True)
         res = m.solve()
-        solve_dict[problem_name] =  SimpleNamespace(
+        solve_dict[problem_name] = SimpleNamespace(
             status=res.info.status,
             setup_time_sec=res.info.setup_time,
             solve_time_sec=res.info.solve_time,
@@ -35,5 +35,5 @@ for file_path in directory.iterdir():
             dres=res.info.dua_res,
         )
 
-with open('mm_osqp_40k.pkl', 'wb') as f:
+with open("mm_osqp_40k.pkl", "wb") as f:
     pickle.dump(solve_dict, f)

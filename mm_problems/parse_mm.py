@@ -13,6 +13,11 @@ import scipy as sp
 # minimize   (1/2)x'Px + c'x
 # subject to Ax = b
 #            Gx <= h
+#
+# OSQP standard form
+# minimize   (1/2)x'Px + q'x
+# subject to l <= Ax <= u
+#
 
 
 def parse_mm_qcos(mm_data):
@@ -76,6 +81,8 @@ def parse_mm_qcos(mm_data):
 
     return n, m, p, P, c, A, b, G, h, l, nsoc, q
 
+
+# TODO: Eliminate +/- inf from l and u
 def parse_mm_osqp(mm_data):
     n = len(mm_data["lb"])
     P = mm_data["Q"]
