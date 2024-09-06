@@ -1,6 +1,7 @@
 import cvxpy as cp
 import numpy as np
 import scipy as sp
+import clarabel
 
 # Parses QP from Maros-Meszaros standard form to QCOS standard form
 #
@@ -82,7 +83,6 @@ def parse_mm_qcos(mm_data):
     return n, m, p, P, c, A, b, G, h, l, nsoc, q
 
 
-# TODO: Eliminate +/- inf from l and u
 def parse_mm_osqp(mm_data):
     n = len(mm_data["lb"])
     P = mm_data["Q"]
@@ -94,8 +94,73 @@ def parse_mm_osqp(mm_data):
     lb = np.squeeze(mm_data["lb"], axis=1)
     ub = np.squeeze(mm_data["ub"], axis=1)
 
-    A = sp.sparse.vstack((sp.sparse.eye(n), Amm))
+    A = sp.sparse.vstack((sp.sparse.eye(n), Amm)).tocsc()
     l = np.hstack((lb, rl))
     u = np.hstack((ub, ru))
 
+    idx = np.where((l != -np.inf) & (u != np.inf))
+
+    A = A[idx]
+    l = l[idx]
+    u = u[idx]
+
     return P, q, A, l, u
+
+def parse_mm_clarabel(mm_data):
+    n = len(mm_data["lb"])
+    Q = mm_data["Q"]
+    Amm = mm_data["A"]
+    q = np.squeeze(mm_data["c"], axis=1)
+    rl = np.squeeze(mm_data["rl"], axis=1)
+    ru = np.squeeze(mm_data["ru"], axis=1)
+    lb = np.squeeze(mm_data["lb"], axis=1)
+    ub = np.squeeze(mm_data["ub"], axis=1)
+
+    P = Q
+
+    eq_idx = np.where(ru == rl)[0]
+    bnd_idx = np.where(ru != rl)[0]
+
+    # Parse out equality constraints.
+    b = ru[eq_idx]
+    A = Amm[eq_idx, :]
+    Amm = Amm[bnd_idx, :]
+    ru = ru[bnd_idx]
+    rl = rl[bnd_idx]
+
+    # Parse lower bound to remove +inf.
+    Glb = -np.eye(n)
+    idx = np.where(lb != -np.inf)
+    Glb = Glb[idx]
+    hlb = lb[idx]
+
+    # Parse upper bound to remove +inf.
+    Gub = np.eye(n)
+    idx = np.where(ub != np.inf)
+    Gub = Gub[idx]
+    hub = ub[idx]
+
+    # Parse inequality constraints to remove (+/-) inf
+    idx = np.where(rl != -np.inf)
+    Grl = Amm[idx]
+    hrl = rl[idx]
+
+    idx = np.where(ru != np.inf)
+    Gru = Amm[idx]
+    hru = ru[idx]
+
+    G = sp.sparse.vstack(
+        (sp.sparse.csc_matrix(Glb), sp.sparse.csc_matrix(Gub), Grl, Gru)
+    )
+    h = np.hstack((hlb, hub, hrl, hru))
+
+    p = A.shape[0]
+    m = G.shape[0]
+
+    A = sp.sparse.vstack((A, -G))
+    b = np.hstack((b, -h))
+
+    cones = [clarabel.ZeroConeT(p),
+             clarabel.NonnegativeConeT(m)]
+
+    return P, q, A, b, cones
