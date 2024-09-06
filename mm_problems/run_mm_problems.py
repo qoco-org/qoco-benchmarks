@@ -31,20 +31,25 @@ for file_path in directory.iterdir():
         prob_qcos = qcos.QCOS()
         prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, verbose=0)
         res_qcos = prob_qcos.solve()
-        solve_dict_qcos[problem_name] = res_qcos
+        solve_dict_qcos[problem_name] = {
+            "status": res_qcos.status,
+            "setup_time": res_qcos.setup_time_sec,
+            "solve_time": res_qcos.solve_time_sec,
+            "run_time": res_qcos.setup_time_sec + res_qcos.solve_time_sec,
+            "obj": res_qcos.obj,
+        }
 
         P, q, A, l, u = parse_mm_osqp(mat)
         m = osqp.OSQP()
         m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=1e-7, eps_rel=1e-7, verbose=False)
         res_osqp = m.solve()
-        solve_dict_osqp[problem_name] = SimpleNamespace(
-            status=res_osqp.info.status,
-            setup_time_sec=res_osqp.info.setup_time,
-            solve_time_sec=res_osqp.info.solve_time,
-            pres=res_osqp.info.pri_res,
-            dres=res_osqp.info.dua_res,
-            obj=res_osqp.info.obj_val,
-        )
+        solve_dict_osqp[problem_name] = {
+            "status": res_osqp.info.status,
+            "setup_time": res_osqp.info.setup_time,
+            "solve_time": res_osqp.info.solve_time,
+            "run_time": res_osqp.info.setup_time + res_osqp.info.solve_time,
+            "obj": res_osqp.info.obj_val,
+        }
 
         settings = clarabel.DefaultSettings()
         settings.tol_gap_abs = 1e-7
@@ -55,11 +60,13 @@ for file_path in directory.iterdir():
         P, q, A, b, cones = parse_mm_clarabel(mat)
         solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
         res_clarabel = solver.solve()
-        solve_dict_clarabel[problem_name] = SimpleNamespace(
-            status=str(res_clarabel.status),
-            solve_time_sec=res_clarabel.solve_time,
-            obj=res_clarabel.obj_val,
-        )
+        solve_dict_clarabel[problem_name] = {
+            "status": str(res_clarabel.status),
+            "setup_time": np.nan,
+            "solve_time": res_clarabel.solve_time,
+            "run_time": res_clarabel.solve_time,
+            "obj": res_clarabel.obj_val,
+        }
 
         P, c, A, b, G, h, x_lb, x_ub = parse_mm_piqp(mat)
         solver = piqp.SparseSolver()
@@ -71,12 +78,13 @@ for file_path in directory.iterdir():
 
         solver.setup(P, c, A, b, G, h, x_lb, x_ub)
         status = solver.solve()
-        solve_dict_piqp[problem_name] = SimpleNamespace(
-            status=str(status),
-            solve_time_sec=solver.result.info.run_time,
-            obj=solver.result.info.primal_obj,
-        )
-
+        solve_dict_piqp[problem_name] = {
+            "status": str(status),
+            "setup_time": np.nan,
+            "solve_time": solver.result.info.run_time,
+            "run_time": solver.result.info.run_time,
+            "obj": solver.result.info.primal_obj,
+        }
 
 with open("mm_qcos_40k.pkl", "wb") as f:
     pickle.dump(solve_dict_qcos, f)
