@@ -5,31 +5,28 @@ import osqp
 import clarabel
 import piqp
 from parse_mm import *
-from types import SimpleNamespace
-import pickle
+import pandas as pd
+from mm_opt import *
 
 solve_dict_qcos = {}
 solve_dict_osqp = {}
 solve_dict_clarabel = {}
 solve_dict_piqp = {}
 directory = Path("mm_problems/MAT_Files")
-nump = 0
 for file_path in directory.iterdir():
-    nump += 1
     if file_path.is_file():
         mat = scipy.io.loadmat(file_path)
         problem_name = file_path.stem
         print(file_path)
         if len(mat["lb"]) > 40000:
             continue
-
         n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_mm_qcos(mat)
         G = G if m > 0 else None
         h = h if m > 0 else None
         A = A if p > 0 else None
         b = b if p > 0 else None
         prob_qcos = qcos.QCOS()
-        prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, verbose=0)
+        prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
         res_qcos = prob_qcos.solve()
         solve_dict_qcos[problem_name] = {
             "status": res_qcos.status,
@@ -38,6 +35,11 @@ for file_path in directory.iterdir():
             "run_time": res_qcos.setup_time_sec + res_qcos.solve_time_sec,
             "obj": res_qcos.obj,
         }
+        # if (res_qcos.status == 'QCOS_SOLVED'):
+        #     print(abs(res_qcos.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
+
+        # if (str(status) == 'Status.PIQP_SOLVED'):
+        #     print(abs(solver.result.info.primal_obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
 
         P, q, A, l, u = parse_mm_osqp(mat)
         m = osqp.OSQP()
@@ -86,11 +88,12 @@ for file_path in directory.iterdir():
             "obj": solver.result.info.primal_obj,
         }
 
-with open("mm_qcos_40k.pkl", "wb") as f:
-    pickle.dump(solve_dict_qcos, f)
-with open("mm_osqp_40k.pkl", "wb") as f:
-    pickle.dump(solve_dict_osqp, f)
-with open("mm_clarabel_40k.pkl", "wb") as f:
-    pickle.dump(solve_dict_clarabel, f)
-with open("mm_piqp_40k.pkl", "wb") as f:
-    pickle.dump(solve_dict_piqp, f)
+df_qcos = pd.DataFrame(solve_dict_qcos).T
+df_osqp = pd.DataFrame(solve_dict_osqp).T
+df_clarabel = pd.DataFrame(solve_dict_clarabel).T
+df_piqp = pd.DataFrame(solve_dict_piqp).T
+
+df_qcos.to_csv("results/mm_qcos.csv")
+df_osqp.to_csv("results/mm_osqp.csv")
+df_clarabel.to_csv("results/mm_clarabel.csv")
+df_piqp.to_csv("results/mm_piqp.csv")

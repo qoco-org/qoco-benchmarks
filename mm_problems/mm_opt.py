@@ -1,3 +1,5 @@
+# File is from osqp_benchmarks
+
 # Define map from problem name to optimal cost
 
 OPT_COST_MAP = {}
