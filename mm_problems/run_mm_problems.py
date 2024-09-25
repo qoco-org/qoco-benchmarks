@@ -8,6 +8,9 @@ from parse_mm import *
 import pandas as pd
 from mm_opt import *
 
+high_acc = 1e-7
+low_acc = 1e-5
+
 solve_dict_qcos = {}
 solve_dict_osqp = {}
 solve_dict_clarabel = {}
@@ -43,7 +46,7 @@ for file_path in directory.iterdir():
 
         P, q, A, l, u = parse_mm_osqp(mat)
         m = osqp.OSQP()
-        m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=1e-7, eps_rel=1e-7, verbose=False)
+        m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=high_acc, eps_rel=high_acc, verbose=False)
         res_osqp = m.solve()
         solve_dict_osqp[problem_name] = {
             "status": res_osqp.info.status,
@@ -54,9 +57,9 @@ for file_path in directory.iterdir():
         }
 
         settings = clarabel.DefaultSettings()
-        settings.tol_gap_abs = 1e-7
-        settings.tol_gap_rel = 1e-7
-        settings.tol_feas = 1e-7
+        settings.tol_gap_abs = high_acc
+        settings.tol_gap_rel = high_acc
+        settings.tol_feas = high_acc
         settings.verbose = False
 
         P, q, A, b, cones = parse_mm_clarabel(mat)
@@ -73,10 +76,10 @@ for file_path in directory.iterdir():
         P, c, A, b, G, h, x_lb, x_ub = parse_mm_piqp(mat)
         solver = piqp.SparseSolver()
         solver.settings.compute_timings = True
-        solver.settings.eps_abs = 1e-7
-        solver.settings.eps_rel = 1e-7
-        solver.settings.eps_duality_gap_abs = 1e-7
-        solver.settings.eps_duality_gap_rel = 1e-7
+        solver.settings.eps_abs = high_acc
+        solver.settings.eps_rel = high_acc
+        solver.settings.eps_duality_gap_abs = high_acc
+        solver.settings.eps_duality_gap_rel = high_acc
 
         solver.setup(P, c, A, b, G, h, x_lb, x_ub)
         status = solver.solve()

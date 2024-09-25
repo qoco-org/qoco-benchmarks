@@ -38,16 +38,13 @@ def parse_mm_qcos(mm_data):
     bineq = np.hstack((uineq, -lineq))
 
     # Drop inf
-    idx = np.where(bineq == np.inf)
+    idx = np.where(bineq != np.inf)
     Aineq = Aineq[idx]
     bineq = bineq[idx]
 
     p = Aeq.shape[0]
     m = Aineq.shape[0]
     n = Aeq.shape[1]
-
-    A = sp.sparse.vstack((Aeq, Aineq))
-    b = np.hstack((beq, bineq))
 
     l = m
     nsoc = 0
@@ -98,7 +95,7 @@ def parse_mm_clarabel(mm_data):
     bineq = np.hstack((uineq, -lineq))
 
     # Drop inf
-    idx = np.where(bineq == np.inf)
+    idx = np.where(bineq != np.inf)
     Aineq = Aineq[idx]
     bineq = bineq[idx]
 
@@ -132,14 +129,14 @@ def parse_mm_piqp(mm_data):
     beq = rl[eq_idx]
 
     Aineq = Amm[ineq_idx]
-    uineq = rl[ineq_idx]
-    lineq = ru[ineq_idx]
+    uineq = ru[ineq_idx]
+    lineq = rl[ineq_idx]
 
     Aineq = sp.sparse.vstack((Aineq, -Aineq))
     bineq = np.hstack((uineq, -lineq))
 
     # Drop inf
-    idx = np.where(bineq == np.inf)
+    idx = np.where(bineq != np.inf)
     G = Aineq[idx]
     h = bineq[idx]
 
