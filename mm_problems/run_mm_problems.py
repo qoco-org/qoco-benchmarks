@@ -7,6 +7,8 @@ import piqp
 from parse_mm import *
 import pandas as pd
 from mm_opt import *
+import cvxpy as cp
+from cvxpy_to_qcos import *
 
 high_acc = 1e-7
 low_acc = 1e-5
@@ -15,6 +17,7 @@ solve_dict_qcos = {}
 solve_dict_osqp = {}
 solve_dict_clarabel = {}
 solve_dict_piqp = {}
+solve_dict_ecos = {}
 directory = Path("mm_problems/MAT_Files")
 for file_path in directory.iterdir():
     if file_path.is_file():
@@ -56,13 +59,67 @@ for file_path in directory.iterdir():
             "obj": res_osqp.info.obj_val,
         }
 
+        
+        ### CVXPY Clarabel
+        # n = len(mat["lb"])
+        # P = mat["Q"]
+        # q = np.squeeze(mat["c"], axis=1)
+        # Amm = mat["A"]
+        # rl = np.squeeze(mat["rl"], axis=1)
+        # ru = np.squeeze(mat["ru"], axis=1)
+        # lb = np.squeeze(mat["lb"], axis=1)
+        # ub = np.squeeze(mat["ub"], axis=1)
+        # x = cp.Variable(n)
+        # obj = cp.Minimize(0.5*cp.quad_form(x, P, True) + q.T @ x)
+        # con = [lb <= x, x <= ub, rl <= Amm@x, Amm@x <= ru]
+        # prob = cp.Problem(obj, con)   
+        # try:
+        #     obj = prob.solve(solver=cp.CLARABEL)
+        #     solve_dict_clarabel[problem_name] = {
+        #         "status": "Solved",
+        #         "setup_time": np.nan,
+        #         "solve_time": prob.solver_stats.solve_time,
+        #         "run_time": prob.solver_stats.solve_time,
+        #         "obj": obj,
+        #     }
+        # except:
+        #     solve_dict_clarabel[problem_name] = {
+        #         "status": "FAILED",
+        #         "setup_time": np.nan,
+        #         "solve_time": np.nan,
+        #         "run_time": np.nan,
+        #         "obj": obj,
+        #     }
+
+
+        # x = cp.Variable(n)
+        # obj = cp.Minimize(0.5*cp.quad_form(x, P, True) + q.T @ x)
+        # con = [lb <= x, x <= ub, rl <= Amm@x, Amm@x <= ru]
+        # prob = cp.Problem(obj, con)
+        # try:
+        #     obj = prob.solve(solver=cp.ECOS, verbose=True)
+        #     solve_dict_ecos[problem_name] = {
+        #         "status": "Solved",
+        #         "setup_time": np.nan,
+        #         "solve_time": prob.solver_stats.solve_time,
+        #         "run_time": prob.solver_stats.solve_time,
+        #         "obj": obj,
+        #     }
+        # except:
+        #     solve_dict_ecos[problem_name] = {
+        #         "status": "FAILED",
+        #         "setup_time": np.nan,
+        #         "solve_time": np.nan,
+        #         "run_time": np.nan,
+        #         "obj": obj,
+        #     }
+
+        P, q, A, b, cones = parse_mm_clarabel(mat)
         settings = clarabel.DefaultSettings()
         settings.tol_gap_abs = high_acc
         settings.tol_gap_rel = high_acc
         settings.tol_feas = high_acc
         settings.verbose = False
-
-        P, q, A, b, cones = parse_mm_clarabel(mat)
         solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
         res_clarabel = solver.solve()
         solve_dict_clarabel[problem_name] = {
@@ -95,8 +152,10 @@ df_qcos = pd.DataFrame(solve_dict_qcos).T
 df_osqp = pd.DataFrame(solve_dict_osqp).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_piqp = pd.DataFrame(solve_dict_piqp).T
+# df_ecos = pd.DataFrame(solve_dict_ecos).T
 
 df_qcos.to_csv("results/mm_qcos.csv")
 df_osqp.to_csv("results/mm_osqp.csv")
 df_clarabel.to_csv("results/mm_clarabel.csv")
 df_piqp.to_csv("results/mm_piqp.csv")
+# df_ecos.to_csv("results/mm_ecos.csv")

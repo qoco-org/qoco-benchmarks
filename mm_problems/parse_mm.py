@@ -22,35 +22,42 @@ import clarabel
 
 
 def parse_mm_qcos(mm_data):
-    P, c, A, l, u = parse_mm_osqp(mm_data)
+    n = len(mm_data["lb"])
+    P = mm_data["Q"]
+    c = np.squeeze(mm_data["c"], axis=1)
 
-    eq_idx = np.where(l == u)[0]
-    ineq_idx = np.where(l != u)[0]
+    Amm = mm_data["A"]
+    rl = np.squeeze(mm_data["rl"], axis=1)
+    ru = np.squeeze(mm_data["ru"], axis=1)
+    lb = np.squeeze(mm_data["lb"], axis=1)
+    ub = np.squeeze(mm_data["ub"], axis=1)
 
-    Aeq = A[eq_idx]
-    beq = l[eq_idx]
+    eq_idx = np.where(rl == ru)[0]
+    ineq_idx = np.where(rl != ru)[0]
 
-    Aineq = A[ineq_idx]
-    uineq = u[ineq_idx]
-    lineq = l[ineq_idx]
+    Aeq = Amm[eq_idx]
+    beq = rl[eq_idx]
 
-    Aineq = sp.sparse.vstack((Aineq, -Aineq))
-    bineq = np.hstack((uineq, -lineq))
+    Aineq = Amm[ineq_idx]
+    uineq = ru[ineq_idx]
+    lineq = rl[ineq_idx]
+
+    G = sp.sparse.vstack((np.eye(n), -np.eye(n), Aineq, -Aineq)).tocsc()
+    h = np.hstack((ub, -lb, uineq, -lineq))
 
     # Drop inf
-    idx = np.where(bineq != np.inf)
-    Aineq = Aineq[idx]
-    bineq = bineq[idx]
+    idx = np.where(h != np.inf)
+    G = G[idx]
+    h = h[idx]
 
+    m = G.shape[0]
     p = Aeq.shape[0]
-    m = Aineq.shape[0]
-    n = Aeq.shape[1]
 
     l = m
     nsoc = 0
     q = []
 
-    return n, m, p, P, c, Aeq, beq, Aineq, bineq, l, nsoc, q
+    return n, m, p, P, c, Aeq, beq, G, h, l, nsoc, q
 
 
 def parse_mm_osqp(mm_data):
@@ -79,35 +86,42 @@ def parse_mm_osqp(mm_data):
 
 def parse_mm_clarabel(mm_data):
 
-    P, q, A, l, u = parse_mm_osqp(mm_data)
+    n = len(mm_data["lb"])
+    P = mm_data["Q"]
+    c = np.squeeze(mm_data["c"], axis=1)
 
-    eq_idx = np.where(l == u)[0]
-    ineq_idx = np.where(l != u)[0]
+    Amm = mm_data["A"]
+    rl = np.squeeze(mm_data["rl"], axis=1)
+    ru = np.squeeze(mm_data["ru"], axis=1)
+    lb = np.squeeze(mm_data["lb"], axis=1)
+    ub = np.squeeze(mm_data["ub"], axis=1)
 
-    Aeq = A[eq_idx]
-    beq = l[eq_idx]
+    eq_idx = np.where(rl == ru)[0]
+    ineq_idx = np.where(rl != ru)[0]
 
-    Aineq = A[ineq_idx]
-    uineq = u[ineq_idx]
-    lineq = l[ineq_idx]
-
-    Aineq = sp.sparse.vstack((Aineq, -Aineq))
-    bineq = np.hstack((uineq, -lineq))
-
-    # Drop inf
-    idx = np.where(bineq != np.inf)
-    Aineq = Aineq[idx]
-    bineq = bineq[idx]
+    Aeq = Amm[eq_idx]
+    beq = rl[eq_idx]
 
     p = Aeq.shape[0]
-    m = Aineq.shape[0]
 
-    A = sp.sparse.vstack((Aeq, Aineq))
-    b = np.hstack((beq, bineq))
+    Aineq = Amm[ineq_idx]
+    uineq = ru[ineq_idx]
+    lineq = rl[ineq_idx]
+
+    G = sp.sparse.vstack((np.eye(n), -np.eye(n), Aineq, -Aineq)).tocsc()
+    h = np.hstack((ub, -lb, uineq, -lineq))
+
+    # Drop inf
+    idx = np.where(h != np.inf)
+    G = G[idx]
+    h = h[idx]
+    m = G.shape[0]
+
+    A = sp.sparse.vstack((Aeq, G))
+    b = np.hstack((beq, h))
 
     cones = [clarabel.ZeroConeT(p), clarabel.NonnegativeConeT(m)]
-
-    return P, q, A, b, cones
+    return P, c, A, b, cones
 
 
 def parse_mm_piqp(mm_data):
