@@ -121,7 +121,7 @@ def parse_mm_clarabel(mm_data):
     b = np.hstack((beq, h))
 
     cones = [clarabel.ZeroConeT(p), clarabel.NonnegativeConeT(m)]
-    return P, c, A, b, cones
+    return P, c, A, b, p, m, cones
 
 
 def parse_mm_piqp(mm_data):

@@ -3,24 +3,26 @@ import pandas as pd
 import numpy as np
 from postprocess import *
 
-solvers = ["qcos", "osqp", "clarabel", "piqp"]
+solvers = ["qcos", "osqp", "clarabel", "piqp", "scs"]
 
 df_qcos = pd.read_csv("./results/mm_qcos.csv")
 df_osqp = pd.read_csv("./results/mm_osqp.csv")
 df_clarabel = pd.read_csv("./results/mm_clarabel.csv")
 df_piqp = pd.read_csv("./results/mm_piqp.csv")
+df_scs = pd.read_csv("./results/mm_scs.csv")
 
 num_prob = 0
 qcos_solved = 0
 osqp_solved = 0
 clarabel_solved = 0
 piqp_solved = 0
+scs_solved = 0
 
 qcos_time = []
 osqp_time = []
 clarabel_time = []
 piqp_time = []
-
+scs_time = []
 
 for status in df_qcos["status"]:
     num_prob += 1
@@ -39,10 +41,16 @@ for status in df_piqp["status"]:
     if status == "Status.PIQP_SOLVED":
         piqp_solved += 1
 
+for status in df_scs["status"]:
+    if status == "solved":
+        scs_solved += 1
+
+
 print("QCOS Solved " + str(qcos_solved) + " out of " + str(num_prob))
 print("OSQP Solved " + str(osqp_solved) + " out of " + str(num_prob))
 print("Clarabel Solved " + str(clarabel_solved) + " out of " + str(num_prob))
 print("PIQP Solved " + str(piqp_solved) + " out of " + str(num_prob))
+print("SCS Solved " + str(scs_solved) + " out of " + str(num_prob))
 
 # Plot performance profile
 compute_performance_profiles(solvers)

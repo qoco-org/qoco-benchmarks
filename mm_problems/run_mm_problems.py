@@ -3,6 +3,7 @@ from pathlib import Path
 import qcospy as qcos
 import osqp
 import clarabel
+import scs
 import piqp
 from parse_mm import *
 import pandas as pd
@@ -17,6 +18,7 @@ solve_dict_qcos = {}
 solve_dict_osqp = {}
 solve_dict_clarabel = {}
 solve_dict_piqp = {}
+solve_dict_scs = {}
 solve_dict_ecos = {}
 directory = Path("mm_problems/MAT_Files")
 for file_path in directory.iterdir():
@@ -26,6 +28,9 @@ for file_path in directory.iterdir():
         print(file_path)
         if len(mat["lb"]) > 40000:
             continue
+
+
+        # QCOS
         n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_mm_qcos(mat)
         G = G if m > 0 else None
         h = h if m > 0 else None
@@ -44,9 +49,7 @@ for file_path in directory.iterdir():
         # if (res_qcos.status == 'QCOS_SOLVED'):
         #     print(abs(res_qcos.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
 
-        # if (str(status) == 'Status.PIQP_SOLVED'):
-        #     print(abs(solver.result.info.primal_obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
-
+        # OSQP
         P, q, A, l, u = parse_mm_osqp(mat)
         m = osqp.OSQP()
         m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=high_acc, eps_rel=high_acc, verbose=False)
@@ -114,13 +117,14 @@ for file_path in directory.iterdir():
         #         "obj": obj,
         #     }
 
-        P, q, A, b, cones = parse_mm_clarabel(mat)
+        # Clarabel
+        P, c, A, b, p, m, cones = parse_mm_clarabel(mat)
         settings = clarabel.DefaultSettings()
         settings.tol_gap_abs = high_acc
         settings.tol_gap_rel = high_acc
         settings.tol_feas = high_acc
         settings.verbose = False
-        solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
+        solver = clarabel.DefaultSolver(P, c, A, b, cones, settings)
         res_clarabel = solver.solve()
         solve_dict_clarabel[problem_name] = {
             "status": str(res_clarabel.status),
@@ -130,6 +134,22 @@ for file_path in directory.iterdir():
             "obj": res_clarabel.obj_val,
         }
 
+        # SCS
+        c = 1.0 * c
+        b = 1.0 * b
+        data = dict(P=P, A=A, b=b, c=c)
+        cone = dict(z=p, l=m)
+        solver = scs.SCS(data, cone, eps_abs=high_acc, eps_rel=high_acc, verbose=False)
+        sol = solver.solve()
+        solve_dict_scs[problem_name] = {
+            "status": sol['info']['status'],
+            "setup_time": sol['info']['setup_time']/1000,
+            "solve_time": sol['info']['solve_time']/1000,
+            "run_time": (sol['info']['setup_time'] + sol['info']['solve_time'])/1000,
+            "obj": sol['info']['pobj'],
+        }
+
+        # PIQP
         P, c, A, b, G, h, x_lb, x_ub = parse_mm_piqp(mat)
         solver = piqp.SparseSolver()
         solver.settings.compute_timings = True
@@ -152,10 +172,12 @@ df_qcos = pd.DataFrame(solve_dict_qcos).T
 df_osqp = pd.DataFrame(solve_dict_osqp).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_piqp = pd.DataFrame(solve_dict_piqp).T
+df_scs = pd.DataFrame(solve_dict_scs).T
 # df_ecos = pd.DataFrame(solve_dict_ecos).T
 
 df_qcos.to_csv("results/mm_qcos.csv")
 df_osqp.to_csv("results/mm_osqp.csv")
 df_clarabel.to_csv("results/mm_clarabel.csv")
 df_piqp.to_csv("results/mm_piqp.csv")
+df_scs.to_csv("results/mm_scs.csv")
 # df_ecos.to_csv("results/mm_ecos.csv")
