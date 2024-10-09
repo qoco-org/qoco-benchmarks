@@ -6,50 +6,60 @@ from solvers.run_generated_solver import *
 import warnings
 
 
-def piqp_solve(prob, tol):
-    sol = prob.solve(
-        solver=cp.PIQP,
-        eps_abs=tol,
-        eps_rel=tol,
-        eps_duality_gap_abs=tol,
-        eps_duality_gap_rel=tol,
-    )
+# def piqp_solve(prob, tol):
+#     sol = prob.solve(
+#         solver=cp.PIQP,
+#         eps_abs=tol,
+#         eps_rel=tol,
+#         eps_duality_gap_abs=tol,
+#         eps_duality_gap_rel=tol,
+#     )
+#     res = {
+#         "status": prob.status,
+#         "setup_time": prob.solver_stats.setup_time,
+#         "solve_time": prob.solver_stats.solve_time,
+#         "run_time": float(prob.solver_stats.setup_time or 0)
+#         + prob.solver_stats.solve_time,
+#         "obj": sol,
+#     }
+#     assert prob.status == "optimal"
+#     return res
+
+
+def clarabel_solve(prob, tol=1e-7, N=100):
+    total_setup_time = 0
+    total_solve_time = 0
+    for i in range(N):
+        sol = prob.solve(
+            solver=cp.CLARABEL, tol_gap_abs=tol, tol_gap_rel=tol, tol_feas=tol
+        )
+        total_setup_time += float(prob.solver_stats.setup_time or 0)
+        total_solve_time += prob.solver_stats.solve_time
     res = {
         "status": prob.status,
-        "setup_time": prob.solver_stats.setup_time,
-        "solve_time": prob.solver_stats.solve_time,
-        "run_time": float(prob.solver_stats.setup_time or 0)
-        + prob.solver_stats.solve_time,
+        "setup_time": total_setup_time / N,
+        "solve_time": total_solve_time / N,
+        "run_time": (total_setup_time + total_solve_time) / N,
         "obj": sol,
     }
     assert prob.status == "optimal"
     return res
 
 
-def clarabel_solve(prob, tol):
-    sol = prob.solve(solver=cp.CLARABEL, tol_gap_abs=tol, tol_gap_rel=tol, tol_feas=tol)
-    res = {
-        "status": prob.status,
-        "setup_time": prob.solver_stats.setup_time,
-        "solve_time": prob.solver_stats.solve_time,
-        "run_time": float(prob.solver_stats.setup_time or 0)
-        + prob.solver_stats.solve_time,
-        "obj": sol,
-    }
-    assert prob.status == "optimal"
-    return res
-
-
-def ecos_solve(prob, tol):
+def ecos_solve(prob, tol=1e-7, N=100):
     warnings.simplefilter(action="ignore", category=FutureWarning)
+    total_setup_time = 0
+    total_solve_time = 0
     try:
-        sol = prob.solve(solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol)
+        for i in range(N):
+            sol = prob.solve(solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol)
+            total_setup_time += float(prob.solver_stats.setup_time or 0)
+            total_solve_time += prob.solver_stats.solve_time
         res = {
             "status": prob.status,
-            "setup_time": prob.solver_stats.setup_time,
-            "solve_time": prob.solver_stats.solve_time,
-            "run_time": float(prob.solver_stats.setup_time or 0)
-            + prob.solver_stats.solve_time,
+            "setup_time": total_setup_time / N,
+            "solve_time": total_solve_time / N,
+            "run_time": (total_setup_time + total_solve_time) / N,
             "obj": sol,
         }
     except:
@@ -64,16 +74,22 @@ def ecos_solve(prob, tol):
     return res
 
 
-def qcos_solve(prob, tol):
+def qcos_solve(prob, tol=1e-7, N=100):
+    total_setup_time = 0
+    total_solve_time = 0
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
     prob_qcos = qcos.QCOS()
     prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol)
-    res_qcos = prob_qcos.solve()
+
+    for i in range(N):
+        res_qcos = prob_qcos.solve()
+        total_setup_time += float(res_qcos.setup_time_sec or 0)
+        total_solve_time += res_qcos.solve_time_sec
     res = {
         "status": res_qcos.status,
-        "setup_time": res_qcos.setup_time_sec,
-        "solve_time": res_qcos.solve_time_sec,
-        "run_time": res_qcos.setup_time_sec + res_qcos.solve_time_sec,
+        "setup_time": total_setup_time / N,
+        "solve_time": total_solve_time / N,
+        "run_time": (total_setup_time + total_solve_time) / N,
         "obj": res_qcos.obj,
     }
     assert res_qcos.status == "QCOS_SOLVED"
