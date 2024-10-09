@@ -29,7 +29,6 @@ for file_path in directory.iterdir():
         if len(mat["lb"]) > 40000:
             continue
 
-
         # QCOS
         n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_mm_qcos(mat)
         G = G if m > 0 else None
@@ -52,7 +51,9 @@ for file_path in directory.iterdir():
         # OSQP
         P, q, A, l, u = parse_mm_osqp(mat)
         m = osqp.OSQP()
-        m.setup(P=P, q=q, A=A, l=l, u=u, eps_abs=high_acc, eps_rel=high_acc, verbose=False)
+        m.setup(
+            P=P, q=q, A=A, l=l, u=u, eps_abs=high_acc, eps_rel=high_acc, verbose=False
+        )
         res_osqp = m.solve()
         solve_dict_osqp[problem_name] = {
             "status": res_osqp.info.status,
@@ -62,7 +63,6 @@ for file_path in directory.iterdir():
             "obj": res_osqp.info.obj_val,
         }
 
-        
         ### CVXPY Clarabel
         # n = len(mat["lb"])
         # P = mat["Q"]
@@ -75,7 +75,7 @@ for file_path in directory.iterdir():
         # x = cp.Variable(n)
         # obj = cp.Minimize(0.5*cp.quad_form(x, P, True) + q.T @ x)
         # con = [lb <= x, x <= ub, rl <= Amm@x, Amm@x <= ru]
-        # prob = cp.Problem(obj, con)   
+        # prob = cp.Problem(obj, con)
         # try:
         #     obj = prob.solve(solver=cp.CLARABEL)
         #     solve_dict_clarabel[problem_name] = {
@@ -93,7 +93,6 @@ for file_path in directory.iterdir():
         #         "run_time": np.nan,
         #         "obj": obj,
         #     }
-
 
         # x = cp.Variable(n)
         # obj = cp.Minimize(0.5*cp.quad_form(x, P, True) + q.T @ x)
@@ -142,11 +141,11 @@ for file_path in directory.iterdir():
         solver = scs.SCS(data, cone, eps_abs=high_acc, eps_rel=high_acc, verbose=False)
         sol = solver.solve()
         solve_dict_scs[problem_name] = {
-            "status": sol['info']['status'],
-            "setup_time": sol['info']['setup_time']/1000,
-            "solve_time": sol['info']['solve_time']/1000,
-            "run_time": (sol['info']['setup_time'] + sol['info']['solve_time'])/1000,
-            "obj": sol['info']['pobj'],
+            "status": sol["info"]["status"],
+            "setup_time": sol["info"]["setup_time"] / 1000,
+            "solve_time": sol["info"]["solve_time"] / 1000,
+            "run_time": (sol["info"]["setup_time"] + sol["info"]["solve_time"]) / 1000,
+            "obj": sol["info"]["pobj"],
         }
 
         # PIQP

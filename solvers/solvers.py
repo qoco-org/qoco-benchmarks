@@ -5,17 +5,26 @@ from solvers.cvxpy_to_qcos import *
 from solvers.run_generated_solver import *
 import warnings
 
+
 def piqp_solve(prob, tol):
-    sol = prob.solve(solver=cp.PIQP, eps_abs=tol, eps_rel=tol, eps_duality_gap_abs=tol, eps_duality_gap_rel=tol)
+    sol = prob.solve(
+        solver=cp.PIQP,
+        eps_abs=tol,
+        eps_rel=tol,
+        eps_duality_gap_abs=tol,
+        eps_duality_gap_rel=tol,
+    )
     res = {
         "status": prob.status,
         "setup_time": prob.solver_stats.setup_time,
         "solve_time": prob.solver_stats.solve_time,
-        "run_time": float(prob.solver_stats.setup_time or 0) + prob.solver_stats.solve_time,
+        "run_time": float(prob.solver_stats.setup_time or 0)
+        + prob.solver_stats.solve_time,
         "obj": sol,
     }
-    assert prob.status == 'optimal'
+    assert prob.status == "optimal"
     return res
+
 
 def clarabel_solve(prob, tol):
     sol = prob.solve(solver=cp.CLARABEL, tol_gap_abs=tol, tol_gap_rel=tol, tol_feas=tol)
@@ -23,21 +32,24 @@ def clarabel_solve(prob, tol):
         "status": prob.status,
         "setup_time": prob.solver_stats.setup_time,
         "solve_time": prob.solver_stats.solve_time,
-        "run_time": float(prob.solver_stats.setup_time or 0) + prob.solver_stats.solve_time,
+        "run_time": float(prob.solver_stats.setup_time or 0)
+        + prob.solver_stats.solve_time,
         "obj": sol,
     }
-    assert prob.status == 'optimal'
+    assert prob.status == "optimal"
     return res
 
+
 def ecos_solve(prob, tol):
-    warnings.simplefilter(action='ignore', category=FutureWarning)
+    warnings.simplefilter(action="ignore", category=FutureWarning)
     try:
         sol = prob.solve(solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol)
         res = {
             "status": prob.status,
             "setup_time": prob.solver_stats.setup_time,
             "solve_time": prob.solver_stats.solve_time,
-            "run_time": float(prob.solver_stats.setup_time or 0) + prob.solver_stats.solve_time,
+            "run_time": float(prob.solver_stats.setup_time or 0)
+            + prob.solver_stats.solve_time,
             "obj": sol,
         }
     except:
@@ -50,6 +62,7 @@ def ecos_solve(prob, tol):
             "obj": np.nan,
         }
     return res
+
 
 def qcos_solve(prob, tol):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
@@ -66,19 +79,22 @@ def qcos_solve(prob, tol):
     assert res_qcos.status == "QCOS_SOLVED"
     return res
 
+
 def qcos_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
     prob_qcos = qcos.QCOS()
     prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     if regenerate_solver:
         prob_qcos.generate_solver(custom_solver_dir, solver_name)
-    codegen_solved, codegen_obj, average_runtime_ms = run_generated_solver(custom_solver_dir+"/"+solver_name)
+    codegen_solved, codegen_obj, average_runtime_ms = run_generated_solver(
+        custom_solver_dir + "/" + solver_name
+    )
 
     assert codegen_solved
 
-    status = 'failed'
-    if codegen_solved:
-        status = 'optimal'
+    status = "failed"
+    if codegen_solved == 1:
+        status = "optimal"
 
     res = {
         "status": status,
