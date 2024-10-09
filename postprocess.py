@@ -2,15 +2,15 @@ import os
 import pandas as pd
 import numpy as np
 
-SOLUTION_PRESENT = ["QCOS_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED"]
+SOLUTION_PRESENT = ["QCOS_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
 
 
 # Function is from osqp_benchmarks (https://github.com/osqp/osqp_benchmarks/blob/master/utils/benchmark.py#L61)
-def compute_performance_profiles(solvers):
+def compute_performance_profiles(solvers, dir):
     t = {}
     status = {}
     for solver in solvers:
-        path = os.path.join("./results", "mm_" + solver + ".csv")
+        path = os.path.join(dir, solver + ".csv")
         with open(path, "rb") as f:
             df = pd.read_csv(path)
 
@@ -53,7 +53,5 @@ def compute_performance_profiles(solvers):
 
     # Store final pandas dataframe
     df_performance_profiles = pd.DataFrame(rho)
-    performance_profiles_file = os.path.join(
-        ".", "results", "mm_performance_profiles.csv"
-    )
+    performance_profiles_file = os.path.join(dir, "performance_profiles.csv")
     df_performance_profiles.to_csv(performance_profiles_file, index=False)

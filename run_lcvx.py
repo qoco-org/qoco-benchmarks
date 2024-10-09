@@ -2,10 +2,11 @@ from problems.optimal_control import lcvx
 from solvers.solvers import *
 import pandas as pd
 from matplotlib import pyplot as plt
+from postprocess import compute_performance_profiles
 
 Nlist = [5, 10, 15, 25, 50, 75, 100, 125]
 var_list = []
-
+solvers = ["clarabel", "ecos", "qcos_custom", "qcos"]
 regen_solver = False
 clarabel_res = {}
 ecos_res = {}
@@ -32,6 +33,16 @@ df_qcos.to_csv("results/lcvx/qcos.csv")
 df_qcos_custom.to_csv("results/lcvx/qcos_custom.csv")
 df_clarabel.to_csv("results/lcvx/clarabel.csv")
 df_ecos.to_csv("results/lcvx/ecos.csv")
+
+compute_performance_profiles(solvers, "./results/lcvx")
+df_perf = pd.read_csv("./results/lcvx/performance_profiles.csv")
+for s in solvers:
+    plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
+plt.legend(loc="best")
+plt.ylabel(r"$\rho_{s}$")
+plt.xlabel(r"$\tau$")
+plt.grid()
+plt.xscale("log")
 
 plt.figure()
 plt.plot(var_list, 1000 * df_qcos["run_time"], "o-", label="QCOS")
