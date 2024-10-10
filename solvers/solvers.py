@@ -25,6 +25,31 @@ import warnings
 #     assert prob.status == "optimal"
 #     return res
 
+def mosek_solve(prob, tol=1e-7, N=100):
+    total_setup_time = 0
+    total_solve_time = 0
+    try:
+        for i in range(N):
+            sol = prob.solve(solver=cp.MOSEK)
+            total_setup_time += float(prob.solver_stats.setup_time or 0)
+            total_solve_time += prob.solver_stats.solve_time
+        res = {
+            "status": prob.status,
+            "setup_time": total_setup_time / N,
+            "solve_time": total_solve_time / N,
+            "run_time": (total_setup_time + total_solve_time) / N,
+            "obj": sol,
+        }
+    except:
+        print("Mosek Failed")
+        res = {
+            "status": np.nan,
+            "setup_time": np.nan,
+            "solve_time": np.nan,
+            "run_time": np.nan,
+            "obj": np.nan,
+        }
+    return res
 
 def clarabel_solve(prob, tol=1e-7, N=100):
     total_setup_time = 0
@@ -111,7 +136,7 @@ def qcos_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
     status = "failed"
     if codegen_solved == 1:
         status = "optimal"
-
+    print(average_runtime_ms / 1000)
     res = {
         "status": status,
         "setup_time": None,
