@@ -7,7 +7,7 @@ from postprocess import compute_performance_profiles
 Nlist = [5, 10, 15, 25, 50, 75, 100, 125]
 var_list = []
 solvers = ["clarabel", "ecos", "qcos_custom", "qcos", "mosek"]
-regen_solver = False
+regen_solver = True
 clarabel_res = {}
 ecos_res = {}
 qcos_res = {}
