@@ -136,7 +136,7 @@ def qcos_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
     status = "failed"
     if codegen_solved == 1:
         status = "optimal"
-    print(average_runtime_ms / 1000)
+
     res = {
         "status": status,
         "setup_time": None,
