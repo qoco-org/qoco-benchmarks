@@ -3,31 +3,31 @@ import pandas as pd
 import numpy as np
 from postprocess import *
 
-solvers = ["qcos", "osqp", "clarabel", "piqp", "scs"]
+solvers = ["qoco", "osqp", "clarabel", "piqp", "scs"]
 
-df_qcos = pd.read_csv("./results/qcos.csv")
+df_qoco = pd.read_csv("./results/qoco.csv")
 df_osqp = pd.read_csv("./results/osqp.csv")
 df_clarabel = pd.read_csv("./results/clarabel.csv")
 df_piqp = pd.read_csv("./results/piqp.csv")
 df_scs = pd.read_csv("./results/scs.csv")
 
 num_prob = 0
-qcos_solved = 0
+qoco_solved = 0
 osqp_solved = 0
 clarabel_solved = 0
 piqp_solved = 0
 scs_solved = 0
 
-qcos_time = []
+qoco_time = []
 osqp_time = []
 clarabel_time = []
 piqp_time = []
 scs_time = []
 
-for status in df_qcos["status"]:
+for status in df_qoco["status"]:
     num_prob += 1
-    if status == "QCOS_SOLVED":
-        qcos_solved += 1
+    if status == "QOCO_SOLVED":
+        qoco_solved += 1
 
 for status in df_osqp["status"]:
     if status == "solved":
@@ -46,7 +46,7 @@ for status in df_scs["status"]:
         scs_solved += 1
 
 
-print("QCOS Solved " + str(qcos_solved) + " out of " + str(num_prob))
+print("QOCO Solved " + str(qoco_solved) + " out of " + str(num_prob))
 print("OSQP Solved " + str(osqp_solved) + " out of " + str(num_prob))
 print("Clarabel Solved " + str(clarabel_solved) + " out of " + str(num_prob))
 print("PIQP Solved " + str(piqp_solved) + " out of " + str(num_prob))

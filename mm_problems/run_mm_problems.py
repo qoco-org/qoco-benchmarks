@@ -1,6 +1,6 @@
 import scipy.io
 from pathlib import Path
-import qcospy as qcos
+import qoco
 import osqp
 import clarabel
 import scs
@@ -9,12 +9,12 @@ from parse_mm import *
 import pandas as pd
 from mm_opt import *
 import cvxpy as cp
-# from solvers.cvxpy_to_qcos import *
+
 
 high_acc = 1e-7
 low_acc = 1e-5
 
-solve_dict_qcos = {}
+solve_dict_qoco = {}
 solve_dict_osqp = {}
 solve_dict_clarabel = {}
 solve_dict_piqp = {}
@@ -29,24 +29,24 @@ for file_path in directory.iterdir():
         if len(mat["lb"]) > 40000:
             continue
 
-        # QCOS
-        n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_mm_qcos(mat)
+        # QOCO
+        n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_mm_qoco(mat)
         G = G if m > 0 else None
         h = h if m > 0 else None
         A = A if p > 0 else None
         b = b if p > 0 else None
-        prob_qcos = qcos.QCOS()
-        prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-        res_qcos = prob_qcos.solve()
-        solve_dict_qcos[problem_name] = {
-            "status": res_qcos.status,
-            "setup_time": res_qcos.setup_time_sec,
-            "solve_time": res_qcos.solve_time_sec,
-            "run_time": res_qcos.setup_time_sec + res_qcos.solve_time_sec,
-            "obj": res_qcos.obj,
+        prob_qoco = qoco.QOCO()
+        prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
+        res_qoco = prob_qoco.solve()
+        solve_dict_qoco[problem_name] = {
+            "status": res_qoco.status,
+            "setup_time": res_qoco.setup_time_sec,
+            "solve_time": res_qoco.solve_time_sec,
+            "run_time": res_qoco.setup_time_sec + res_qoco.solve_time_sec,
+            "obj": res_qoco.obj,
         }
-        # if (res_qcos.status == 'QCOS_SOLVED'):
-        #     print(abs(res_qcos.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
+        # if (res_qoco.status == 'QOCO_SOLVED'):
+        #     print(abs(res_qoco.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
 
         # OSQP
         P, q, A, l, u = parse_mm_osqp(mat)
@@ -167,14 +167,14 @@ for file_path in directory.iterdir():
             "obj": solver.result.info.primal_obj,
         }
 
-df_qcos = pd.DataFrame(solve_dict_qcos).T
+df_qoco = pd.DataFrame(solve_dict_qoco).T
 df_osqp = pd.DataFrame(solve_dict_osqp).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_piqp = pd.DataFrame(solve_dict_piqp).T
 df_scs = pd.DataFrame(solve_dict_scs).T
 # df_ecos = pd.DataFrame(solve_dict_ecos).T
 
-df_qcos.to_csv("results/mm_qcos.csv")
+df_qoco.to_csv("results/mm_qoco.csv")
 df_osqp.to_csv("results/mm_osqp.csv")
 df_clarabel.to_csv("results/mm_clarabel.csv")
 df_piqp.to_csv("results/mm_piqp.csv")

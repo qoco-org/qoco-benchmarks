@@ -3,14 +3,14 @@ import numpy as np
 import scipy as sp
 import clarabel
 
-# Parses QP from Maros-Meszaros standard form to QCOS standard form
+# Parses QP from Maros-Meszaros standard form to QOCO standard form
 #
 # Maros-Meszaros standard form
 #   minimize    (1/2) x'Qx + c'x
 #   subject to  rl <= Ax <= ru
 #               lb <=  x <= ub
 #
-# QCOS standard form
+# QOCO standard form
 # minimize   (1/2)x'Px + c'x
 # subject to Ax = b
 #            Gx <= h
@@ -21,7 +21,7 @@ import clarabel
 #
 
 
-def parse_mm_qcos(mm_data):
+def parse_mm_qoco(mm_data):
     n = len(mm_data["lb"])
     P = mm_data["Q"]
     c = np.squeeze(mm_data["c"], axis=1)

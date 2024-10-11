@@ -1,7 +1,7 @@
 import cvxpy as cp
 import numpy as np
-import qcospy as qcos
-from solvers.cvxpy_to_qcos import *
+import qoco
+from solvers.cvxpy_to_qoco import *
 from solvers.run_generated_solver import *
 import warnings
 
@@ -24,6 +24,7 @@ import warnings
 #     }
 #     assert prob.status == "optimal"
 #     return res
+
 
 def mosek_solve(prob, tol=1e-7, N=100):
     total_setup_time = 0
@@ -52,6 +53,7 @@ def mosek_solve(prob, tol=1e-7, N=100):
             "obj": np.nan,
         }
     return res
+
 
 def clarabel_solve(prob, tol=1e-7, N=100):
     total_setup_time = 0
@@ -104,35 +106,35 @@ def ecos_solve(prob, tol=1e-7, N=100):
     return res
 
 
-def qcos_solve(prob, tol=1e-7, N=100):
+def qoco_solve(prob, tol=1e-7, N=100):
     total_setup_time = 0
     total_solve_time = 0
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-    prob_qcos = qcos.QCOS()
-    prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol)
+    prob_qoco = qoco.QOCO()
+    prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol)
 
     for i in range(N):
-        res_qcos = prob_qcos.solve()
-        total_setup_time += float(res_qcos.setup_time_sec or 0)
-        total_solve_time += res_qcos.solve_time_sec
+        res_qoco = prob_qoco.solve()
+        total_setup_time += float(res_qoco.setup_time_sec or 0)
+        total_solve_time += res_qoco.solve_time_sec
     res = {
         "nvar": prob.size_metrics.num_scalar_variables,
-        "status": res_qcos.status,
+        "status": res_qoco.status,
         "setup_time": total_setup_time / N,
         "solve_time": total_solve_time / N,
         "run_time": (total_setup_time + total_solve_time) / N,
-        "obj": res_qcos.obj,
+        "obj": res_qoco.obj,
     }
-    assert res_qcos.status == "QCOS_SOLVED"
+    assert res_qoco.status == "QOCO_SOLVED"
     return res
 
 
-def qcos_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
+def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-    prob_qcos = qcos.QCOS()
-    prob_qcos.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
+    prob_qoco = qoco.QOCO()
+    prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     if regenerate_solver:
-        prob_qcos.generate_solver(custom_solver_dir, solver_name)
+        prob_qoco.generate_solver(custom_solver_dir, solver_name)
     codegen_solved, codegen_obj, average_runtime_ms = run_generated_solver(
         custom_solver_dir + "/" + solver_name
     )
