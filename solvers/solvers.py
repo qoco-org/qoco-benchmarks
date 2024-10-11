@@ -34,6 +34,7 @@ def mosek_solve(prob, tol=1e-7, N=100):
             total_setup_time += float(prob.solver_stats.setup_time or 0)
             total_solve_time += prob.solver_stats.solve_time
         res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
             "status": prob.status,
             "setup_time": total_setup_time / N,
             "solve_time": total_solve_time / N,
@@ -43,6 +44,7 @@ def mosek_solve(prob, tol=1e-7, N=100):
     except:
         print("Mosek Failed")
         res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -61,6 +63,7 @@ def clarabel_solve(prob, tol=1e-7, N=100):
         total_setup_time += float(prob.solver_stats.setup_time or 0)
         total_solve_time += prob.solver_stats.solve_time
     res = {
+        "nvar": prob.size_metrics.num_scalar_variables,
         "status": prob.status,
         "setup_time": total_setup_time / N,
         "solve_time": total_solve_time / N,
@@ -81,6 +84,7 @@ def ecos_solve(prob, tol=1e-7, N=100):
             total_setup_time += float(prob.solver_stats.setup_time or 0)
             total_solve_time += prob.solver_stats.solve_time
         res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
             "status": prob.status,
             "setup_time": total_setup_time / N,
             "solve_time": total_solve_time / N,
@@ -90,6 +94,7 @@ def ecos_solve(prob, tol=1e-7, N=100):
     except:
         print("ECOS Failed")
         res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -111,6 +116,7 @@ def qcos_solve(prob, tol=1e-7, N=100):
         total_setup_time += float(res_qcos.setup_time_sec or 0)
         total_solve_time += res_qcos.solve_time_sec
     res = {
+        "nvar": prob.size_metrics.num_scalar_variables,
         "status": res_qcos.status,
         "setup_time": total_setup_time / N,
         "solve_time": total_solve_time / N,
@@ -138,6 +144,7 @@ def qcos_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
         status = "optimal"
 
     res = {
+        "nvar": prob.size_metrics.num_scalar_variables,
         "status": status,
         "setup_time": None,
         "solve_time": average_runtime_ms / 1000,

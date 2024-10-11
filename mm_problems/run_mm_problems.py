@@ -9,7 +9,7 @@ from parse_mm import *
 import pandas as pd
 from mm_opt import *
 import cvxpy as cp
-from solvers.cvxpy_to_qcos import *
+# from solvers.cvxpy_to_qcos import *
 
 high_acc = 1e-7
 low_acc = 1e-5

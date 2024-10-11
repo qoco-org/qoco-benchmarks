@@ -4,7 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from postprocess import compute_performance_profiles
 
-Nlist = [5, 10, 15, 25, 50, 75, 100, 125, 200, 300]
+Nlist = [15, 25, 50, 75, 100, 125, 150, 200, 250, 300]
 var_list = []
 solvers = ["clarabel", "ecos", "qcos_custom", "qcos", "mosek"]
 regen_solver = False
@@ -48,15 +48,3 @@ df_ecos.to_csv("results/lcvx/ecos.csv")
 # plt.xlabel(r"$\tau$")
 # plt.grid()
 # plt.xscale("log")
-
-plt.figure()
-plt.plot(var_list, 1000 * df_qcos["run_time"], "o-", label="QCOS")
-plt.plot(var_list[0:8], 1000 * df_qcos_custom["run_time"], "o-", label="QCOS Custom")
-plt.plot(var_list, 1000 * df_ecos["run_time"], "o-", label="ECOS")
-plt.plot(var_list, 1000 * df_mosek["run_time"], "o-", label="MOSEK")
-plt.plot(var_list, 1000 * df_clarabel["run_time"], "o-", label="Clarabel")
-plt.legend()
-plt.xlabel("Number of Variables")
-plt.ylabel("Solvetime [milliseconds]")
-plt.savefig("plots/lcvx.pdf")
-plt.show()

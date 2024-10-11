@@ -5,11 +5,11 @@ from postprocess import *
 
 solvers = ["qcos", "osqp", "clarabel", "piqp", "scs"]
 
-df_qcos = pd.read_csv("./results/mm_qcos.csv")
-df_osqp = pd.read_csv("./results/mm_osqp.csv")
-df_clarabel = pd.read_csv("./results/mm_clarabel.csv")
-df_piqp = pd.read_csv("./results/mm_piqp.csv")
-df_scs = pd.read_csv("./results/mm_scs.csv")
+df_qcos = pd.read_csv("./results/qcos.csv")
+df_osqp = pd.read_csv("./results/osqp.csv")
+df_clarabel = pd.read_csv("./results/clarabel.csv")
+df_piqp = pd.read_csv("./results/piqp.csv")
+df_scs = pd.read_csv("./results/scs.csv")
 
 num_prob = 0
 qcos_solved = 0
@@ -53,8 +53,8 @@ print("PIQP Solved " + str(piqp_solved) + " out of " + str(num_prob))
 print("SCS Solved " + str(scs_solved) + " out of " + str(num_prob))
 
 # Plot performance profile
-compute_performance_profiles(solvers)
-df_perf = pd.read_csv("./results/mm_performance_profiles.csv")
+compute_performance_profiles(solvers, "./results")
+df_perf = pd.read_csv("./results/performance_profiles.csv")
 for s in solvers:
     plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
 plt.legend(loc="best")
@@ -62,4 +62,5 @@ plt.ylabel(r"$\rho_{s}$")
 plt.xlabel(r"$\tau$")
 plt.grid()
 plt.xscale("log")
+plt.savefig("plots/mm.pdf")
 plt.show()

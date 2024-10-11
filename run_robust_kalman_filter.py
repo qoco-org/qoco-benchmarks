@@ -4,7 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from postprocess import compute_performance_profiles
 
-Nlist = [25, 50, 75, 100, 125, 150, 175, 300, 500]
+Nlist = [25, 50, 75, 100, 125, 150, 175, 225, 300, 400, 500]
 var_list = []
 solvers = ["clarabel", "ecos", "qcos_custom", "qcos", "mosek"]
 regen_solver = False
@@ -48,15 +48,3 @@ df_ecos.to_csv("results/robust_kalman_filter/ecos.csv")
 # plt.xlabel(r"$\tau$")
 # plt.grid()
 # plt.xscale("log")
-
-plt.figure()
-plt.plot(var_list, 1000 * df_qcos["run_time"], "o-", label="QCOS")
-plt.plot(var_list[0:7], 1000 * df_qcos_custom["run_time"], "o-", label="QCOS Custom")
-plt.plot(var_list, 1000 * df_ecos["run_time"], "o-", label="ECOS")
-plt.plot(var_list, 1000 * df_mosek["run_time"], "o-", label="MOSEK")
-plt.plot(var_list, 1000 * df_clarabel["run_time"], "o-", label="Clarabel")
-plt.legend()
-plt.xlabel("Number of Variables")
-plt.ylabel("Solvetime [milliseconds]")
-plt.savefig("plots/robust_kalman_filter.pdf")
-plt.show()
