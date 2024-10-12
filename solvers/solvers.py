@@ -82,17 +82,32 @@ def ecos_solve(prob, tol=1e-7, N=100):
     solve_time = np.inf
     try:
         for i in range(N):
-            sol = prob.solve(solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol)
+            sol = prob.solve(
+                solver=cp.ECOS,
+                abstol=tol,
+                reltol=tol,
+                feastol=tol,
+            )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
-        res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
-            "status": prob.status,
-            "setup_time": setup_time,
-            "solve_time": solve_time,
-            "run_time": setup_time + solve_time,
-            "obj": sol,
-        }
+        if prob.status == "optimal":
+            res = {
+                "nvar": prob.size_metrics.num_scalar_variables,
+                "status": prob.status,
+                "setup_time": setup_time,
+                "solve_time": solve_time,
+                "run_time": setup_time + solve_time,
+                "obj": sol,
+            }
+        else:
+            res = {
+                "nvar": prob.size_metrics.num_scalar_variables,
+                "status": np.nan,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+            }
     except:
         print("ECOS Failed")
         res = {

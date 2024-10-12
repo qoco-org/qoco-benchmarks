@@ -1,4 +1,5 @@
 from matplotlib import pyplot as plt
+import numpy as np
 import pandas as pd
 from matplotlib import rc
 
@@ -98,7 +99,22 @@ plt.plot(
     color="blue",
     label="QOCO",
 )
-
+top = plt.ylim()[1]
+failed_idx = np.where(df_mosek_lcvx["status"].values != "optimal")
+plt.scatter(
+    df_mosek_lcvx["nvar"].values[failed_idx],
+    top * np.ones(len(failed_idx[0])),
+    color="red",
+    marker="x",
+)
+# top = plt.ylim()[1]
+failed_idx = np.where(df_ecos_lcvx["status"].values != "optimal")
+plt.scatter(
+    df_ecos_lcvx["nvar"].values[failed_idx],
+    2 * top * np.ones(len(failed_idx[0])),
+    color="green",
+    marker="x",
+)
 plt.legend(loc="lower right")
 plt.xlabel("Number of Variables")
 plt.ylabel("Solvetime [milliseconds]")
