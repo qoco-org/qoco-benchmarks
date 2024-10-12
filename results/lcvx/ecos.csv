@@ -1,5 +1,5 @@
 ,nvar,status,setup_time,solve_time,run_time,obj
-lcvx_15,176,optimal_inaccurate,0.00017218492000000004,0.0020753502,0.00224753512,-3.469398421691846
+lcvx_15,176,optimal_inaccurate,0.000168308,0.002051802,0.00222011,-3.469398421691846
 lcvx_25,286.0,,,,,
 lcvx_50,561.0,,,,,
 lcvx_75,836.0,,,,,

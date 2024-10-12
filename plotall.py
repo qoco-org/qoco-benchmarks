@@ -102,6 +102,6 @@ plt.plot(
 plt.legend(loc="lower right")
 plt.xlabel("Number of Variables")
 plt.ylabel("Solvetime [milliseconds]")
-plt.savefig("plots/lcvx.pdf")
 plt.yscale("log")
-plt.show()
+plt.savefig("plots/lcvx.pdf")
+# plt.show()

@@ -7,7 +7,7 @@ def run_generated_solver(solver_dir):
     os.system(
         "cd "
         + solver_dir
-        + "/build && cmake -DQOCO_CUSTOM_BUILD_TYPE:STR=Release -DENABLE_PRINTING:BOOL=TRUE .. && make && ./runtest && cd ../.."
+        + "/build && cmake -DQOCO_CUSTOM_BUILD_TYPE:STR=Release -DENABLE_PRINTING:BOOL=TRUE .. && make -j5 && ./runtest && cd ../.."
     )
     with open(solver_dir + "/build/result.bin", "rb") as file:
         # Read the unsigned int (4 bytes)
@@ -17,5 +17,5 @@ def run_generated_solver(solver_dir):
         obj = struct.unpack("d", file.read(8))[0]
 
         # Read the second double (8 bytes)
-        average_runtime_ms = struct.unpack("d", file.read(8))[0]
-    return solved, obj, average_runtime_ms
+        runtime_sec = struct.unpack("d", file.read(8))[0]
+    return solved, obj, runtime_sec
