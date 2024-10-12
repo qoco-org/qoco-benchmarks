@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+import os
 import pandas as pd
 from matplotlib import rc
 
@@ -16,13 +17,6 @@ df_mosek_robust_kalman_filter = pd.read_csv("./results/robust_kalman_filter/mose
 df_ecos_robust_kalman_filter = pd.read_csv("./results/robust_kalman_filter/ecos.csv")
 
 plt.figure()
-plt.plot(
-    df_qoco_custom_robust_kalman_filter["nvar"],
-    1000 * df_qoco_custom_robust_kalman_filter["run_time"],
-    "o-",
-    color="black",
-    label="QOCO Custom",
-)
 plt.plot(
     df_ecos_robust_kalman_filter["nvar"],
     1000 * df_ecos_robust_kalman_filter["run_time"],
@@ -51,12 +45,21 @@ plt.plot(
     color="blue",
     label="QOCO",
 )
+plt.plot(
+    df_qoco_custom_robust_kalman_filter["nvar"],
+    1000 * df_qoco_custom_robust_kalman_filter["run_time"],
+    "o-",
+    color="black",
+    label="QOCO Custom",
+)
 plt.legend(loc="lower right")
 plt.xlabel("Number of Variables")
 plt.ylabel("Solvetime [milliseconds]")
 plt.yscale("log")
-plt.savefig("plots/robust_kalman_filter.pdf")
-
+strFile = "plots/robust_kalman_filter.pdf"
+if os.path.isfile(strFile):
+    os.remove(strFile)
+plt.savefig(strFile)
 df_qoco_lcvx = pd.read_csv("./results/lcvx/qoco.csv")
 df_qoco_custom_lcvx = pd.read_csv("./results/lcvx/qoco_custom.csv")
 df_clarabel_lcvx = pd.read_csv("./results/lcvx/clarabel.csv")
@@ -64,13 +67,6 @@ df_mosek_lcvx = pd.read_csv("./results/lcvx/mosek.csv")
 df_ecos_lcvx = pd.read_csv("./results/lcvx/ecos.csv")
 
 plt.figure()
-plt.plot(
-    df_qoco_custom_lcvx["nvar"],
-    1000 * df_qoco_custom_lcvx["run_time"],
-    "o-",
-    color="black",
-    label="QOCO Custom",
-)
 plt.plot(
     df_ecos_lcvx["nvar"],
     1000 * df_ecos_lcvx["run_time"],
@@ -99,6 +95,13 @@ plt.plot(
     color="blue",
     label="QOCO",
 )
+plt.plot(
+    df_qoco_custom_lcvx["nvar"],
+    1000 * df_qoco_custom_lcvx["run_time"],
+    "o-",
+    color="black",
+    label="QOCO Custom",
+)
 top = plt.ylim()[1]
 failed_idx = np.where(df_mosek_lcvx["status"].values != "optimal")
 plt.scatter(
@@ -119,5 +122,8 @@ plt.legend(loc="lower right")
 plt.xlabel("Number of Variables")
 plt.ylabel("Solvetime [milliseconds]")
 plt.yscale("log")
-plt.savefig("plots/lcvx.pdf")
+strFile = "plots/lcvx.pdf"
+if os.path.isfile(strFile):
+    os.remove(strFile)
+plt.savefig(strFile)
 # plt.show()
