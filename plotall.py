@@ -78,6 +78,7 @@ def plotall():
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)
+
     df_qoco_lcvx = pd.read_csv("./results/lcvx/qoco.csv")
     df_qoco_custom_lcvx = pd.read_csv("./results/lcvx/qoco_custom.csv")
     df_clarabel_lcvx = pd.read_csv("./results/lcvx/clarabel.csv")
@@ -149,6 +150,65 @@ def plotall():
     plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
     strFile = "plots/lcvx.pdf"
+    if os.path.isfile(strFile):
+        os.remove(strFile)
+    plt.savefig(strFile)
+
+    df_qoco_portfolio = pd.read_csv("./results/portfolio/qoco.csv")
+    df_qoco_custom_portfolio = pd.read_csv("./results/portfolio/qoco_custom.csv")
+    df_clarabel_portfolio = pd.read_csv("./results/portfolio/clarabel.csv")
+    df_mosek_portfolio = pd.read_csv("./results/portfolio/mosek.csv")
+    df_gurobi_portfolio = pd.read_csv("./results/portfolio/gurobi.csv")
+    df_ecos_portfolio = pd.read_csv("./results/portfolio/ecos.csv")
+
+    plt.figure()
+    plt.plot(
+        df_ecos_portfolio["nvar"],
+        1000 * df_ecos_portfolio["run_time"],
+        "o-",
+        color="green",
+        label="ECOS",
+    )
+    plt.plot(
+        df_mosek_portfolio["nvar"],
+        1000 * df_mosek_portfolio["run_time"],
+        "o-",
+        color="red",
+        label="MOSEK",
+    )
+    plt.plot(
+        df_gurobi_portfolio["nvar"],
+        1000 * df_gurobi_portfolio["run_time"],
+        "o-",
+        color="orange",
+        label="Gurobi",
+    )
+    plt.plot(
+        df_clarabel_portfolio["nvar"],
+        1000 * df_clarabel_portfolio["run_time"],
+        "o-",
+        color="purple",
+        label="Clarabel",
+    )
+    plt.plot(
+        df_qoco_portfolio["nvar"],
+        1000 * df_qoco_portfolio["run_time"],
+        "o-",
+        color="blue",
+        label="QOCO",
+    )
+    plt.plot(
+        df_qoco_custom_portfolio["nvar"],
+        1000 * df_qoco_custom_portfolio["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
+    plt.legend(loc="lower right")
+    plt.xlabel("Number of Variables")
+    plt.ylabel("Solvetime [milliseconds]")
+    plt.yscale("log")
+    strFile = "plots/portfolio.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)

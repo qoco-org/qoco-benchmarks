@@ -15,6 +15,7 @@ def gurobi_solve(prob, tol=1e-7, N=100):
     env.setParam("BarQCPConvTol", tol)
     env.setParam("FeasibilityTol", tol)
     env.setParam("OptimalityTol", tol)
+    env.setParam("Presolve", 0)
     try:
         for i in range(N):
             sol = prob.solve(solver=cp.GUROBI, env=env)
@@ -53,6 +54,7 @@ def mosek_solve(prob, tol=1e-7, N=100):
                     "MSK_DPAR_INTPNT_CO_TOL_DFEAS": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_MU_RED": tol,
+                    "MSK_IPAR_PRESOLVE_USE": 0,
                 },
             )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)

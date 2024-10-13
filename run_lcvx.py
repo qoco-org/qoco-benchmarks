@@ -2,7 +2,6 @@ from problems.optimal_control import lcvx
 from solvers.solvers import *
 import pandas as pd
 from matplotlib import pyplot as plt
-from postprocess import compute_performance_profiles
 
 
 def run_lcvx(regen_solver):
