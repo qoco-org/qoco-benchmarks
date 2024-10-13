@@ -72,12 +72,11 @@ def lcvx(T):
         mu1 = rho1 * np.exp(-z0)
         mu2 = rho2 * np.exp(-z0)
         con += [cp.norm(u[:, k]) <= s[k]]
-        con += [mu1 * (1.0 - (z[k] - z0)) <= s[k]]
+        con += [mu1 * (1.0 - (z[k] - z0) + 0.5 * (z[k] - z0) ** 2) <= s[k]]
         con += [s[k] <= mu2 * (1.0 - (z[k] - z0))]
-        con += [cp.log(m0 - a * rho2 * k * dt) <= z[k]]
+        con += [np.log(m0 - a * rho2 * k * dt) <= z[k]]
         con += [z[k] <= np.log(m0 - a * rho1 * k * dt)]
         con += [cp.norm(S @ x[:, k]) + c @ x[:, k] <= 0]
-        # constraints += [u[2, k] >= s[k] * np.cos(tvc_max)]
         con += [u[2, k] >= cp.norm(u[:, k]) * np.cos(tvc_max)]
 
     prob = cp.Problem(cp.Minimize(obj), con)
