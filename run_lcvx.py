@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 
 def run_lcvx(regen_solver):
-    Nlist = [15, 25, 50, 75, 100, 125, 150, 200, 250, 300]
+    Nlist = [15, 25, 50, 75, 100, 125, 150, 200, 250, 300, 350]
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}

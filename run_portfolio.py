@@ -5,8 +5,7 @@ from matplotlib import pyplot as plt
 
 
 def run_portfolio(regen_solver):
-    Nlist = [2, 5, 8, 12, 15, 20, 25, 30, 35]
-    # Nlist = [2, 8, 12]
+    Nlist = [2, 5, 8, 12, 15, 20, 25, 30, 35, 40]
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
