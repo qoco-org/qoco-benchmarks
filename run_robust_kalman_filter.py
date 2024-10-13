@@ -4,6 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from postprocess import compute_performance_profiles
 
+
 def run_robust_kalman_filter(regen_solver):
     Nlist = [25, 50, 75, 100, 125, 150, 175, 225, 300, 400, 500]
     var_list = []
@@ -42,6 +43,7 @@ def run_robust_kalman_filter(regen_solver):
     df_mosek.to_csv("results/robust_kalman_filter/mosek.csv")
     df_gurobi.to_csv("results/robust_kalman_filter/gurobi.csv")
     df_ecos.to_csv("results/robust_kalman_filter/ecos.csv")
+
 
 # compute_performance_profiles(solvers, "./results/robust_kalman_filter")
 # df_perf = pd.read_csv("./results/robust_kalman_filter/performance_profiles.csv")

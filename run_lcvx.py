@@ -4,6 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from postprocess import compute_performance_profiles
 
+
 def run_lcvx(regen_solver):
     Nlist = [15, 25, 50, 75, 100, 125, 150, 200, 250, 300]
     var_list = []
@@ -42,6 +43,7 @@ def run_lcvx(regen_solver):
     df_mosek.to_csv("results/lcvx/mosek.csv")
     df_gurobi.to_csv("results/lcvx/gurobi.csv")
     df_ecos.to_csv("results/lcvx/ecos.csv")
+
 
 # compute_performance_profiles(solvers, "./results/lcvx")
 # df_perf = pd.read_csv("./results/lcvx/performance_profiles.csv")

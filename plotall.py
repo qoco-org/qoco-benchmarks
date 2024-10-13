@@ -144,13 +144,6 @@ def plotall():
         color="green",
         marker="x",
     )
-    failed_idx = np.where(df_gurobi_lcvx["status"].values != "optimal")
-    plt.scatter(
-        df_gurobi_lcvx["nvar"].values[failed_idx],
-        3 * top * np.ones(len(failed_idx[0])),
-        color="orange",
-        marker="x",
-    )
     plt.legend(loc="lower right")
     plt.xlabel("Number of Variables")
     plt.ylabel("Solvetime [milliseconds]")

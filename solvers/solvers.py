@@ -1,36 +1,23 @@
 import cvxpy as cp
 import numpy as np
 import qoco
+import gurobipy
 from solvers.cvxpy_to_qoco import *
 from solvers.run_generated_solver import *
 import warnings
 
 
-# def piqp_solve(prob, tol):
-#     sol = prob.solve(
-#         solver=cp.PIQP,
-#         eps_abs=tol,
-#         eps_rel=tol,
-#         eps_duality_gap_abs=tol,
-#         eps_duality_gap_rel=tol,
-#     )
-#     res = {
-#         "status": prob.status,
-#         "setup_time": prob.solver_stats.setup_time,
-#         "solve_time": prob.solver_stats.solve_time,
-#         "run_time": float(prob.solver_stats.setup_time or 0)
-#         + prob.solver_stats.solve_time,
-#         "obj": sol,
-#     }
-#     assert prob.status == "optimal"
-#     return res
-
 def gurobi_solve(prob, tol=1e-7, N=100):
     setup_time = np.inf
     solve_time = np.inf
+    env = gurobipy.Env()
+    env.setParam("BarConvTol", tol)
+    env.setParam("BarQCPConvTol", tol)
+    env.setParam("FeasibilityTol", tol)
+    env.setParam("OptimalityTol", tol)
     try:
         for i in range(N):
-            sol = prob.solve(solver=cp.GUROBI)
+            sol = prob.solve(solver=cp.GUROBI, env=env)
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         res = {
@@ -53,12 +40,21 @@ def gurobi_solve(prob, tol=1e-7, N=100):
         }
     return res
 
+
 def mosek_solve(prob, tol=1e-7, N=100):
     setup_time = np.inf
     solve_time = np.inf
     try:
         for i in range(N):
-            sol = prob.solve(solver=cp.MOSEK)
+            sol = prob.solve(
+                solver=cp.MOSEK,
+                mosek_params={
+                    "MSK_DPAR_INTPNT_CO_TOL_PFEAS": tol,
+                    "MSK_DPAR_INTPNT_CO_TOL_DFEAS": tol,
+                    "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": tol,
+                    "MSK_DPAR_INTPNT_CO_TOL_MU_RED": tol,
+                },
+            )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         res = {
