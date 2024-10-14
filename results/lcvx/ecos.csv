@@ -1,6 +1,5 @@
 ,nvar,status,setup_time,solve_time,run_time,obj
 lcvx_15,176.0,,,,,
-lcvx_25,286.0,,,,,
 lcvx_50,561.0,,,,,
 lcvx_75,836.0,,,,,
 lcvx_100,1111.0,,,,,

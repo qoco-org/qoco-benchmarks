@@ -17,7 +17,6 @@ def lcvx(T):
 
     g0 = 9.807
     m0 = m_dry + m_fuel
-    # T = int(tspan / dt)
     a = 1 / (Isp * g0)
     nx = 6
     nu = 3

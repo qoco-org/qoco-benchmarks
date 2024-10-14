@@ -212,4 +212,70 @@ def plotall():
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)
+
+    df_qoco_oscillating_masses = pd.read_csv("./results/oscillating_masses/qoco.csv")
+    df_qoco_custom_oscillating_masses = pd.read_csv(
+        "./results/oscillating_masses/qoco_custom.csv"
+    )
+    df_clarabel_oscillating_masses = pd.read_csv(
+        "./results/oscillating_masses/clarabel.csv"
+    )
+    df_mosek_oscillating_masses = pd.read_csv("./results/oscillating_masses/mosek.csv")
+    df_gurobi_oscillating_masses = pd.read_csv(
+        "./results/oscillating_masses/gurobi.csv"
+    )
+    df_ecos_oscillating_masses = pd.read_csv("./results/oscillating_masses/ecos.csv")
+
+    plt.figure()
+    plt.plot(
+        df_ecos_oscillating_masses["nvar"],
+        1000 * df_ecos_oscillating_masses["run_time"],
+        "o-",
+        color="green",
+        label="ECOS",
+    )
+    plt.plot(
+        df_mosek_oscillating_masses["nvar"],
+        1000 * df_mosek_oscillating_masses["run_time"],
+        "o-",
+        color="red",
+        label="MOSEK",
+    )
+    plt.plot(
+        df_gurobi_oscillating_masses["nvar"],
+        1000 * df_gurobi_oscillating_masses["run_time"],
+        "o-",
+        color="orange",
+        label="Gurobi",
+    )
+    plt.plot(
+        df_clarabel_oscillating_masses["nvar"],
+        1000 * df_clarabel_oscillating_masses["run_time"],
+        "o-",
+        color="purple",
+        label="Clarabel",
+    )
+    plt.plot(
+        df_qoco_oscillating_masses["nvar"],
+        1000 * df_qoco_oscillating_masses["run_time"],
+        "o-",
+        color="blue",
+        label="QOCO",
+    )
+    plt.plot(
+        df_qoco_custom_oscillating_masses["nvar"],
+        1000 * df_qoco_custom_oscillating_masses["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
+    plt.legend(loc="lower right")
+    plt.xlabel("Number of Variables")
+    plt.ylabel("Solvetime [milliseconds]")
+    plt.yscale("log")
+    strFile = "plots/oscillating_masses.pdf"
+    if os.path.isfile(strFile):
+        os.remove(strFile)
+    plt.savefig(strFile)
+
     plt.show()
