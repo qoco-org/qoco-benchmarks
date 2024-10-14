@@ -74,6 +74,7 @@ def plotall():
     plt.xlabel("Number of Variables")
     plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
+    plt.title("Robust Kalman Filter")
     strFile = "plots/robust_kalman_filter.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -149,6 +150,7 @@ def plotall():
     plt.xlabel("Number of Variables")
     plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
+    plt.title("LCvx")
     strFile = "plots/lcvx.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -208,6 +210,7 @@ def plotall():
     plt.xlabel("Number of Variables")
     plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
+    plt.title("Portfolio Optimization")
     strFile = "plots/portfolio.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -273,7 +276,68 @@ def plotall():
     plt.xlabel("Number of Variables")
     plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
+    plt.title("Oscillating Masses")
     strFile = "plots/oscillating_masses.pdf"
+    if os.path.isfile(strFile):
+        os.remove(strFile)
+    plt.savefig(strFile)
+
+    df_qoco_group_lasso = pd.read_csv("./results/group_lasso/qoco.csv")
+    df_qoco_custom_group_lasso = pd.read_csv("./results/group_lasso/qoco_custom.csv")
+    df_clarabel_group_lasso = pd.read_csv("./results/group_lasso/clarabel.csv")
+    df_mosek_group_lasso = pd.read_csv("./results/group_lasso/mosek.csv")
+    df_gurobi_group_lasso = pd.read_csv("./results/group_lasso/gurobi.csv")
+    df_ecos_group_lasso = pd.read_csv("./results/group_lasso/ecos.csv")
+
+    plt.figure()
+    plt.plot(
+        df_ecos_group_lasso["nvar"],
+        1000 * df_ecos_group_lasso["run_time"],
+        "o-",
+        color="green",
+        label="ECOS",
+    )
+    plt.plot(
+        df_mosek_group_lasso["nvar"],
+        1000 * df_mosek_group_lasso["run_time"],
+        "o-",
+        color="red",
+        label="MOSEK",
+    )
+    plt.plot(
+        df_gurobi_group_lasso["nvar"],
+        1000 * df_gurobi_group_lasso["run_time"],
+        "o-",
+        color="orange",
+        label="Gurobi",
+    )
+    plt.plot(
+        df_clarabel_group_lasso["nvar"],
+        1000 * df_clarabel_group_lasso["run_time"],
+        "o-",
+        color="purple",
+        label="Clarabel",
+    )
+    plt.plot(
+        df_qoco_group_lasso["nvar"],
+        1000 * df_qoco_group_lasso["run_time"],
+        "o-",
+        color="blue",
+        label="QOCO",
+    )
+    plt.plot(
+        df_qoco_custom_group_lasso["nvar"],
+        1000 * df_qoco_custom_group_lasso["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
+    plt.legend(loc="lower right")
+    plt.xlabel("Number of Variables")
+    plt.ylabel("Solvetime [milliseconds]")
+    plt.yscale("log")
+    plt.title("Group Lasso")
+    strFile = "plots/group_lasso.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)
