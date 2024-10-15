@@ -1,8 +1,9 @@
 import os
 import struct
+import numpy as np
 
 
-def run_generated_solver(solver_dir):
+def run_generated_qoco(solver_dir):
     os.system("cd " + solver_dir + " && mkdir build")
     os.system(
         "cd "
@@ -19,3 +20,80 @@ def run_generated_solver(solver_dir):
         # Read the second double (8 bytes)
         runtime_sec = struct.unpack("d", file.read(8))[0]
     return solved, obj, runtime_sec
+
+
+def run_generated_cvxgen(solver_dir, x0, Q, R, A, B, umax, xmax):
+    create_cvxgen_runtest(solver_dir, x0, Q, R, A, B, umax, xmax)
+    os.system("cd " + solver_dir + " && make -j5 && ./testsolver")
+    with open(solver_dir + "/result.bin", "rb") as file:
+        # Read the unsigned int (4 bytes)
+        solved = struct.unpack("B", file.read(1))[0]
+
+        # Read the first double (8 bytes)
+        obj = struct.unpack("d", file.read(8))[0]
+
+        # Read the second double (8 bytes)
+        runtime_sec = struct.unpack("d", file.read(8))[0]
+    return solved, obj, runtime_sec
+
+
+def create_cvxgen_runtest(solver_dir, x0, Q, R, A, B, umax, xmax):
+    if os.path.isfile(solver_dir + "/testsolver.c"):
+        os.remove(solver_dir + "/testsolver.c")
+    # time.sleep(1)
+
+    f = open(solver_dir + "/testsolver.c", "a")
+    f.write("#include <stdio.h>\n")
+    f.write("#include <time.h>\n")
+    f.write('#include "solver.h"\n')
+    f.write("#define MIN(a,b) (((a)<(b))?(a):(b))\n\n")
+    f.write("Vars vars;\n")
+    f.write("Params params;\n")
+    f.write("Workspace work;\n")
+    f.write("Settings settings;\n")
+    f.write("int main(int argc, char **argv) {\n")
+    f.write("  set_defaults();\n")
+    f.write("   setup_indexing();\n")
+    f.write("   settings.verbose = 0;\n")
+    f.write("   settings.resid_tol = 1e-7;\n")
+    f.write("   settings.eps = 1e-7;\n")
+    f.write("   double N = 1000;\n")
+    f.write("   double solve_time_sec = 1e10;\n")
+    f.write("   for (int i = 0; i < N; ++i) {\n")
+    f.write("       struct timespec start, end;\n")
+    f.write("       clock_gettime(CLOCK_MONOTONIC, &start);\n")
+    f.write("       load_default_data();\n")
+    f.write("       solve();\n")
+    f.write("       clock_gettime(CLOCK_MONOTONIC, &end);\n")
+    f.write(
+        "       double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;\n"
+    )
+    f.write("       solve_time_sec = MIN(solve_time_sec, elapsed_time);\n")
+    f.write("   }\n")
+    f.write('   printf("\\nSolvetime: %.9f ms", 1e3 * solve_time_sec);\n')
+    f.write('   FILE *file = fopen("result.bin", "wb");\n')
+    f.write("   fwrite(&work.converged, sizeof(unsigned char), 1, file);\n")
+    f.write("   fwrite(&work.optval, sizeof(double), 1, file);\n")
+    f.write("   fwrite(&solve_time_sec, sizeof(double), 1, file);\n")
+    f.write("   fclose(file);\n")
+    f.write('   printf("\\nobj: %f", work.optval);\n')
+    f.write("}")
+
+    f.write("void load_default_data() {\n")
+    n, m = B.shape
+    for i in range(n):
+        f.write("   params.x_0[%i] = %f;\n" % (i, x0[i]))
+    for i in range(n):
+        f.write("   params.Q[%i] = %f;\n" % (i, Q[i, i]))
+    for i in range(m):
+        f.write("   params.R[%i] = %f;\n" % (i, R[i, i]))
+    for j in range(n):
+        for i in range(n):
+            f.write("   params.A[%i] = %f;\n" % (j * n + i, A[i, j]))
+    for j in range(m):
+        for i in range(n):
+            f.write("   params.B[%i] = %f;\n" % (j * n + i, B[i, j]))
+    f.write("   params.u_max[0] = %f;\n" % (umax))
+    f.write("   params.x_max[0] = %f;\n" % (xmax))
+    f.write("}\n")
+    f.close()

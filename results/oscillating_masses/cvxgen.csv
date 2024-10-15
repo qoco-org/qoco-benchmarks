@@ -1,0 +1,3 @@
+,nvar,status,setup_time,solve_time,run_time,obj
+oscillating_masses_8,104.0,1.0,,0.000245025,0.000245025,114.55934069846013
+oscillating_masses_20,248.0,1.0,,0.000621039,0.000621039,183.57348974159856

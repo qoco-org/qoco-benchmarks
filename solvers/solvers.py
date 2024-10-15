@@ -175,7 +175,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     if regenerate_solver:
         prob_qoco.generate_solver(custom_solver_dir, solver_name)
-    codegen_solved, codegen_obj, runtime_sec = run_generated_solver(
+    codegen_solved, codegen_obj, runtime_sec = run_generated_qoco(
         custom_solver_dir + "/" + solver_name
     )
 

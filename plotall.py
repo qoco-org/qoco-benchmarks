@@ -131,14 +131,6 @@ def plotall():
         label="QOCO Custom",
     )
     top = plt.ylim()[1]
-    failed_idx = np.where(df_mosek_lcvx["status"].values != "optimal")
-    plt.scatter(
-        df_mosek_lcvx["nvar"].values[failed_idx],
-        top * np.ones(len(failed_idx[0])),
-        color="red",
-        marker="x",
-    )
-    # top = plt.ylim()[1]
     failed_idx = np.where(df_ecos_lcvx["status"].values != "optimal")
     plt.scatter(
         df_ecos_lcvx["nvar"].values[failed_idx],
@@ -228,6 +220,9 @@ def plotall():
         "./results/oscillating_masses/gurobi.csv"
     )
     df_ecos_oscillating_masses = pd.read_csv("./results/oscillating_masses/ecos.csv")
+    df_cvxgen_oscillating_masses = pd.read_csv(
+        "./results/oscillating_masses/cvxgen.csv"
+    )
 
     plt.figure()
     plt.plot(
@@ -271,6 +266,20 @@ def plotall():
         "o-",
         color="black",
         label="QOCO Custom",
+    )
+    plt.plot(
+        df_cvxgen_oscillating_masses["nvar"],
+        1000 * df_cvxgen_oscillating_masses["run_time"],
+        "o-",
+        color="steelblue",
+        label="CVXGEN",
+    )
+    top = plt.ylim()[1]
+    plt.scatter(
+        df_qoco_custom_oscillating_masses["nvar"].values[2:5],
+        2 * top * np.ones(3),
+        color="steelblue",
+        marker="x",
     )
     plt.legend(loc="lower right")
     plt.xlabel("Number of Variables")

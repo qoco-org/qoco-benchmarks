@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 
-SOLUTION_PRESENT = ["QCOS_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
+SOLUTION_PRESENT = ["QOCO_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
 
 
 # Function is from osqp_benchmarks (https://github.com/osqp/osqp_benchmarks/blob/master/utils/benchmark.py#L61)

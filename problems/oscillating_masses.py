@@ -25,8 +25,10 @@ def oscillating_masses(T):
     u = cp.Variable((n, T))
     x = cp.Variable((2 * n, T + 1))
 
-    xlim = 2 * np.ones(2 * n)
-    ulim = 5 * np.ones(n)
+    umax = 5
+    xmax = 2
+    xlim = xmax * np.ones(2 * n)
+    ulim = umax * np.ones(n)
 
     x0 = np.clip(np.random.randn(2 * n), -0.95 * xlim, 0.95 * xlim)
     obj = 0
@@ -39,4 +41,4 @@ def oscillating_masses(T):
     obj += cp.quad_form(x[:, T], Q)
 
     prob = cp.Problem(cp.Minimize(obj), con)
-    return prob
+    return prob, x0, Q, R, A, B, umax, xmax
