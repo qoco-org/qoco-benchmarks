@@ -4,6 +4,7 @@ import qoco
 import gurobipy
 from solvers.cvxpy_to_qoco import *
 from solvers.run_generated_solver import *
+from solvers.problem_size import get_problem_size
 import warnings
 
 
@@ -22,7 +23,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": prob.status,
             "setup_time": setup_time,
             "solve_time": solve_time,
@@ -31,7 +32,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
         }
     except:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -59,7 +60,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": prob.status,
             "setup_time": setup_time,
             "solve_time": solve_time,
@@ -68,7 +69,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
         }
     except:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -94,7 +95,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
 
         if prob.status == "optimal":
             res = {
-                "nvar": prob.size_metrics.num_scalar_variables,
+                "size": get_problem_size(prob),
                 "status": prob.status,
                 "setup_time": setup_time,
                 "solve_time": solve_time,
@@ -103,7 +104,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
             }
         else:
             res = {
-                "nvar": prob.size_metrics.num_scalar_variables,
+                "size": get_problem_size(prob),
                 "status": prob.status,
                 "setup_time": np.nan,
                 "solve_time": np.nan,
@@ -112,7 +113,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
             }
     except:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -138,7 +139,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         if prob.status == "optimal":
             res = {
-                "nvar": prob.size_metrics.num_scalar_variables,
+                "size": get_problem_size(prob),
                 "status": prob.status,
                 "setup_time": setup_time,
                 "solve_time": solve_time,
@@ -147,7 +148,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
             }
         else:
             res = {
-                "nvar": prob.size_metrics.num_scalar_variables,
+                "size": get_problem_size(prob),
                 "status": prob.status,
                 "setup_time": np.nan,
                 "solve_time": np.nan,
@@ -156,7 +157,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
             }
     except:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": np.nan,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -179,7 +180,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
         solve_time = np.minimum(res_qoco.solve_time_sec, solve_time)
     if res_qoco.status == "QOCO_SOLVED":
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": res_qoco.status,
             "setup_time": setup_time,
             "solve_time": solve_time,
@@ -188,7 +189,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
         }
     else:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": res_qoco.status,
             "setup_time": np.nan,
             "solve_time": np.nan,
@@ -210,7 +211,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
 
     if codegen_solved == 1:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": "optimal",
             "setup_time": None,
             "solve_time": runtime_sec,
@@ -219,7 +220,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
         }
     else:
         res = {
-            "nvar": prob.size_metrics.num_scalar_variables,
+            "size": get_problem_size(prob),
             "status": "failed",
             "setup_time": None,
             "solve_time": np.nan,

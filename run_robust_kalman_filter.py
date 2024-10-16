@@ -1,13 +1,9 @@
 from problems.robust_kalman_filter import robust_kalman_filter
 from solvers.solvers import *
 import pandas as pd
-from matplotlib import pyplot as plt
-
 
 def run_robust_kalman_filter(regen_solver):
     Nlist = [25, 50, 75, 125, 175, 225, 300, 375, 450, 500]
-    var_list = []
-    solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
     ecos_res = {}
     qoco_res = {}
@@ -18,7 +14,6 @@ def run_robust_kalman_filter(regen_solver):
     for N in Nlist:
         name = "robust_kalman_filter_" + str(N)
         prob = robust_kalman_filter(N)
-        var_list.append(prob.size_metrics.num_scalar_variables)
         clarabel_res[name] = clarabel_solve(prob, 1e-7)
         mosek_res[name] = mosek_solve(prob, 1e-7)
         gurobi_res[name] = gurobi_solve(prob, 1e-7)

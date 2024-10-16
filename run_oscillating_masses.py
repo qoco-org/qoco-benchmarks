@@ -42,7 +42,7 @@ def run_oscillating_masses(regen_solver):
             )
             if solved:
                 cvxgen_res[name] = {
-                    "nvar": prob.size_metrics.num_scalar_variables,
+                    "size": get_problem_size(prob),
                     "status": "optimal",
                     "setup_time": None,
                     "solve_time": runtime_sec,
@@ -51,7 +51,7 @@ def run_oscillating_masses(regen_solver):
                 }
             else:
                 cvxgen_res[name] = {
-                    "nvar": prob.size_metrics.num_scalar_variables,
+                    "size": get_problem_size(prob),
                     "status": "optimal",
                     "setup_time": None,
                     "solve_time": runtime_sec,
