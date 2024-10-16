@@ -16,18 +16,14 @@ def run_portfolio(regen_solver):
     gurobi_res = {}
 
     for N in Nlist:
-        if N >= 15:
-            nruns = 10
-        else:
-            nruns = 100
         name = "portfolio_" + str(N)
         prob = portfolio(N)
         var_list.append(prob.size_metrics.num_scalar_variables)
-        clarabel_res[name] = clarabel_solve(prob, 1e-7, nruns)
-        mosek_res[name] = mosek_solve(prob, 1e-7, nruns)
-        gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
-        qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
-        ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
+        clarabel_res[name] = clarabel_solve(prob, 1e-7)
+        mosek_res[name] = mosek_solve(prob, 1e-7)
+        gurobi_res[name] = gurobi_solve(prob, 1e-7)
+        qoco_res[name] = qoco_solve(prob, 1e-7)
+        ecos_res[name] = ecos_solve(prob, 1e-7)
         if N <= 15:
             qoco_custom_res[name] = qoco_custom_solve(
                 prob, "./generated_solvers", name, regen_solver

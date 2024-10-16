@@ -14,24 +14,50 @@ def run_oscillating_masses(regen_solver):
     qoco_custom_res = {}
     mosek_res = {}
     gurobi_res = {}
+    cvxgen_res = {}
 
     for N in Nlist:
-        if N >= 16:
-            nruns = 10
-        else:
-            nruns = 100
         name = "oscillating_masses_" + str(N)
-        prob = oscillating_masses(N)
+        prob, x0, Q, R, A, B, umax, xmax = oscillating_masses(N)
         var_list.append(prob.size_metrics.num_scalar_variables)
-        clarabel_res[name] = clarabel_solve(prob, 1e-7, nruns)
-        mosek_res[name] = mosek_solve(prob, 1e-7, nruns)
-        gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
-        qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
-        ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
+        clarabel_res[name] = clarabel_solve(prob, 1e-7)
+        mosek_res[name] = mosek_solve(prob, 1e-7)
+        gurobi_res[name] = gurobi_solve(prob, 1e-7)
+        qoco_res[name] = qoco_solve(prob, 1e-7)
+        ecos_res[name] = ecos_solve(prob, 1e-7)
         if N <= 56:
             qoco_custom_res[name] = qoco_custom_solve(
                 prob, "./generated_solvers", name, regen_solver
             )
+        if N <= 20:
+            solved, obj, runtime_sec = run_generated_cvxgen(
+                "./cvxgen/generated_solvers/" + name,
+                x0,
+                Q,
+                R,
+                A,
+                B,
+                umax,
+                xmax,
+            )
+            if solved:
+                cvxgen_res[name] = {
+                    "nvar": prob.size_metrics.num_scalar_variables,
+                    "status": "optimal",
+                    "setup_time": None,
+                    "solve_time": runtime_sec,
+                    "run_time": runtime_sec,
+                    "obj": obj,
+                }
+            else:
+                cvxgen_res[name] = {
+                    "nvar": prob.size_metrics.num_scalar_variables,
+                    "status": "optimal",
+                    "setup_time": None,
+                    "solve_time": runtime_sec,
+                    "run_time": runtime_sec,
+                    "obj": obj,
+                }
 
     df_qoco = pd.DataFrame(qoco_res).T
     df_qoco_custom = pd.DataFrame(qoco_custom_res).T
@@ -39,6 +65,7 @@ def run_oscillating_masses(regen_solver):
     df_mosek = pd.DataFrame(mosek_res).T
     df_gurobi = pd.DataFrame(gurobi_res).T
     df_ecos = pd.DataFrame(ecos_res).T
+    df_cvxgen = pd.DataFrame(cvxgen_res).T
 
     df_qoco.to_csv("results/oscillating_masses/qoco.csv")
     df_qoco_custom.to_csv("results/oscillating_masses/qoco_custom.csv")
@@ -46,6 +73,7 @@ def run_oscillating_masses(regen_solver):
     df_mosek.to_csv("results/oscillating_masses/mosek.csv")
     df_gurobi.to_csv("results/oscillating_masses/gurobi.csv")
     df_ecos.to_csv("results/oscillating_masses/ecos.csv")
+    df_cvxgen.to_csv("results/oscillating_masses/cvxgen.csv")
 
 
 # compute_performance_profiles(solvers, "./results/robust_kalman_filter")

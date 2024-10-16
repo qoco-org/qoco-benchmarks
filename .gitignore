@@ -2,4 +2,3 @@ __pycache__/
 test/
 test.py
 generated_solvers/
-cvxgen/solvers/

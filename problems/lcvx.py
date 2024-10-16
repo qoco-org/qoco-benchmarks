@@ -3,7 +3,7 @@ import numpy as np
 
 
 def lcvx(T):
-    tspan = 8
+    tspan = 15
     dt = tspan / (T - 1)
     x0 = np.array([10.0, 10.0, 30.0, 0.0, 0.0, 0.0])
     g = 9.807

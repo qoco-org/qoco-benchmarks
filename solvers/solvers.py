@@ -7,7 +7,7 @@ from solvers.run_generated_solver import *
 import warnings
 
 
-def gurobi_solve(prob, tol=1e-7, N=100):
+def gurobi_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
     env = gurobipy.Env()
@@ -30,7 +30,6 @@ def gurobi_solve(prob, tol=1e-7, N=100):
             "obj": sol,
         }
     except:
-        print("Gurobi Failed")
         res = {
             "nvar": prob.size_metrics.num_scalar_variables,
             "status": np.nan,
@@ -42,7 +41,7 @@ def gurobi_solve(prob, tol=1e-7, N=100):
     return res
 
 
-def mosek_solve(prob, tol=1e-7, N=100):
+def mosek_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
     try:
@@ -68,7 +67,6 @@ def mosek_solve(prob, tol=1e-7, N=100):
             "obj": sol,
         }
     except:
-        print("Mosek Failed")
         res = {
             "nvar": prob.size_metrics.num_scalar_variables,
             "status": np.nan,
@@ -80,28 +78,51 @@ def mosek_solve(prob, tol=1e-7, N=100):
     return res
 
 
-def clarabel_solve(prob, tol=1e-7, N=100):
+def clarabel_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
-    for i in range(N):
-        sol = prob.solve(
-            solver=cp.CLARABEL, tol_gap_abs=tol, tol_gap_rel=tol, tol_feas=tol
-        )
-        setup_time = np.minimum(prob.solver_stats.setup_time or 0.0, setup_time)
-        solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
-    res = {
-        "nvar": prob.size_metrics.num_scalar_variables,
-        "status": prob.status,
-        "setup_time": setup_time,
-        "solve_time": solve_time,
-        "run_time": setup_time + solve_time,
-        "obj": sol,
-    }
-    assert prob.status == "optimal"
+    try:
+        for i in range(N):
+            sol = prob.solve(
+                solver=cp.CLARABEL,
+                tol_gap_abs=tol,
+                tol_gap_rel=tol,
+                tol_feas=tol,
+            )
+            setup_time = np.minimum(prob.solver_stats.setup_time or 0.0, setup_time)
+            solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
+
+        if prob.status == "optimal":
+            res = {
+                "nvar": prob.size_metrics.num_scalar_variables,
+                "status": prob.status,
+                "setup_time": setup_time,
+                "solve_time": solve_time,
+                "run_time": setup_time + solve_time,
+                "obj": sol,
+            }
+        else:
+            res = {
+                "nvar": prob.size_metrics.num_scalar_variables,
+                "status": prob.status,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+            }
+    except:
+        res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
+            "status": np.nan,
+            "setup_time": np.nan,
+            "solve_time": np.nan,
+            "run_time": np.nan,
+            "obj": np.nan,
+        }
     return res
 
 
-def ecos_solve(prob, tol=1e-7, N=100):
+def ecos_solve(prob, tol=1e-7, N=10):
     warnings.simplefilter(action="ignore", category=FutureWarning)
     setup_time = np.inf
     solve_time = np.inf
@@ -127,14 +148,13 @@ def ecos_solve(prob, tol=1e-7, N=100):
         else:
             res = {
                 "nvar": prob.size_metrics.num_scalar_variables,
-                "status": np.nan,
+                "status": prob.status,
                 "setup_time": np.nan,
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
             }
     except:
-        print("ECOS Failed")
         res = {
             "nvar": prob.size_metrics.num_scalar_variables,
             "status": np.nan,
@@ -146,7 +166,7 @@ def ecos_solve(prob, tol=1e-7, N=100):
     return res
 
 
-def qoco_solve(prob, tol=1e-7, N=100):
+def qoco_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
@@ -157,15 +177,24 @@ def qoco_solve(prob, tol=1e-7, N=100):
         res_qoco = prob_qoco.solve()
         setup_time = np.minimum(res_qoco.setup_time_sec or 0, setup_time)
         solve_time = np.minimum(res_qoco.solve_time_sec, solve_time)
-    res = {
-        "nvar": prob.size_metrics.num_scalar_variables,
-        "status": res_qoco.status,
-        "setup_time": setup_time,
-        "solve_time": solve_time,
-        "run_time": setup_time + solve_time,
-        "obj": res_qoco.obj,
-    }
-    assert res_qoco.status == "QOCO_SOLVED"
+    if res_qoco.status == "QOCO_SOLVED":
+        res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
+            "status": res_qoco.status,
+            "setup_time": setup_time,
+            "solve_time": solve_time,
+            "run_time": setup_time + solve_time,
+            "obj": res_qoco.obj,
+        }
+    else:
+        res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
+            "status": res_qoco.status,
+            "setup_time": np.nan,
+            "solve_time": np.nan,
+            "run_time": np.nan,
+            "obj": np.nan,
+        }
     return res
 
 
@@ -179,18 +208,22 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
         custom_solver_dir + "/" + solver_name
     )
 
-    assert codegen_solved
-
-    status = "failed"
     if codegen_solved == 1:
-        status = "optimal"
-
-    res = {
-        "nvar": prob.size_metrics.num_scalar_variables,
-        "status": status,
-        "setup_time": None,
-        "solve_time": runtime_sec,
-        "run_time": runtime_sec,
-        "obj": codegen_obj,
-    }
+        res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
+            "status": "optimal",
+            "setup_time": None,
+            "solve_time": runtime_sec,
+            "run_time": runtime_sec,
+            "obj": codegen_obj,
+        }
+    else:
+        res = {
+            "nvar": prob.size_metrics.num_scalar_variables,
+            "status": "failed",
+            "setup_time": None,
+            "solve_time": np.nan,
+            "run_time": np.nan,
+            "obj": np.nan,
+        }
     return res
