@@ -123,13 +123,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    plt.plot(
-        df_qoco_custom_lcvx["size"],
-        1000 * df_qoco_custom_lcvx["run_time"],
-        "o-",
-        color="black",
-        label="QOCO Custom",
-    )
+    # plt.plot(
+    #     df_qoco_custom_lcvx["size"],
+    #     1000 * df_qoco_custom_lcvx["run_time"],
+    #     "o-",
+    #     color="black",
+    #     label="QOCO Custom",
+    # )
     top = plt.ylim()[1]
     failed_idx = np.where(df_ecos_lcvx["status"].values != "optimal")
     plt.scatter(

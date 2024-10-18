@@ -16,18 +16,19 @@ def run_lcvx(regen_solver):
     gurobi_res = {}
 
     for N in Nlist:
-        name = "lcvx_" + str(N)
-        prob = lcvx(N)
-        var_list.append(prob.size_metrics.num_scalar_variables)
-        clarabel_res[name] = clarabel_solve(prob, 1e-7, 1)
-        mosek_res[name] = mosek_solve(prob, 1e-7, 1)
-        gurobi_res[name] = gurobi_solve(prob, 1e-7, 1)
-        qoco_res[name] = qoco_solve(prob, 1e-7, 1)
-        ecos_res[name] = ecos_solve(prob, 1e-7, 1)
-        if N <= 125:
-            qoco_custom_res[name] = qoco_custom_solve(
-                prob, "./generated_solvers", name, regen_solver
-            )
+        for i in range(20):
+            name = "lcvx_N_" + str(N) + "_i_" + str(i)
+            prob = lcvx(N)
+            var_list.append(prob.size_metrics.num_scalar_variables)
+            clarabel_res[name] = clarabel_solve(prob, 1e-7)
+            mosek_res[name] = mosek_solve(prob, 1e-7)
+            gurobi_res[name] = gurobi_solve(prob, 1e-7)
+            qoco_res[name] = qoco_solve(prob, 1e-7)
+            ecos_res[name] = ecos_solve(prob, 1e-7)
+            # if N <= 125:
+            #     qoco_custom_res[name] = qoco_custom_solve(
+            #         prob, "./generated_solvers", name, regen_solver
+            #     )
 
     df_qoco = pd.DataFrame(qoco_res).T
     df_qoco_custom = pd.DataFrame(qoco_custom_res).T
