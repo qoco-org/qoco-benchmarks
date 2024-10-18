@@ -3,14 +3,13 @@ import numpy as np
 
 
 def lcvx(T):
-    tspan = 15
+    tspan = 20
     dt = tspan / (T - 1)
-    x0 = np.array([10.0, 10.0, 30.0, 0.0, 0.0, 0.0])
+    x0 = np.array([10.0, 10.0, 300.0, 0.0, 0.0, 0.0])
     g = 9.807
-    gs = np.deg2rad(1.0)
-    tvc_max = np.deg2rad(25.0)
+    tvc_max = np.deg2rad(45.0)
     rho1 = 100.0
-    rho2 = 411.0
+    rho2 = 500.0
     m_dry = 25.0
     m_fuel = 10.0
     Isp = 100.0
@@ -42,8 +41,6 @@ def lcvx(T):
         ]
     )
     G = np.array([0.0, 0.0, -0.5 * g * dt**2, 0.0, 0.0, -g * dt])
-    S = np.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0, 0.0, 0.0]])
-    c = np.array([0.0, 0.0, -np.tan(0.5 * np.pi - gs), 0.0, 0.0, 0.0])
     xT = np.zeros((nx))
 
     x = cp.Variable((nx, T + 1))
@@ -75,7 +72,6 @@ def lcvx(T):
         con += [s[k] <= mu2 * (1.0 - (z[k] - z0))]
         con += [np.log(m0 - a * rho2 * k * dt) <= z[k]]
         con += [z[k] <= np.log(m0 - a * rho1 * k * dt)]
-        con += [cp.norm(S @ x[:, k]) + c @ x[:, k] <= 0]
         con += [u[2, k] >= cp.norm(u[:, k]) * np.cos(tvc_max)]
 
     prob = cp.Problem(cp.Minimize(obj), con)
