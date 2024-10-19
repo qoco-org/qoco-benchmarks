@@ -2,9 +2,8 @@ import numpy as np
 import cvxpy as cp
 from scipy import sparse
 
-
+np.random.seed(123)
 def portfolio(k):
-    np.random.seed(123)
 
     n = 100 * k
     F = sparse.random(n, k, density=0.5, data_rvs=np.random.randn, format="csc")

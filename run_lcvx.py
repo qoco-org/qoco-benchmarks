@@ -4,7 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 
-def run_lcvx(regen_solver):
+def run_lcvx(regen_solver, ninstances, nruns):
     Nlist = [15, 50, 75, 100, 125, 150, 200, 250, 300, 350]
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
@@ -16,15 +16,15 @@ def run_lcvx(regen_solver):
     gurobi_res = {}
 
     for N in Nlist:
-        for i in range(20):
+        for i in range(ninstances):
             name = "lcvx_N_" + str(N) + "_i_" + str(i)
             prob = lcvx(N)
             var_list.append(prob.size_metrics.num_scalar_variables)
-            clarabel_res[name] = clarabel_solve(prob, 1e-7)
-            mosek_res[name] = mosek_solve(prob, 1e-7)
-            gurobi_res[name] = gurobi_solve(prob, 1e-7)
-            qoco_res[name] = qoco_solve(prob, 1e-7)
-            ecos_res[name] = ecos_solve(prob, 1e-7)
+            clarabel_res[name] = clarabel_solve(prob, 1e-7, nruns)
+            mosek_res[name] = mosek_solve(prob, 1e-7, nruns)
+            gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
+            qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
+            ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
             # if N <= 125:
             #     qoco_custom_res[name] = qoco_custom_solve(
             #         prob, "./generated_solvers", name, regen_solver

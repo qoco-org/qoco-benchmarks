@@ -2,15 +2,14 @@ import cvxpy as cp
 import scipy as sp
 import numpy as np
 
-
+np.random.seed(123)
 def oscillating_masses(T):
-    np.random.seed(123)
 
     dt = 0.25
     n = 4
 
-    Q = np.eye(2 * n)
-    R = 5 * np.eye(n)
+    Q = np.diag(np.random.uniform(0,10,2 * n))
+    R = np.diag(np.random.uniform(0,10,n))
 
     band = -2 * np.eye(n)
     for i in range(1, n):

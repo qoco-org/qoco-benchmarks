@@ -2,9 +2,8 @@ import cvxpy as cp
 import numpy as np
 from scipy import sparse
 
-
+np.random.seed(123)
 def group_lasso(ngroups):
-    np.random.seed(123)
 
     group_size = 10
     n = ngroups * group_size
@@ -21,7 +20,6 @@ def group_lasso(ngroups):
     A = sparse.random(m, n, density=0.10, data_rvs=np.random.randn, format="csc")
     e = np.random.randn(m) / n
     b = A @ xtrue + e
-
     y = cp.Variable(m)
     x = cp.Variable(n)
     con = [y == A @ x - b]

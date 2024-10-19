@@ -63,13 +63,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    plt.plot(
-        df_qoco_custom_robust_kalman_filter["size"],
-        1000 * df_qoco_custom_robust_kalman_filter["run_time"],
-        "o-",
-        color="black",
-        label="QOCO Custom",
-    )
+    # plt.plot(
+    #     df_qoco_custom_robust_kalman_filter["size"],
+    #     1000 * df_qoco_custom_robust_kalman_filter["run_time"],
+    #     "o-",
+    #     color="black",
+    #     label="QOCO Custom",
+    # )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -198,13 +198,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    plt.plot(
-        df_qoco_custom_portfolio["size"],
-        1000 * df_qoco_custom_portfolio["run_time"],
-        "o-",
-        color="black",
-        label="QOCO Custom",
-    )
+    # plt.plot(
+    #     df_qoco_custom_portfolio["size"],
+    #     1000 * df_qoco_custom_portfolio["run_time"],
+    #     "o-",
+    #     color="black",
+    #     label="QOCO Custom",
+    # )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -267,27 +267,27 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    plt.plot(
-        df_qoco_custom_oscillating_masses["size"],
-        1000 * df_qoco_custom_oscillating_masses["run_time"],
-        "o-",
-        color="black",
-        label="QOCO Custom",
-    )
-    plt.plot(
-        df_cvxgen_oscillating_masses["size"],
-        1000 * df_cvxgen_oscillating_masses["run_time"],
-        "o-",
-        color="steelblue",
-        label="CVXGEN",
-    )
-    top = plt.ylim()[1]
-    plt.scatter(
-        df_qoco_custom_oscillating_masses["size"].values[2:5],
-        2 * top * np.ones(3),
-        color="steelblue",
-        marker="x",
-    )
+    # plt.plot(
+    #     df_qoco_custom_oscillating_masses["size"],
+    #     1000 * df_qoco_custom_oscillating_masses["run_time"],
+    #     "o-",
+    #     color="black",
+    #     label="QOCO Custom",
+    # )
+    # plt.plot(
+    #     df_cvxgen_oscillating_masses["size"],
+    #     1000 * df_cvxgen_oscillating_masses["run_time"],
+    #     "o-",
+    #     color="steelblue",
+    #     label="CVXGEN",
+    # )
+    # top = plt.ylim()[1]
+    # plt.scatter(
+    #     df_qoco_custom_oscillating_masses["size"].values[2:5],
+    #     2 * top * np.ones(3),
+    #     color="steelblue",
+    #     marker="x",
+    # )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -341,13 +341,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    plt.plot(
-        df_qoco_custom_group_lasso["size"],
-        1000 * df_qoco_custom_group_lasso["run_time"],
-        "o-",
-        color="black",
-        label="QOCO Custom",
-    )
+    # plt.plot(
+    #     df_qoco_custom_group_lasso["size"],
+    #     1000 * df_qoco_custom_group_lasso["run_time"],
+    #     "o-",
+    #     color="black",
+    #     label="QOCO Custom",
+    # )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")

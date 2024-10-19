@@ -1,7 +1,7 @@
 import numpy as np
 import cvxpy as cp
 
-
+np.random.seed(123)
 # Problem from https://www.cvxpy.org/examples/applications/robust_kalman.html
 def robust_kalman_filter(n):
     T = 50
@@ -29,7 +29,6 @@ def robust_kalman_filter(n):
 
     sigma = 20
     p = 0.20
-    np.random.seed(6)
 
     x = np.zeros((4, n + 1))
     x[:, 0] = [0, 0, 0, 0]
@@ -40,7 +39,6 @@ def robust_kalman_filter(n):
     v = np.random.randn(2, n)
 
     # add outliers to v
-    np.random.seed(0)
     inds = np.random.rand(n) <= p
     v[:, inds] = sigma * np.random.randn(2, n)[:, inds]
 
@@ -48,7 +46,6 @@ def robust_kalman_filter(n):
     for t in range(n):
         y[:, t] = C.dot(x[:, t]) + v[:, t]
         x[:, t + 1] = A.dot(x[:, t]) + B.dot(w[:, t])
-
     x = cp.Variable(shape=(4, n + 1))
     w = cp.Variable(shape=(2, n))
     v = cp.Variable(shape=(2, n))

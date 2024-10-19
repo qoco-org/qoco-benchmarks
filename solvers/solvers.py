@@ -12,6 +12,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
     env = gurobipy.Env()
+    env.setParam("OutputFlag", False)
     env.setParam("BarConvTol", tol)
     env.setParam("BarQCPConvTol", tol)
     env.setParam("FeasibilityTol", tol)
