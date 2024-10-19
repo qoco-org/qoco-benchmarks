@@ -18,6 +18,6 @@ def portfolio(k):
     obj = cp.Minimize(
         cp.quad_form(x, D) + cp.quad_form(y, sparse.eye(k)) - (1 / gamma) * (mu.T @ x)
     )
-    con = [cp.sum(x) == 1, F.T @ x == y, 0 <= x, x <= 1]
+    con = [cp.sum(x) == 1, F.T @ x == y, 0 <= x]
     prob = cp.Problem(obj, con)
     return prob
