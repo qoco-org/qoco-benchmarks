@@ -3,6 +3,8 @@ import cvxpy as cp
 from scipy import sparse
 
 np.random.seed(123)
+
+
 def portfolio(k):
 
     n = 100 * k

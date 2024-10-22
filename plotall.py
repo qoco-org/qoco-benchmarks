@@ -63,13 +63,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    # plt.plot(
-    #     df_qoco_custom_robust_kalman_filter["size"],
-    #     1000 * df_qoco_custom_robust_kalman_filter["run_time"],
-    #     "o-",
-    #     color="black",
-    #     label="QOCO Custom",
-    # )
+    plt.plot(
+        df_qoco_custom_robust_kalman_filter["size"],
+        1000 * df_qoco_custom_robust_kalman_filter["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -86,7 +86,6 @@ def plotall():
     df_mosek_lcvx = pd.read_csv("./results/lcvx/mosek.csv")
     df_gurobi_lcvx = pd.read_csv("./results/lcvx/gurobi.csv")
     df_ecos_lcvx = pd.read_csv("./results/lcvx/ecos.csv")
-
     plt.figure()
     plt.plot(
         df_ecos_lcvx["size"],
@@ -123,13 +122,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    # plt.plot(
-    #     df_qoco_custom_lcvx["size"],
-    #     1000 * df_qoco_custom_lcvx["run_time"],
-    #     "o-",
-    #     color="black",
-    #     label="QOCO Custom",
-    # )
+    plt.plot(
+        df_qoco_custom_lcvx["size"],
+        1000 * df_qoco_custom_lcvx["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
     top = plt.ylim()[1]
     failed_idx = np.where(df_ecos_lcvx["status"].values != "optimal")
     plt.scatter(
@@ -230,7 +229,6 @@ def plotall():
     df_cvxgen_oscillating_masses = pd.read_csv(
         "./results/oscillating_masses/cvxgen.csv"
     )
-
     plt.figure()
     plt.plot(
         df_ecos_oscillating_masses["size"],
@@ -267,27 +265,27 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    # plt.plot(
-    #     df_qoco_custom_oscillating_masses["size"],
-    #     1000 * df_qoco_custom_oscillating_masses["run_time"],
-    #     "o-",
-    #     color="black",
-    #     label="QOCO Custom",
-    # )
-    # plt.plot(
-    #     df_cvxgen_oscillating_masses["size"],
-    #     1000 * df_cvxgen_oscillating_masses["run_time"],
-    #     "o-",
-    #     color="steelblue",
-    #     label="CVXGEN",
-    # )
-    # top = plt.ylim()[1]
-    # plt.scatter(
-    #     df_qoco_custom_oscillating_masses["size"].values[2:5],
-    #     2 * top * np.ones(3),
-    #     color="steelblue",
-    #     marker="x",
-    # )
+    plt.plot(
+        df_qoco_custom_oscillating_masses["size"],
+        1000 * df_qoco_custom_oscillating_masses["run_time"],
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
+    plt.plot(
+        df_cvxgen_oscillating_masses["size"],
+        1000 * df_cvxgen_oscillating_masses["run_time"],
+        "o-",
+        color="steelblue",
+        label="CVXGEN",
+    )
+    top = plt.ylim()[1]
+    plt.scatter(
+        df_qoco_custom_oscillating_masses["size"].values[2:5],
+        2 * top * np.ones(3),
+        color="steelblue",
+        marker="x",
+    )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -357,5 +355,11 @@ def plotall():
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)
+
+    # Sanity check to make sure custom solvers are generated based on the most updated data.
+    assert np.linalg.norm(df_gurobi_lcvx['obj'].values[0:100]-df_qoco_custom_lcvx['obj'].values[0:100], np.inf) < 1e-5
+    # assert np.linalg.norm(df_gurobi_robust_kalman_filter['obj'].values[0:100]-df_qoco_custom_robust_kalman_filter['obj'].values[0:100], np.inf) < 1e-5
+    # assert np.linalg.norm(df_gurobi_oscillating_masses['obj'].values[0:100]-df_qoco_oscillating_masses['obj'].values[0:100], np.inf) < 1e-5
+    # assert np.linalg.norm(df_gurobi_oscillating_masses['obj'].values[0:100]-df_cvxgen_oscillating_masses['obj'].values[0:100], np.inf) < 1e-5
 
     plt.show()

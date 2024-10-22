@@ -2,10 +2,21 @@ import cvxpy as cp
 import numpy as np
 
 np.random.seed(123)
+
+
 def lcvx(T):
     tspan = 20
     dt = tspan / (T - 1)
-    x0 = np.array([np.random.uniform(-10,10), np.random.uniform(-10,10), np.random.uniform(200,400), 0.0, 0.0, 0.0])
+    x0 = np.array(
+        [
+            np.random.uniform(-10, 10),
+            np.random.uniform(-10, 10),
+            np.random.uniform(200, 400),
+            0.0,
+            0.0,
+            0.0,
+        ]
+    )
     # x0 = np.array([10.0, 10.0, 300.0, 0.0, 0.0, 0.0])
     g = 9.807
     tvc_max = np.deg2rad(45.0)

@@ -26,39 +26,44 @@ def run_oscillating_masses(regen_solver, ninstances, nruns):
             gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
             qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
-            # if N <= 56:
-            #     qoco_custom_res[name] = qoco_custom_solve(
-            #         prob, "./generated_solvers", name, regen_solver
-            #     )
-            # if N <= 20:
-            #     solved, obj, runtime_sec = run_generated_cvxgen(
-            #         "./cvxgen/generated_solvers/" + name,
-            #         x0,
-            #         Q,
-            #         R,
-            #         A,
-            #         B,
-            #         umax,
-            #         xmax,
-            #     )
-            #     if solved:
-            #         cvxgen_res[name] = {
-            #             "size": get_problem_size(prob),
-            #             "status": "optimal",
-            #             "setup_time": None,
-            #             "solve_time": runtime_sec,
-            #             "run_time": runtime_sec,
-            #             "obj": obj,
-            #         }
-            #     else:
-            #         cvxgen_res[name] = {
-            #             "size": get_problem_size(prob),
-            #             "status": "optimal",
-            #             "setup_time": None,
-            #             "solve_time": runtime_sec,
-            #             "run_time": runtime_sec,
-            #             "obj": obj,
-            #         }
+            if N <= 56:
+                qoco_custom_res[name] = qoco_custom_solve(
+                    prob,
+                    "./generated_solvers",
+                    "oscillating_masses_" + str(N),
+                    regen_solver,
+                    nruns,
+                )
+            if N <= 20:
+                solved, obj, runtime_sec = run_generated_cvxgen(
+                    "./cvxgen/generated_solvers/" + "oscillating_masses_" + str(N),
+                    x0,
+                    Q,
+                    R,
+                    A,
+                    B,
+                    umax,
+                    xmax,
+                    nruns,
+                )
+                if solved:
+                    cvxgen_res[name] = {
+                        "size": get_problem_size(prob),
+                        "status": "optimal",
+                        "setup_time": None,
+                        "solve_time": runtime_sec,
+                        "run_time": runtime_sec,
+                        "obj": obj,
+                    }
+                else:
+                    cvxgen_res[name] = {
+                        "size": get_problem_size(prob),
+                        "status": "optimal",
+                        "setup_time": None,
+                        "solve_time": runtime_sec,
+                        "run_time": runtime_sec,
+                        "obj": obj,
+                    }
 
     df_qoco = pd.DataFrame(qoco_res).T
     df_qoco_custom = pd.DataFrame(qoco_custom_res).T

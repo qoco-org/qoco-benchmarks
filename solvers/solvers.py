@@ -200,14 +200,14 @@ def qoco_solve(prob, tol=1e-7, N=10):
     return res
 
 
-def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver):
+def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver, nruns):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     if regenerate_solver:
         prob_qoco.generate_solver(custom_solver_dir, solver_name)
     codegen_solved, codegen_obj, runtime_sec = run_generated_qoco(
-        custom_solver_dir + "/" + solver_name
+        custom_solver_dir + "/" + solver_name, nruns, c, b, h
     )
 
     if codegen_solved == 1:
