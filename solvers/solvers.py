@@ -207,7 +207,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, regenerate_solver, n
     if regenerate_solver:
         prob_qoco.generate_solver(custom_solver_dir, solver_name)
     codegen_solved, codegen_obj, runtime_sec = run_generated_qoco(
-        custom_solver_dir + "/" + solver_name, nruns, c, b, h
+        custom_solver_dir + "/" + solver_name, nruns, P, A, G, c, b, h
     )
 
     if codegen_solved == 1:

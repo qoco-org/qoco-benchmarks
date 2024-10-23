@@ -357,9 +357,40 @@ def plotall():
     plt.savefig(strFile)
 
     # Sanity check to make sure custom solvers are generated based on the most updated data.
-    assert np.linalg.norm(df_gurobi_lcvx['obj'].values[0:100]-df_qoco_custom_lcvx['obj'].values[0:100], np.inf) < 1e-5
-    # assert np.linalg.norm(df_gurobi_robust_kalman_filter['obj'].values[0:100]-df_qoco_custom_robust_kalman_filter['obj'].values[0:100], np.inf) < 1e-5
-    # assert np.linalg.norm(df_gurobi_oscillating_masses['obj'].values[0:100]-df_qoco_oscillating_masses['obj'].values[0:100], np.inf) < 1e-5
-    # assert np.linalg.norm(df_gurobi_oscillating_masses['obj'].values[0:100]-df_cvxgen_oscillating_masses['obj'].values[0:100], np.inf) < 1e-5
+    assert (
+        np.linalg.norm(
+            df_gurobi_lcvx["obj"].values[0:100]
+            - df_qoco_custom_lcvx["obj"].values[0:100],
+            np.inf,
+        )
+        < 1e-5
+    )
+    assert (
+        np.linalg.norm(
+            df_gurobi_robust_kalman_filter["obj"].values[0:100]
+            - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
+            np.inf,
+        )
+        / np.linalg.norm(df_gurobi_robust_kalman_filter["obj"].values[0:100], np.inf)
+        < 1e-5
+    )
+    assert (
+        np.linalg.norm(
+            df_gurobi_oscillating_masses["obj"].values[0:100]
+            - df_qoco_custom_oscillating_masses["obj"].values[0:100],
+            np.inf,
+        )
+        / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:100], np.inf)
+        < 1e-5
+    )
+    assert (
+        np.linalg.norm(
+            df_gurobi_oscillating_masses["obj"].values[0:40]
+            - df_cvxgen_oscillating_masses["obj"].values[0:40],
+            np.inf,
+        )
+        / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:40], np.inf)
+        < 1e-5
+    )
 
     plt.show()

@@ -16,11 +16,11 @@ def run_robust_kalman_filter(regen_solver, ninstances, nruns):
         for i in range(ninstances):
             name = "robust_kalman_filter_N_" + str(N) + "_i_" + str(i)
             prob = robust_kalman_filter(N)
-            # clarabel_res[name] = clarabel_solve(prob, 1e-7, nruns)
-            # mosek_res[name] = mosek_solve(prob, 1e-7, nruns)
-            # gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
-            # qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
-            # ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
+            clarabel_res[name] = clarabel_solve(prob, 1e-7, nruns)
+            mosek_res[name] = mosek_solve(prob, 1e-7, nruns)
+            gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
+            qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
+            ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
             if N <= 175:
                 qoco_custom_res[name] = qoco_custom_solve(
                     prob,
@@ -37,12 +37,12 @@ def run_robust_kalman_filter(regen_solver, ninstances, nruns):
     df_gurobi = pd.DataFrame(gurobi_res).T
     df_ecos = pd.DataFrame(ecos_res).T
 
-    # df_qoco.to_csv("results/robust_kalman_filter/qoco.csv")
+    df_qoco.to_csv("results/robust_kalman_filter/qoco.csv")
     df_qoco_custom.to_csv("results/robust_kalman_filter/qoco_custom.csv")
-    # df_clarabel.to_csv("results/robust_kalman_filter/clarabel.csv")
-    # df_mosek.to_csv("results/robust_kalman_filter/mosek.csv")
-    # df_gurobi.to_csv("results/robust_kalman_filter/gurobi.csv")
-    # df_ecos.to_csv("results/robust_kalman_filter/ecos.csv")
+    df_clarabel.to_csv("results/robust_kalman_filter/clarabel.csv")
+    df_mosek.to_csv("results/robust_kalman_filter/mosek.csv")
+    df_gurobi.to_csv("results/robust_kalman_filter/gurobi.csv")
+    df_ecos.to_csv("results/robust_kalman_filter/ecos.csv")
 
 
 # compute_performance_profiles(solvers, "./results/robust_kalman_filter")
