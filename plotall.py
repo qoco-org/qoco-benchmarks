@@ -365,14 +365,10 @@ def plotall():
         )
         < 1e-5
     )
-    assert (
-        np.linalg.norm(
-            df_gurobi_robust_kalman_filter["obj"].values[0:100]
-            - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
-            np.inf,
-        )
-        / np.linalg.norm(df_gurobi_robust_kalman_filter["obj"].values[0:100], np.inf)
-        < 1e-5
+    assert np.linalg.norm(
+        df_gurobi_robust_kalman_filter["obj"].values[0:100]
+        - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
+        np.inf,
     )
     assert (
         np.linalg.norm(
@@ -380,7 +376,6 @@ def plotall():
             - df_qoco_custom_oscillating_masses["obj"].values[0:100],
             np.inf,
         )
-        / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:100], np.inf)
         < 1e-5
     )
     assert (
@@ -389,7 +384,6 @@ def plotall():
             - df_cvxgen_oscillating_masses["obj"].values[0:40],
             np.inf,
         )
-        / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:40], np.inf)
         < 1e-5
     )
 
