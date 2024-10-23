@@ -31,7 +31,7 @@ def oscillating_masses(T):
     xlim = xmax * np.ones(2 * n)
     ulim = umax * np.ones(n)
 
-    x0 = np.clip(np.random.randn(2 * n), -0.95 * xlim, 0.95 * xlim)
+    x0 = np.clip(np.random.randn(2 * n), -0.90 * xlim, 0.90 * xlim)
     obj = 0
     con = [x[:, 0] == x0]
     for k in range(T):
