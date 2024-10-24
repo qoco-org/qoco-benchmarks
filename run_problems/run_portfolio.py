@@ -25,10 +25,10 @@ def run_portfolio(regen_solver, ninstances, nruns):
             gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
             qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
-            # if N <= 15:
-            #     qoco_custom_res[name] = qoco_custom_solve(
-            #         prob, "./generated_solvers", name, regen_solver
-            #     )
+            if N <= 15:
+                qoco_custom_res[name] = qoco_custom_solve(
+                    prob, "./generated_solvers", name, regen_solver, nruns
+                )
 
     df_qoco = pd.DataFrame(qoco_res).T
     df_qoco_custom = pd.DataFrame(qoco_custom_res).T

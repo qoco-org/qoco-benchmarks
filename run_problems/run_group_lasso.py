@@ -5,7 +5,8 @@ from matplotlib import pyplot as plt
 
 
 def run_group_lasso(regen_solver, ninstances, nruns):
-    Nlist = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16]
+    # Nlist = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16]
+    Nlist = [1]
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
@@ -24,10 +25,10 @@ def run_group_lasso(regen_solver, ninstances, nruns):
             gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
             qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
-            # if N <= 5:
-            #     qoco_custom_res[name] = qoco_custom_solve(
-            #         prob, "./generated_solvers", name, regen_solver
-            #     )
+            if N <= 5:
+                qoco_custom_res[name] = qoco_custom_solve(
+                    prob, "./generated_solvers", name, regen_solver, nruns
+                )
 
     df_qoco = pd.DataFrame(qoco_res).T
     df_qoco_custom = pd.DataFrame(qoco_custom_res).T
