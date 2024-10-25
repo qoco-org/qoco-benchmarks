@@ -473,14 +473,14 @@ def plotall():
         - df_qoco_custom_lcvx["obj"].values[0:100],
         np.inf,
     ) < 1e-5
-    # assert (
-    #     np.linalg.norm(
-    #         df_gurobi_portfolio["obj"].values[0:100]
-    #         - df_qoco_custom_portfolio["obj"].values[0:100],
-    #         np.inf,
-    #     )
-    #     < 1e-5
-    # )
+    assert (
+        np.linalg.norm(
+            df_gurobi_portfolio["obj"].values[0:100]
+            - df_qoco_custom_portfolio["obj"].values[0:100],
+            np.inf,
+        )
+        < 1e-5
+    )
     assert (
         np.linalg.norm(
             df_gurobi_oscillating_masses["obj"].values[0:100]
