@@ -2,9 +2,6 @@ import cvxpy as cp
 import scipy as sp
 import numpy as np
 
-np.random.seed(123)
-
-
 def oscillating_masses(T):
 
     dt = 0.25

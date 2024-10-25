@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 
 
 def run_lcvx(regen_solver, ninstances, nruns):
+    np.random.seed(123)
+
     Nlist = [15, 50, 75, 100, 125, 150, 200, 250, 300, 350]
 
     var_list = []

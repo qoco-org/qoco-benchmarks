@@ -197,7 +197,7 @@ def plotall():
     rkf_size = set(df_gurobi_portfolio["size"])
     rkf_size = [*rkf_size]
     rkf_size.sort()
-    # rkf_size_custom = set(df_qoco_custom_portfolio["size"])
+    rkf_size_custom = set(df_qoco_custom_portfolio["size"])
     rkf_size_custom = [*rkf_size_custom]
     rkf_size_custom.sort()
     rkf_ecos_time = []
@@ -214,9 +214,9 @@ def plotall():
         rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_portfolio['run_time'][idx]))
         rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_portfolio['run_time'][idx]))
         rkf_qoco_time.append(1000 * np.nanmean(df_qoco_portfolio['run_time'][idx]))
-    # for size in rkf_size_custom:
-    #     idx = df_qoco_custom_portfolio[df_qoco_custom_portfolio['size'] == size].index
-    #     rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_portfolio['run_time'][idx]))
+    for size in rkf_size_custom:
+        idx = df_qoco_custom_portfolio[df_qoco_custom_portfolio['size'] == size].index
+        rkf_qoco_custom_time.append(1000 * np.min(df_qoco_custom_portfolio['run_time'][idx]))
 
     plt.figure()
     plt.plot(
@@ -254,13 +254,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    # plt.plot(
-    #     rkf_size_custom,
-    #     rkf_qoco_custom_time,
-    #     "o-",
-    #     color="black",
-    #     label="QOCO Custom",
-    # )
+    plt.plot(
+        rkf_size_custom,
+        rkf_qoco_custom_time,
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -463,19 +463,16 @@ def plotall():
     plt.savefig(strFile)
 
     # Sanity check to make sure custom solvers are generated based on the most updated data.
-    # assert (
-    #     np.linalg.norm(
-    #         df_gurobi_portfolio["obj"].values[0:100]
-    #         - df_qoco_custom_portfolio["obj"].values[0:100],
-    #         np.inf,
-    #     )
-    #     < 1e-5
-    # )
     assert np.linalg.norm(
         df_gurobi_robust_kalman_filter["obj"].values[0:100]
         - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
         np.inf,
-    )
+    ) < 1e-5
+    assert np.linalg.norm(
+        df_gurobi_lcvx["obj"].values[0:100]
+        - df_qoco_custom_lcvx["obj"].values[0:100],
+        np.inf,
+    ) < 1e-5
     # assert (
     #     np.linalg.norm(
     #         df_gurobi_portfolio["obj"].values[0:100]

@@ -4,7 +4,10 @@ import pandas as pd
 
 
 def run_robust_kalman_filter(regen_solver, ninstances, nruns):
+    np.random.seed(123)
+
     Nlist = [25, 50, 75, 125, 175, 225, 300, 375, 450, 500]
+
     clarabel_res = {}
     ecos_res = {}
     qoco_res = {}
