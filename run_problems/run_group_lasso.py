@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 
 
 def run_group_lasso(regen_solver, ninstances, nruns):
+    np.random.seed(123)
+
     # Nlist = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16]
     Nlist = [1]
     var_list = []

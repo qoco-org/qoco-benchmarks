@@ -1,6 +1,7 @@
 import numpy as np
 import cvxpy as cp
 
+
 # Problem from https://www.cvxpy.org/examples/applications/robust_kalman.html
 def robust_kalman_filter(n):
     T = 50

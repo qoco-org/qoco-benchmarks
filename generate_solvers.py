@@ -2,6 +2,7 @@ from problems.portfolio import portfolio
 from problems.group_lasso import group_lasso
 
 import qoco
+import numpy as np
 from solvers.cvxpy_to_qoco import convert
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -11,6 +12,7 @@ def call_generate(obj, name):
 
 
 def generate_portfolio(Nlist, ninstances):
+    np.random.seed(123)
     problems = []
     names = []
     for N in Nlist:
@@ -34,6 +36,7 @@ def generate_portfolio(Nlist, ninstances):
 
 
 def generate_group_lasso(Nlist, ninstances):
+    np.random.seed(123)
     problems = []
     names = []
     for N in Nlist:
@@ -58,6 +61,6 @@ def generate_group_lasso(Nlist, ninstances):
 
 ninstances = 20
 Ngl = [1, 2, 3, 4, 5]
-Nport = [2, 5, 8, 12, 15]
-generate_portfolio(Nport, ninstances)
+# Nport = [2, 5, 8, 12, 15]
+# generate_portfolio(Nport, ninstances)
 generate_group_lasso(Ngl, ninstances)

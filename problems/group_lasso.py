@@ -2,8 +2,6 @@ import cvxpy as cp
 import numpy as np
 from scipy import sparse
 
-np.random.seed(123)
-
 
 def group_lasso(ngroups):
 

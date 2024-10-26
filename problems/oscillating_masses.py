@@ -2,6 +2,7 @@ import cvxpy as cp
 import scipy as sp
 import numpy as np
 
+
 def oscillating_masses(T):
 
     dt = 0.25

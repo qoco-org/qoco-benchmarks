@@ -1,6 +1,7 @@
 import cvxpy as cp
 import numpy as np
 
+
 def lcvx(T):
     tspan = 20
     dt = tspan / (T - 1)

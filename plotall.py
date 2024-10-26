@@ -41,15 +41,31 @@ def plotall():
     rkf_qoco_custom_time = []
 
     for size in rkf_size:
-        idx = df_gurobi_robust_kalman_filter[df_gurobi_robust_kalman_filter['size'] == size].index
-        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_robust_kalman_filter['run_time'][idx]))
-        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_robust_kalman_filter['run_time'][idx]))
-        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_robust_kalman_filter['run_time'][idx]))
-        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_robust_kalman_filter['run_time'][idx]))
-        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_robust_kalman_filter['run_time'][idx]))
+        idx = df_gurobi_robust_kalman_filter[
+            df_gurobi_robust_kalman_filter["size"] == size
+        ].index
+        rkf_ecos_time.append(
+            1000 * np.nanmean(df_ecos_robust_kalman_filter["run_time"][idx])
+        )
+        rkf_mosek_time.append(
+            1000 * np.nanmean(df_mosek_robust_kalman_filter["run_time"][idx])
+        )
+        rkf_gurobi_time.append(
+            1000 * np.nanmean(df_gurobi_robust_kalman_filter["run_time"][idx])
+        )
+        rkf_clarabel_time.append(
+            1000 * np.nanmean(df_clarabel_robust_kalman_filter["run_time"][idx])
+        )
+        rkf_qoco_time.append(
+            1000 * np.nanmean(df_qoco_robust_kalman_filter["run_time"][idx])
+        )
     for size in rkf_size_custom:
-        idx = df_qoco_custom_robust_kalman_filter[df_qoco_custom_robust_kalman_filter['size'] == size].index
-        rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_robust_kalman_filter['run_time'][idx]))
+        idx = df_qoco_custom_robust_kalman_filter[
+            df_qoco_custom_robust_kalman_filter["size"] == size
+        ].index
+        rkf_qoco_custom_time.append(
+            1000 * np.nanmean(df_qoco_custom_robust_kalman_filter["run_time"][idx])
+        )
 
     plt.figure()
     plt.plot(
@@ -124,15 +140,17 @@ def plotall():
     rkf_qoco_time = []
     rkf_qoco_custom_time = []
     for size in rkf_size:
-        idx = df_gurobi_lcvx[df_gurobi_lcvx['size'] == size].index
-        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_lcvx['run_time'][idx]))
-        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_lcvx['run_time'][idx]))
-        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_lcvx['run_time'][idx]))
-        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_lcvx['run_time'][idx]))
-        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_lcvx['run_time'][idx]))
+        idx = df_gurobi_lcvx[df_gurobi_lcvx["size"] == size].index
+        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_lcvx["run_time"][idx]))
+        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_lcvx["run_time"][idx]))
+        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_lcvx["run_time"][idx]))
+        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_lcvx["run_time"][idx]))
+        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_lcvx["run_time"][idx]))
     for size in rkf_size_custom:
-        idx = df_qoco_custom_lcvx[df_qoco_custom_lcvx['size'] == size].index
-        rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_lcvx['run_time'][idx]))
+        idx = df_qoco_custom_lcvx[df_qoco_custom_lcvx["size"] == size].index
+        rkf_qoco_custom_time.append(
+            1000 * np.nanmean(df_qoco_custom_lcvx["run_time"][idx])
+        )
 
     plt.figure()
     plt.plot(
@@ -208,15 +226,19 @@ def plotall():
     rkf_qoco_custom_time = []
 
     for size in rkf_size:
-        idx = df_gurobi_portfolio[df_gurobi_portfolio['size'] == size].index
-        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_portfolio['run_time'][idx]))
-        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_portfolio['run_time'][idx]))
-        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_portfolio['run_time'][idx]))
-        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_portfolio['run_time'][idx]))
-        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_portfolio['run_time'][idx]))
+        idx = df_gurobi_portfolio[df_gurobi_portfolio["size"] == size].index
+        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_portfolio["run_time"][idx]))
+        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_portfolio["run_time"][idx]))
+        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_portfolio["run_time"][idx]))
+        rkf_clarabel_time.append(
+            1000 * np.nanmean(df_clarabel_portfolio["run_time"][idx])
+        )
+        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_portfolio["run_time"][idx]))
     for size in rkf_size_custom:
-        idx = df_qoco_custom_portfolio[df_qoco_custom_portfolio['size'] == size].index
-        rkf_qoco_custom_time.append(1000 * np.min(df_qoco_custom_portfolio['run_time'][idx]))
+        idx = df_qoco_custom_portfolio[df_qoco_custom_portfolio["size"] == size].index
+        rkf_qoco_custom_time.append(
+            1000 * np.min(df_qoco_custom_portfolio["run_time"][idx])
+        )
 
     plt.figure()
     plt.plot(
@@ -305,18 +327,38 @@ def plotall():
     rkf_cvxgen_time = []
 
     for size in rkf_size:
-        idx = df_gurobi_oscillating_masses[df_gurobi_oscillating_masses['size'] == size].index
-        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_oscillating_masses['run_time'][idx]))
-        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_oscillating_masses['run_time'][idx]))
-        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_oscillating_masses['run_time'][idx]))
-        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_oscillating_masses['run_time'][idx]))
-        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_oscillating_masses['run_time'][idx]))
+        idx = df_gurobi_oscillating_masses[
+            df_gurobi_oscillating_masses["size"] == size
+        ].index
+        rkf_ecos_time.append(
+            1000 * np.nanmean(df_ecos_oscillating_masses["run_time"][idx])
+        )
+        rkf_mosek_time.append(
+            1000 * np.nanmean(df_mosek_oscillating_masses["run_time"][idx])
+        )
+        rkf_gurobi_time.append(
+            1000 * np.nanmean(df_gurobi_oscillating_masses["run_time"][idx])
+        )
+        rkf_clarabel_time.append(
+            1000 * np.nanmean(df_clarabel_oscillating_masses["run_time"][idx])
+        )
+        rkf_qoco_time.append(
+            1000 * np.nanmean(df_qoco_oscillating_masses["run_time"][idx])
+        )
     for size in rkf_size_custom:
-        idx = df_qoco_custom_oscillating_masses[df_qoco_custom_oscillating_masses['size'] == size].index
-        rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_oscillating_masses['run_time'][idx]))
+        idx = df_qoco_custom_oscillating_masses[
+            df_qoco_custom_oscillating_masses["size"] == size
+        ].index
+        rkf_qoco_custom_time.append(
+            1000 * np.nanmean(df_qoco_custom_oscillating_masses["run_time"][idx])
+        )
     for size in rkf_size_cvxgen:
-        idx = df_cvxgen_oscillating_masses[df_cvxgen_oscillating_masses['size'] == size].index
-        rkf_cvxgen_time.append(1000 * np.nanmean(df_cvxgen_oscillating_masses['run_time'][idx]))
+        idx = df_cvxgen_oscillating_masses[
+            df_cvxgen_oscillating_masses["size"] == size
+        ].index
+        rkf_cvxgen_time.append(
+            1000 * np.nanmean(df_cvxgen_oscillating_masses["run_time"][idx])
+        )
 
     plt.figure()
     plt.plot(
@@ -388,9 +430,9 @@ def plotall():
     rkf_size = set(df_gurobi_group_lasso["size"])
     rkf_size = [*rkf_size]
     rkf_size.sort()
-    # rkf_size_custom = set(df_qoco_custom_group_lasso["size"])
-    # rkf_size_custom = [*rkf_size_custom]
-    # rkf_size_custom.sort()
+    rkf_size_custom = set(df_qoco_custom_group_lasso["size"])
+    rkf_size_custom = [*rkf_size_custom]
+    rkf_size_custom.sort()
     rkf_ecos_time = []
     rkf_mosek_time = []
     rkf_gurobi_time = []
@@ -399,15 +441,19 @@ def plotall():
     rkf_qoco_custom_time = []
 
     for size in rkf_size:
-        idx = df_gurobi_group_lasso[df_gurobi_group_lasso['size'] == size].index
-        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_group_lasso['run_time'][idx]))
-        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_group_lasso['run_time'][idx]))
-        rkf_gurobi_time.append(1000 * np.nanmean(df_gurobi_group_lasso['run_time'][idx]))
-        rkf_clarabel_time.append(1000 * np.nanmean(df_clarabel_group_lasso['run_time'][idx]))
-        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_group_lasso['run_time'][idx]))
-    # for size in rkf_size_custom:
-    #     idx = df_qoco_custom_group_lasso[df_qoco_custom_group_lasso['size'] == size].index
-    #     rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_group_lasso['run_time'][idx]))
+        idx = df_gurobi_group_lasso[df_gurobi_group_lasso["size"] == size].index
+        rkf_ecos_time.append(1000 * np.nanmean(df_ecos_group_lasso["run_time"][idx]))
+        rkf_mosek_time.append(1000 * np.nanmean(df_mosek_group_lasso["run_time"][idx]))
+        rkf_gurobi_time.append(
+            1000 * np.nanmean(df_gurobi_group_lasso["run_time"][idx])
+        )
+        rkf_clarabel_time.append(
+            1000 * np.nanmean(df_clarabel_group_lasso["run_time"][idx])
+        )
+        rkf_qoco_time.append(1000 * np.nanmean(df_qoco_group_lasso["run_time"][idx]))
+    for size in rkf_size_custom:
+        idx = df_qoco_custom_group_lasso[df_qoco_custom_group_lasso['size'] == size].index
+        rkf_qoco_custom_time.append(1000 * np.nanmean(df_qoco_custom_group_lasso['run_time'][idx]))
 
     plt.figure()
     plt.plot(
@@ -445,13 +491,13 @@ def plotall():
         color="blue",
         label="QOCO",
     )
-    # plt.plot(
-    #     rkf_size_custom,
-    #     rkf_qoco_custom_time,
-    #     "o-",
-    #     color="black",
-    #     label="QOCO Custom",
-    # )
+    plt.plot(
+        rkf_size_custom,
+        rkf_qoco_custom_time,
+        "o-",
+        color="black",
+        label="QOCO Custom",
+    )
     plt.legend(loc="lower right")
     plt.xlabel("Problem Size")
     plt.ylabel("Solvetime [milliseconds]")
@@ -463,16 +509,22 @@ def plotall():
     plt.savefig(strFile)
 
     # Sanity check to make sure custom solvers are generated based on the most updated data.
-    assert np.linalg.norm(
-        df_gurobi_robust_kalman_filter["obj"].values[0:100]
-        - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
-        np.inf,
-    ) < 1e-5
-    assert np.linalg.norm(
-        df_gurobi_lcvx["obj"].values[0:100]
-        - df_qoco_custom_lcvx["obj"].values[0:100],
-        np.inf,
-    ) < 1e-5
+    assert (
+        np.linalg.norm(
+            df_gurobi_robust_kalman_filter["obj"].values[0:100]
+            - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
+            np.inf,
+        )
+        < 1e-5
+    )
+    assert (
+        np.linalg.norm(
+            df_gurobi_lcvx["obj"].values[0:100]
+            - df_qoco_custom_lcvx["obj"].values[0:100],
+            np.inf,
+        )
+        < 1e-5
+    )
     assert (
         np.linalg.norm(
             df_gurobi_portfolio["obj"].values[0:100]
@@ -497,13 +549,13 @@ def plotall():
         )
         < 1e-5
     )
-    # assert (
-    #     np.linalg.norm(
-    #         df_gurobi_group_lasso["obj"].values[0:100]
-    #         - df_qoco_custom_group_lasso["obj"].values[0:100],
-    #         np.inf,
-    #     )
-    #     < 1e-5
-    # )
+    assert (
+        np.linalg.norm(
+            df_gurobi_group_lasso["obj"].values[0:100]
+            - df_qoco_custom_group_lasso["obj"].values[0:100],
+            np.inf,
+        )
+        < 1e-5
+    )
 
     plt.show()
