@@ -346,6 +346,12 @@ def plotall():
         color="mediumvioletred",
         label="QOCO Custom",
     )
+    plt.plot(
+        cvxgen_size,
+        cvxgen_time,
+        "o-",
+        color="olive",
+    )
     plt.yscale("log")
     plt.title("Oscillating Masses")
     plt.tight_layout()

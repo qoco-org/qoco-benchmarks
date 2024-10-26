@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 def run_oscillating_masses(regen_solver, ninstances, nruns):
     np.random.seed(123)
 
-    Nlist = [8, 20, 32, 44, 56, 72, 88, 104, 120, 136, 160]
+    Nlist = [8, 20, 32, 44, 56, 76, 96, 116, 136, 156]
 
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
