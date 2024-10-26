@@ -29,13 +29,18 @@ def plotall():
     )
 
     qoco_size, qoco_time = get_average_solvetime(df_qoco_robust_kalman_filter)
-    qoco_custom_size, qoco_custom_time = get_average_solvetime(df_qoco_custom_robust_kalman_filter)
-    clarabel_size, clarabel_time = get_average_solvetime(df_clarabel_robust_kalman_filter)
+    qoco_custom_size, qoco_custom_time = get_average_solvetime(
+        df_qoco_custom_robust_kalman_filter
+    )
+    clarabel_size, clarabel_time = get_average_solvetime(
+        df_clarabel_robust_kalman_filter
+    )
     gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_robust_kalman_filter)
     mosek_size, mosek_time = get_average_solvetime(df_mosek_robust_kalman_filter)
     ecos_size, ecos_time = get_average_solvetime(df_ecos_robust_kalman_filter)
 
-    plt.figure()
+    plt.figure(figsize=(8.5, 11))
+    plt.subplot(321)
     plt.plot(
         clarabel_size,
         clarabel_time,
@@ -75,18 +80,11 @@ def plotall():
         qoco_custom_size,
         qoco_custom_time,
         "o-",
-        color="palevioletred",
+        color="mediumvioletred",
         label="QOCO Custom",
     )
-    plt.legend(loc="lower right")
-    plt.xlabel("Problem Size")
-    plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
     plt.title("Robust Kalman Filter")
-    strFile = "plots/robust_kalman_filter.pdf"
-    if os.path.isfile(strFile):
-        os.remove(strFile)
-    plt.savefig(strFile)
 
     df_qoco_lcvx = pd.read_csv("./results/lcvx/qoco.csv")
     df_qoco_custom_lcvx = pd.read_csv("./results/lcvx/qoco_custom.csv")
@@ -102,7 +100,7 @@ def plotall():
     mosek_size, mosek_time = get_average_solvetime(df_mosek_lcvx)
     ecos_size, ecos_time = get_average_solvetime(df_ecos_lcvx)
 
-    plt.figure()
+    plt.subplot(322)
     plt.plot(
         clarabel_size,
         clarabel_time,
@@ -142,18 +140,73 @@ def plotall():
         qoco_custom_size,
         qoco_custom_time,
         "o-",
-        color="palevioletred",
+        color="mediumvioletred",
         label="QOCO Custom",
     )
-    plt.legend(loc="lower right")
-    plt.xlabel("Problem Size")
-    plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
     plt.title("LCvx")
-    strFile = "plots/lcvx.pdf"
-    if os.path.isfile(strFile):
-        os.remove(strFile)
-    plt.savefig(strFile)
+
+    df_qoco_group_lasso = pd.read_csv("./results/group_lasso/qoco.csv")
+    df_qoco_custom_group_lasso = pd.read_csv("./results/group_lasso/qoco_custom.csv")
+    df_clarabel_group_lasso = pd.read_csv("./results/group_lasso/clarabel.csv")
+    df_mosek_group_lasso = pd.read_csv("./results/group_lasso/mosek.csv")
+    df_gurobi_group_lasso = pd.read_csv("./results/group_lasso/gurobi.csv")
+    df_ecos_group_lasso = pd.read_csv("./results/group_lasso/ecos.csv")
+
+    qoco_size, qoco_time = get_average_solvetime(df_qoco_group_lasso)
+    qoco_custom_size, qoco_custom_time = get_average_solvetime(
+        df_qoco_custom_group_lasso
+    )
+    clarabel_size, clarabel_time = get_average_solvetime(df_clarabel_group_lasso)
+    gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_group_lasso)
+    mosek_size, mosek_time = get_average_solvetime(df_mosek_group_lasso)
+    ecos_size, ecos_time = get_average_solvetime(df_ecos_group_lasso)
+
+    plt.subplot(323)
+    plt.plot(
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
+    )
+    plt.plot(
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
+    )
+    plt.plot(
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
+    )
+    plt.plot(
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
+    )
+    plt.plot(
+        qoco_size,
+        qoco_time,
+        "o-",
+        color="royalblue",
+        label="QOCO",
+    )
+    plt.plot(
+        qoco_custom_size,
+        qoco_custom_time,
+        "o-",
+        color="mediumvioletred",
+        label="QOCO Custom",
+    )
+    plt.yscale("log")
+    plt.title("Group Lasso")
 
     df_qoco_portfolio = pd.read_csv("./results/portfolio/qoco.csv")
     df_qoco_custom_portfolio = pd.read_csv("./results/portfolio/qoco_custom.csv")
@@ -169,7 +222,9 @@ def plotall():
     mosek_size, mosek_time = get_average_solvetime(df_mosek_portfolio)
     ecos_size, ecos_time = get_average_solvetime(df_ecos_portfolio)
 
-    plt.figure()
+    ax = plt.subplot(324)
+    pos = ax.get_position()
+    xright = pos.x0
     plt.plot(
         clarabel_size,
         clarabel_time,
@@ -209,18 +264,11 @@ def plotall():
         qoco_custom_size,
         qoco_custom_time,
         "o-",
-        color="palevioletred",
+        color="mediumvioletred",
         label="QOCO Custom",
     )
-    plt.legend(loc="lower right")
-    plt.xlabel("Problem Size")
-    plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
     plt.title("Portfolio Optimization")
-    strFile = "plots/portfolio.pdf"
-    if os.path.isfile(strFile):
-        os.remove(strFile)
-    plt.savefig(strFile)
 
     df_qoco_oscillating_masses = pd.read_csv("./results/oscillating_masses/qoco.csv")
     df_qoco_custom_oscillating_masses = pd.read_csv(
@@ -239,14 +287,16 @@ def plotall():
     )
 
     qoco_size, qoco_time = get_average_solvetime(df_qoco_oscillating_masses)
-    qoco_custom_size, qoco_custom_time = get_average_solvetime(df_qoco_custom_oscillating_masses)
+    qoco_custom_size, qoco_custom_time = get_average_solvetime(
+        df_qoco_custom_oscillating_masses
+    )
     clarabel_size, clarabel_time = get_average_solvetime(df_clarabel_oscillating_masses)
     gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_oscillating_masses)
     mosek_size, mosek_time = get_average_solvetime(df_mosek_oscillating_masses)
     ecos_size, ecos_time = get_average_solvetime(df_ecos_oscillating_masses)
     cvxgen_size, cvxgen_time = get_average_solvetime(df_cvxgen_oscillating_masses)
 
-    plt.figure()
+    ax = plt.subplot(325)
     plt.plot(
         clarabel_size,
         clarabel_time,
@@ -293,82 +343,18 @@ def plotall():
         qoco_custom_size,
         qoco_custom_time,
         "o-",
-        color="palevioletred",
+        color="mediumvioletred",
         label="QOCO Custom",
     )
-    plt.legend(loc="lower right")
-    plt.xlabel("Problem Size")
-    plt.ylabel("Solvetime [milliseconds]")
     plt.yscale("log")
     plt.title("Oscillating Masses")
-    strFile = "plots/oscillating_masses.pdf"
-    if os.path.isfile(strFile):
-        os.remove(strFile)
-    plt.savefig(strFile)
+    plt.tight_layout()
+    pos = ax.get_position()
+    ax.set_position([0.5 * (pos.x0 + xright), pos.y0, pos.width, pos.height])
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend(handles, labels, loc="center right", bbox_to_anchor=(1.5, 0.5))
 
-    df_qoco_group_lasso = pd.read_csv("./results/group_lasso/qoco.csv")
-    df_qoco_custom_group_lasso = pd.read_csv("./results/group_lasso/qoco_custom.csv")
-    df_clarabel_group_lasso = pd.read_csv("./results/group_lasso/clarabel.csv")
-    df_mosek_group_lasso = pd.read_csv("./results/group_lasso/mosek.csv")
-    df_gurobi_group_lasso = pd.read_csv("./results/group_lasso/gurobi.csv")
-    df_ecos_group_lasso = pd.read_csv("./results/group_lasso/ecos.csv")
-
-    qoco_size, qoco_time = get_average_solvetime(df_qoco_group_lasso)
-    qoco_custom_size, qoco_custom_time = get_average_solvetime(df_qoco_custom_group_lasso)
-    clarabel_size, clarabel_time = get_average_solvetime(df_clarabel_group_lasso)
-    gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_group_lasso)
-    mosek_size, mosek_time = get_average_solvetime(df_mosek_group_lasso)
-    ecos_size, ecos_time = get_average_solvetime(df_ecos_group_lasso)
-
-    plt.figure()
-    plt.plot(
-        clarabel_size,
-        clarabel_time,
-        "o-",
-        color="darkviolet",
-        label="Clarabel",
-    )
-    plt.plot(
-        ecos_size,
-        ecos_time,
-        "o-",
-        color="mediumseagreen",
-        label="ECOS",
-    )
-    plt.plot(
-        gurobi_size,
-        gurobi_time,
-        "o-",
-        color="coral",
-        label="Gurobi",
-    )
-    plt.plot(
-        mosek_size,
-        mosek_time,
-        "o-",
-        color="firebrick",
-        label="Mosek",
-    )
-    plt.plot(
-        qoco_size,
-        qoco_time,
-        "o-",
-        color="royalblue",
-        label="QOCO",
-    )
-    plt.plot(
-        qoco_custom_size,
-        qoco_custom_time,
-        "o-",
-        color="palevioletred",
-        label="QOCO Custom",
-    )
-    plt.legend(loc="lower right")
-    plt.xlabel("Problem Size")
-    plt.ylabel("Solvetime [milliseconds]")
-    plt.yscale("log")
-    plt.title("Group Lasso")
-    strFile = "plots/group_lasso.pdf"
+    strFile = "plots/benchmark_problems.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)

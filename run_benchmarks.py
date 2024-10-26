@@ -13,4 +13,4 @@ nruns = 1
 # run_portfolio(regen_solver, ninstances, nruns)
 # run_oscillating_masses(regen_solver, ninstances, nruns)
 # run_group_lasso(regen_solver, ninstances, nruns)
-# plotall()
+plotall()

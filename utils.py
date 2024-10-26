@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_average_solvetime(df):
     size = set(df["size"])
     size = [*size]
