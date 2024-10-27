@@ -7,7 +7,7 @@ from plotall import plotall
 
 regen_solver = False
 ninstances = 20
-nruns = 1
+nruns = 10
 # run_lcvx(regen_solver, ninstances, nruns)
 # run_robust_kalman_filter(regen_solver, ninstances, nruns)
 # run_portfolio(regen_solver, ninstances, nruns)
