@@ -2,8 +2,6 @@ import numpy as np
 import cvxpy as cp
 from scipy import sparse
 
-np.random.seed(123)
-
 
 def portfolio(k):
 

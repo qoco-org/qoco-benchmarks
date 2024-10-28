@@ -58,9 +58,11 @@ def generate_group_lasso(Nlist, ninstances):
         for future in as_completed(futures):
             future.result()
 
-
+# For group lasso and portfolio must generate all custom solvers at the same time in order for them to have the correct
+# sparsity structure according to the pseudo random number generator.
 ninstances = 20
 Ngl = [1, 2, 3, 4, 5]
-# Nport = [2, 5, 8, 12, 15]
-# generate_portfolio(Nport, ninstances)
-generate_group_lasso(Ngl, ninstances)
+Nport = [2, 4, 6, 8, 10]
+
+generate_portfolio(Nport, ninstances)
+# generate_group_lasso(Ngl, ninstances)

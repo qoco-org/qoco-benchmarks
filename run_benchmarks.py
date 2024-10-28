@@ -10,7 +10,7 @@ ninstances = 20
 nruns = 10
 # run_lcvx(regen_solver, ninstances, nruns)
 # run_robust_kalman_filter(regen_solver, ninstances, nruns)
-# run_portfolio(regen_solver, ninstances, nruns)
+run_portfolio(regen_solver, ninstances, nruns)
 # run_oscillating_masses(regen_solver, ninstances, nruns)
 # run_group_lasso(regen_solver, ninstances, nruns)
 plotall()

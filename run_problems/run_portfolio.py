@@ -5,7 +5,9 @@ from matplotlib import pyplot as plt
 
 
 def run_portfolio(regen_solver, ninstances, nruns):
-    Nlist = [2, 5, 8, 12, 15, 20, 25, 30, 35, 40]
+    np.random.seed(123)
+
+    Nlist = [2, 4, 6, 8, 10, 15, 20, 25, 30, 35]
     var_list = []
     solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
@@ -25,7 +27,7 @@ def run_portfolio(regen_solver, ninstances, nruns):
             gurobi_res[name] = gurobi_solve(prob, 1e-7, nruns)
             qoco_res[name] = qoco_solve(prob, 1e-7, nruns)
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
-            if N <= 15:
+            if N <= 10:
                 qoco_custom_res[name] = qoco_custom_solve(
                     prob, "./generated_solvers", name, regen_solver, nruns
                 )
