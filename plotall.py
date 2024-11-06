@@ -7,7 +7,7 @@ from utils import get_average_solvetime
 
 
 def plotall():
-    plt.rcParams.update({"text.usetex": True, "font.family": "Helvetica"})
+    plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
 
     df_qoco_robust_kalman_filter = pd.read_csv(
         "./results/robust_kalman_filter/qoco.csv"
@@ -72,19 +72,19 @@ def plotall():
     plt.plot(
         qoco_size,
         qoco_time,
-        "o-",
+        "X-",
         color="royalblue",
         label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
         qoco_custom_time,
-        "o-",
+        "X-",
         color="mediumvioletred",
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Robust Kalman Filter")
+    plt.title("Robust Kalman Filter", usetex = True)
 
     df_qoco_lcvx = pd.read_csv("./results/lcvx/qoco.csv")
     df_qoco_custom_lcvx = pd.read_csv("./results/lcvx/qoco_custom.csv")
@@ -132,19 +132,19 @@ def plotall():
     plt.plot(
         qoco_size,
         qoco_time,
-        "o-",
+        "X-",
         color="royalblue",
         label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
         qoco_custom_time,
-        "o-",
+        "X-",
         color="mediumvioletred",
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("LCvx")
+    plt.title("LCvx", usetex = True)
 
     df_qoco_group_lasso = pd.read_csv("./results/group_lasso/qoco.csv")
     df_qoco_custom_group_lasso = pd.read_csv("./results/group_lasso/qoco_custom.csv")
@@ -194,19 +194,19 @@ def plotall():
     plt.plot(
         qoco_size,
         qoco_time,
-        "o-",
+        "X-",
         color="royalblue",
         label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
         qoco_custom_time,
-        "o-",
+        "X-",
         color="mediumvioletred",
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Group Lasso")
+    plt.title("Group Lasso", usetex = True)
 
     df_qoco_portfolio = pd.read_csv("./results/portfolio/qoco.csv")
     df_qoco_custom_portfolio = pd.read_csv("./results/portfolio/qoco_custom.csv")
@@ -256,19 +256,19 @@ def plotall():
     plt.plot(
         qoco_size,
         qoco_time,
-        "o-",
+        "X-",
         color="royalblue",
         label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
         qoco_custom_time,
-        "o-",
+        "X-",
         color="mediumvioletred",
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Portfolio Optimization")
+    plt.title("Portfolio Optimization", usetex = True)
 
     df_qoco_oscillating_masses = pd.read_csv("./results/oscillating_masses/qoco.csv")
     df_qoco_custom_oscillating_masses = pd.read_csv(
@@ -335,14 +335,14 @@ def plotall():
     plt.plot(
         qoco_size,
         qoco_time,
-        "o-",
+        "X-",
         color="royalblue",
         label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
         qoco_custom_time,
-        "o-",
+        "X-",
         color="mediumvioletred",
         label="QOCO Custom",
     )
@@ -353,7 +353,7 @@ def plotall():
         color="olive",
     )
     plt.yscale("log")
-    plt.title("Oscillating Masses")
+    plt.title("Oscillating Masses", usetex = True)
     plt.tight_layout()
     pos = ax.get_position()
     ax.set_position([0.5 * (pos.x0 + xright), pos.y0, pos.width, pos.height])
