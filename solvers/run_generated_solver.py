@@ -133,7 +133,6 @@ def create_qoco_runtest(solver_dir, nruns, P, A, G, c, b, h):
     f.write("   Workspace work;\n")
     f.write("   set_default_settings(&work);\n")
     f.write("   work.settings.verbose = 0;\n")
-    f.write("   work.settings.ruiz_iters = 0;\n")
     f.write("   double N = %i;\n" % nruns)
     f.write("   double solve_time_sec = 1e10;\n")
     f.write("   for (int i = 0; i < N; ++i) {\n")

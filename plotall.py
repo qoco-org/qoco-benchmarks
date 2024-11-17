@@ -84,7 +84,7 @@ def plotall():
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Robust Kalman Filter", usetex = True)
+    plt.title("Robust Kalman Filter", usetex=True)
 
     df_qoco_lcvx = pd.read_csv("./results/lcvx/qoco.csv")
     df_qoco_custom_lcvx = pd.read_csv("./results/lcvx/qoco_custom.csv")
@@ -144,7 +144,7 @@ def plotall():
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("LCvx", usetex = True)
+    plt.title("LCvx", usetex=True)
 
     df_qoco_group_lasso = pd.read_csv("./results/group_lasso/qoco.csv")
     df_qoco_custom_group_lasso = pd.read_csv("./results/group_lasso/qoco_custom.csv")
@@ -206,7 +206,7 @@ def plotall():
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Group Lasso", usetex = True)
+    plt.title("Group Lasso", usetex=True)
 
     df_qoco_portfolio = pd.read_csv("./results/portfolio/qoco.csv")
     df_qoco_custom_portfolio = pd.read_csv("./results/portfolio/qoco_custom.csv")
@@ -268,7 +268,7 @@ def plotall():
         label="QOCO Custom",
     )
     plt.yscale("log")
-    plt.title("Portfolio Optimization", usetex = True)
+    plt.title("Portfolio Optimization", usetex=True)
 
     df_qoco_oscillating_masses = pd.read_csv("./results/oscillating_masses/qoco.csv")
     df_qoco_custom_oscillating_masses = pd.read_csv(
@@ -353,7 +353,7 @@ def plotall():
         color="olive",
     )
     plt.yscale("log")
-    plt.title("Oscillating Masses", usetex = True)
+    plt.title("Oscillating Masses", usetex=True)
     plt.tight_layout()
     pos = ax.get_position()
     ax.set_position([0.5 * (pos.x0 + xright), pos.y0, pos.width, pos.height])
