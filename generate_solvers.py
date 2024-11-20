@@ -104,8 +104,8 @@ Nlcvx = [15, 50, 75, 100, 125]
 Nrkf = [25, 50, 75, 125, 175]
 Nom = [8, 20, 32, 44, 56]
 
-# generate_portfolio(Nport, ninstances)
-# generate_group_lasso(Ngl, ninstances)
-# generate_lcvx(Nlcvx)
-# generate_oscillating_masses(Nom)
-# generate_robust_kalman_filter(Nrkf)
+generate_portfolio(Nport, ninstances)
+generate_group_lasso(Ngl, ninstances)
+generate_lcvx(Nlcvx)
+generate_oscillating_masses(Nom)
+generate_robust_kalman_filter(Nrkf)
