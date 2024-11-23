@@ -55,8 +55,8 @@ def lcvx(T):
 
     x = cp.Variable((nx, T + 1))
     z = cp.Variable(T + 1)
-    u = cp.Variable((nu, T + 1))
-    s = cp.Variable(T + 1)
+    u = cp.Variable((nu, T))
+    s = cp.Variable(T)
 
     # Objective
     obj = -z[T]
@@ -73,7 +73,7 @@ def lcvx(T):
         con += [z[k + 1] == z[k] - a * s[k] * dt]
 
     # State and Input Constraints
-    for k in range(T + 1):
+    for k in range(T):
         z0 = np.log(m0 - (a * rho2 * k * dt))
         mu1 = rho1 * np.exp(-z0)
         mu2 = rho2 * np.exp(-z0)

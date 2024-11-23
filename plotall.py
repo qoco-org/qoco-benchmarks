@@ -96,7 +96,7 @@ def plotall():
     qoco_size, qoco_time = get_average_solvetime(df_qoco_lcvx)
     qoco_custom_size, qoco_custom_time = get_average_solvetime(df_qoco_custom_lcvx)
     clarabel_size, clarabel_time = get_average_solvetime(df_clarabel_lcvx)
-    gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_robust_kalman_filter)
+    gurobi_size, gurobi_time = get_average_solvetime(df_gurobi_lcvx)
     mosek_size, mosek_time = get_average_solvetime(df_mosek_lcvx)
     ecos_size, ecos_time = get_average_solvetime(df_ecos_lcvx)
 
