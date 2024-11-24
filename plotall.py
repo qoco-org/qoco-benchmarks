@@ -399,7 +399,7 @@ def plotall():
         label="QOCO",
     )
 
-    plt.legend(loc="best")
+    plt.legend(loc="lower right")
     plt.ylabel("Ratio of problem solved", usetex=True)
     plt.xlabel("Performance ratio", usetex=True)
     plt.grid()
@@ -443,12 +443,12 @@ def plotall():
         label="QOCO",
     )
 
-    plt.legend(loc="best")
+    plt.legend(loc="lower right")
     plt.ylabel("Fraction of problem solved within t", usetex=True)
-    plt.xlabel("Solvetime t  [in milliseconds]", usetex=True)
+    plt.xlabel("Solvetime t [seconds]", usetex=True)
     plt.grid()
     plt.xscale("log")
-    plt.title("Performance Ratio", usetex=True)
+    plt.title("Solution Time Profile", usetex=True)
     strFile = "plots/benchmark_problems_absolute_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -503,5 +503,3 @@ def plotall():
         )
         < 1e-5
     )
-
-    plt.show()

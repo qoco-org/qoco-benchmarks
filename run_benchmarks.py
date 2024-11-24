@@ -5,6 +5,7 @@ from run_problems.run_oscillating_masses import *
 from run_problems.run_group_lasso import *
 from plotall import plotall
 from postprocess import *
+from utils import *
 
 regen_solver = False
 ninstances = 20
@@ -19,4 +20,6 @@ solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco"]
 get_overall_performance(solvers)
 compute_relative_profile(solvers, "./results/overall")
 compute_absolute_profile(solvers, "./results/overall")
+compute_shifted_geometric_mean(solvers, "./results/overall", "benchmark")
 plotall()
+export_figures()
