@@ -365,6 +365,51 @@ def plotall():
         os.remove(strFile)
     plt.savefig(strFile)
 
+    # Plot performance profile
+    df_perf = pd.read_csv("./results/overall/performance_profiles.csv")
+    plt.figure(dpi=200)
+    plt.plot(
+        df_perf["tau"].values,
+        df_perf["clarabel"].values,
+        color="darkviolet",
+        label="Clarabel",
+    )
+    plt.plot(
+        df_perf["tau"].values,
+        df_perf["ecos"].values,
+        color="mediumseagreen",
+        label="ECOS",
+    )
+    plt.plot(
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
+    )
+    plt.plot(
+        df_perf["tau"].values,
+        df_perf["mosek"].values,
+        color="firebrick",
+        label="Mosek",
+    )
+    plt.plot(
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
+    )
+
+    plt.legend(loc="best")
+    plt.ylabel("Ratio of problem solved", usetex=True)
+    plt.xlabel("Performance ratio", usetex=True)
+    plt.grid()
+    plt.xscale("log")
+    plt.title("Performance Ratio", usetex=True)
+    strFile = "plots/benchmark_problems_performance_plot.pdf"
+    if os.path.isfile(strFile):
+        os.remove(strFile)
+    plt.savefig(strFile)
+
     # Sanity check to make sure custom solvers are generated based on the most updated data.
     assert (
         np.linalg.norm(

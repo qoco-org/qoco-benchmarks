@@ -1,8 +1,26 @@
-import os
+import os, shutil
 import pandas as pd
 import numpy as np
 
 SOLUTION_PRESENT = ["QOCO_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
+
+
+# Creates directory ./results/overall and for each solver generates a .csv that concatinates the results from all the problems solved. Need this to compute overall performance plots.
+def get_overall_performance(solvers):
+    results = "./results"
+    os.makedirs("./results/overall", exist_ok=True)
+
+    # Loop over all solvers.
+    for solver in solvers:
+        overall_df = pd.DataFrame()
+        # Loop over all problems
+        for item in os.listdir(results):
+            if item == "overall":
+                continue
+            item_path = os.path.join(results, item)
+            df = pd.read_csv(os.path.join(item_path, solver + ".csv"))
+            overall_df = pd.concat([overall_df, df], ignore_index=True)
+        overall_df.to_csv(os.path.join("./results/overall", solver + ".csv"))
 
 
 # Function is from osqp_benchmarks (https://github.com/osqp/osqp_benchmarks/blob/master/utils/benchmark.py#L61)
