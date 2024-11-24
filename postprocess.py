@@ -148,7 +148,7 @@ def compute_shifted_geometric_mean(solvers, dir, name):
     mings = np.min([rs[s] for s in solvers])
     for s in solvers:
         rs[s] /= mings
-        fail[s] *= (100 / n_prob)
+        fail[s] *= 100 / n_prob
     f = open(os.path.join("./plots", name + "_sgm.tex"), "w")
     f.write("\\begin{tabular}{lccccc}\n")
     f.write("  \hline\n")

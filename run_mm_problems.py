@@ -1,24 +1,21 @@
 import scipy.io
 from pathlib import Path
 import qoco
-import osqp
 import clarabel
-import scs
-import piqp
-from parse_mm import *
+from mm_problems.parse_mm import *
 import pandas as pd
-from mm_opt import *
+from mm_problems.mm_opt import *
 import cvxpy as cp
+from solvers.solvers import *
 
 
 high_acc = 1e-7
 low_acc = 1e-5
 
 solve_dict_qoco = {}
-solve_dict_osqp = {}
 solve_dict_clarabel = {}
-solve_dict_piqp = {}
-solve_dict_scs = {}
+solve_dict_gurobi = {}
+solve_dict_mosek = {}
 solve_dict_ecos = {}
 directory = Path("mm_problems/MAT_Files")
 for file_path in directory.iterdir():
@@ -26,7 +23,7 @@ for file_path in directory.iterdir():
         mat = scipy.io.loadmat(file_path)
         problem_name = file_path.stem
         print(file_path)
-        if len(mat["lb"]) > 40000:
+        if len(mat["lb"]) > 500:
             continue
 
         # QOCO
@@ -45,6 +42,25 @@ for file_path in directory.iterdir():
             "run_time": res_qoco.setup_time_sec + res_qoco.solve_time_sec,
             "obj": res_qoco.obj,
         }
+
+        # Gurobi
+        x = cp.Variable(n)
+        obj = cp.Minimize(0.5 * cp.quad_form(x, P, True) + c.T @ x)
+        con = []
+        if A is not None:
+            con += [A @ x == b]
+        if G is not None:
+            con += [G @ x == h]
+        prob = cp.Problem(obj, con)
+        solve_dict_gurobi[problem_name] = gurobi_solve(prob, 1e-7, N=1)
+
+        # Mosek
+        # x = cp.Variable(n)
+        # obj = cp.Minimize(0.5 * cp.quad_form(x, P, True) + c.T @ x)
+        # con = [A @ x == b, G @ x <= h]
+        # prob = cp.Problem(obj, con)
+        solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
+
         # if (res_qoco.status == 'QOCO_SOLVED'):
         #     print(abs(res_qoco.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
 
@@ -72,32 +88,31 @@ for file_path in directory.iterdir():
         #     }
 
         # Clarabel
-        # P, c, A, b, p, m, cones = parse_mm_clarabel(mat)
-        # settings = clarabel.DefaultSettings()
-        # settings.tol_gap_abs = high_acc
-        # settings.tol_gap_rel = high_acc
-        # settings.tol_feas = high_acc
-        # settings.verbose = False
-        # solver = clarabel.DefaultSolver(P, c, A, b, cones, settings)
-        # res_clarabel = solver.solve()
-        # solve_dict_clarabel[problem_name] = {
-        #     "status": str(res_clarabel.status),
-        #     "setup_time": np.nan,
-        #     "solve_time": res_clarabel.solve_time,
-        #     "run_time": res_clarabel.solve_time,
-        #     "obj": res_clarabel.obj_val,
-        # }
+        P, c, A, b, p, m, cones = parse_mm_clarabel(mat)
+        settings = clarabel.DefaultSettings()
+        settings.tol_gap_abs = high_acc
+        settings.tol_gap_rel = high_acc
+        settings.tol_feas = high_acc
+        settings.verbose = False
+        solver = clarabel.DefaultSolver(P, c, A, b, cones, settings)
+        res_clarabel = solver.solve()
+        solve_dict_clarabel[problem_name] = {
+            "status": str(res_clarabel.status),
+            "setup_time": np.nan,
+            "solve_time": res_clarabel.solve_time,
+            "run_time": res_clarabel.solve_time,
+            "obj": res_clarabel.obj_val,
+        }
 
 df_qoco = pd.DataFrame(solve_dict_qoco).T
-df_osqp = pd.DataFrame(solve_dict_osqp).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
-df_piqp = pd.DataFrame(solve_dict_piqp).T
-df_scs = pd.DataFrame(solve_dict_scs).T
+df_gurobi = pd.DataFrame(solve_dict_gurobi).T
+df_mosek = pd.DataFrame(solve_dict_mosek).T
 # df_ecos = pd.DataFrame(solve_dict_ecos).T
 
-df_qoco.to_csv("results/mm_qoco.csv")
-# df_osqp.to_csv("results/mm_osqp.csv")
-# df_clarabel.to_csv("results/mm_clarabel.csv")
-# df_piqp.to_csv("results/mm_piqp.csv")
-# df_scs.to_csv("results/mm_scs.csv")
+df_qoco.to_csv("results/maros/qoco.csv")
+df_clarabel.to_csv("results/maros/clarabel.csv")
+df_gurobi.to_csv("results/maros/gurobi.csv")
+df_mosek.to_csv("results/maros/mosek.csv")
+
 # df_ecos.to_csv("results/mm_ecos.csv")
