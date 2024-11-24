@@ -9,13 +9,14 @@ from postprocess import *
 regen_solver = False
 ninstances = 20
 nruns = 100
-run_lcvx(regen_solver, ninstances, nruns)
-run_robust_kalman_filter(regen_solver, ninstances, nruns)
-run_portfolio(regen_solver, ninstances, nruns)
-run_oscillating_masses(regen_solver, ninstances, nruns)
-run_group_lasso(regen_solver, ninstances, nruns)
+# run_lcvx(regen_solver, ninstances, nruns)
+# run_robust_kalman_filter(regen_solver, ninstances, nruns)
+# run_portfolio(regen_solver, ninstances, nruns)
+# run_oscillating_masses(regen_solver, ninstances, nruns)
+# run_group_lasso(regen_solver, ninstances, nruns)
 
 solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco"]
 get_overall_performance(solvers)
-compute_performance_profiles(solvers, "./results/overall")
+compute_relative_profile(solvers, "./results/overall")
+compute_absolute_profile(solvers, "./results/overall")
 plotall()
