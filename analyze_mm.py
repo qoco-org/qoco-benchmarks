@@ -24,7 +24,7 @@ for status in df_qoco["status"]:
         qoco_solved += 1
 
 for status in df_clarabel["status"]:
-    if status == "Solved":
+    if status == "optimal":
         clarabel_solved += 1
 
 for status in df_ecos["status"]:

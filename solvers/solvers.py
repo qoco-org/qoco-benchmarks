@@ -164,6 +164,12 @@ def qoco_solve(prob, tol=1e-7, N=10):
     setup_time = np.inf
     solve_time = np.inf
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
+    
+    G = G if m > 0 else None
+    h = h if m > 0 else None
+    A = A if p > 0 else None
+    b = b if p > 0 else None
+
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol)
 
