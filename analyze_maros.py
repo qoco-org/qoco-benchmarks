@@ -45,7 +45,12 @@ print("ECOS Solved " + str(ecos_solved) + " out of " + str(num_prob))
 print("Gurobi Solved " + str(gurobi_solved) + " out of " + str(num_prob))
 print("Mosek Solved " + str(mosek_solved) + " out of " + str(num_prob))
 
+idx = np.where(df_qoco["status"].values != "QOCO_SOLVED")
+qoco_failed = df_qoco.iloc[idx]["Unnamed: 0"].values
+print("QOCO Failed:", qoco_failed)
+
 # Plot performance profile
-compute_relative_profile(solvers, "./results/maros")
-compute_absolute_profile(solvers, "./results/maros")
-compute_shifted_geometric_mean(solvers, "./results/maros", "maros")
+tmax = 100
+compute_relative_profile(solvers, tmax, "./results/maros")
+compute_absolute_profile(solvers, tmax, "./results/maros")
+compute_shifted_geometric_mean(solvers, tmax, "./results/maros", "maros")

@@ -10,25 +10,31 @@ timelimit = 100
 # Creates directory ./results/overall and for each solver generates a .csv that concatanates the results from all the problems solved.
 # Need this to compute overall performance plots.
 def get_overall_performance(solvers):
-    results = "./results"
-    os.makedirs("./results/overall", exist_ok=True)
+    if "qoco_custom" in solvers:
+        dir = "./results/overall_custom"
+        nprob = 100
+    else:
+        dir = "./results/overall"
+        nprob = 200
+    
+    os.makedirs(dir, exist_ok=True)
 
     # Loop over all solvers.
     for s in solvers:
         overall_df = pd.DataFrame()
         # Loop over all problems
-        for item in os.listdir(results):
-            if item == "overall":
+        for item in os.listdir("./results"):
+            if item == "overall" or item == "overall_custom" or item == "maros":
                 continue
-            item_path = os.path.join(results, item)
-            df = pd.read_csv(os.path.join(item_path, s + ".csv"))
+            item_path = os.path.join("./results", item)
+            df = pd.read_csv(os.path.join(item_path, s + ".csv"))[0:nprob]
             overall_df = pd.concat([overall_df, df], ignore_index=True)
-        overall_df.to_csv(os.path.join("./results/overall", s + ".csv"))
+        overall_df.to_csv(os.path.join(dir, s + ".csv"))
 
 
 # Function is from osqp_benchmarks (https://github.com/osqp/osqp_benchmarks/blob/master/utils/benchmark.py#L61)
 # Computes relative performannce profile and saves data to .csv in dir.
-def compute_relative_profile(solvers, dir):
+def compute_relative_profile(solvers, tmax, dir):
     t = {}
     status = {}
     for s in solvers:
@@ -43,7 +49,7 @@ def compute_relative_profile(solvers, dir):
             # Set max time for solvers that did not succeed
             for idx in range(n_prob):
                 if status[s][idx] not in SOLUTION_PRESENT:
-                    t[s][idx] = timelimit
+                    t[s][idx] = tmax
 
     # Dictionary of relative times for each solver/problem
     r = {}
@@ -80,7 +86,7 @@ def compute_relative_profile(solvers, dir):
 
 
 # Computes absolute performannce profile and saves data to .csv in dir.
-def compute_absolute_profile(solvers, dir):
+def compute_absolute_profile(solvers, tmax, dir):
     t = {}
     status = {}
     for s in solvers:
@@ -95,11 +101,11 @@ def compute_absolute_profile(solvers, dir):
             # Set max time for solvers that did not succeed
             for idx in range(n_prob):
                 if status[s][idx] not in SOLUTION_PRESENT:
-                    t[s][idx] = timelimit
+                    t[s][idx] = tmax
 
     # Compute curve for all solvers
     n_tau = 1000
-    tau_vec = np.logspace(-4, 1, n_tau)
+    tau_vec = np.logspace(-4.3, 1, n_tau)
     rho = {"tau": tau_vec}
 
     for s in solvers:
@@ -118,7 +124,7 @@ def compute_absolute_profile(solvers, dir):
 
 
 # Computes sgm and writes .tex table to plots directory.
-def compute_shifted_geometric_mean(solvers, dir, name):
+def compute_shifted_geometric_mean(solvers, tmax, dir, name):
     t = {}
     status = {}
     fail = {}
@@ -136,7 +142,7 @@ def compute_shifted_geometric_mean(solvers, dir, name):
             for idx in range(n_prob):
                 if status[s][idx] not in SOLUTION_PRESENT:
                     fail[s] += 1
-                    t[s][idx] = timelimit
+                    t[s][idx] = tmax
 
     rs = {}
     for s in solvers:
@@ -156,12 +162,60 @@ def compute_shifted_geometric_mean(solvers, dir, name):
         "   & \\textbf{QOCO} & \\textbf{Clarabel} & \\textbf{ECOS} & \\textbf{Gurobi} & \\textbf{Mosek} \\\ \\hline\n"
     )
     f.write(
-        "  Shifted GM & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
+        "  Shifted GM & \\textbf{%.1f} & %.1f & %.1f & %.1f & %.1f \\\ \n"
         % (rs["qoco"], rs["clarabel"], rs["ecos"], rs["gurobi"], rs["mosek"])
     )
     f.write(
         "  Failure Rate (\%%) & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \hline \n"
         % (fail["qoco"], fail["clarabel"], fail["ecos"], fail["gurobi"], fail["mosek"])
+    )
+    f.write("\end{tabular}\n")
+    f.close()
+
+def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
+    t = {}
+    status = {}
+    fail = {}
+    for s in solvers:
+        fail[s] = 0
+        path = os.path.join(dir, s + ".csv")
+        with open(path, "rb") as f:
+            df = pd.read_csv(path)
+
+            n_prob = len(df)
+            t[s] = df["run_time"].values
+            status[s] = df["status"].values
+
+            # Set max time for solvers that did not succeed
+            for idx in range(n_prob):
+                if status[s][idx] not in SOLUTION_PRESENT:
+                    fail[s] += 1
+                    t[s][idx] = tmax
+
+    rs = {}
+    for s in solvers:
+        rs[s] = 1
+        for p in range(n_prob):
+            rs[s] *= 1 + t[s][p]
+        rs[s] = (rs[s] ** (1 / n_prob)) - 1
+
+    mings = np.min([rs[s] for s in solvers])
+    for s in solvers:
+        rs[s] /= mings
+        fail[s] *= 100 / n_prob
+    f = open(os.path.join("./plots", name + "_sgm.tex"), "w")
+    f.write("\\begin{tabular}{lcccccc}\n")
+    f.write("  \hline\n")
+    f.write(
+        "    & \\textbf{QOCO Custom}   & \\textbf{QOCO} & \\textbf{Clarabel} & \\textbf{ECOS} & \\textbf{Gurobi} & \\textbf{Mosek} \\\ \\hline\n"
+    )
+    f.write(
+        "  Shifted GM & \\textbf{%.1f} & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
+        % (rs["qoco_custom"], rs["qoco"], rs["clarabel"], rs["ecos"], rs["gurobi"], rs["mosek"])
+    )
+    f.write(
+        "  Failure Rate (\%%) & %.1f & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \hline \n"
+        % (fail["qoco_custom"], fail["qoco"], fail["clarabel"], fail["ecos"], fail["gurobi"], fail["mosek"])
     )
     f.write("\end{tabular}\n")
     f.close()

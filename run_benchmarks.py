@@ -16,10 +16,18 @@ nruns = 100
 # run_oscillating_masses(regen_solver, ninstances, nruns)
 # run_group_lasso(regen_solver, ninstances, nruns)
 
-# solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco"]
-# get_overall_performance(solvers)
-# compute_relative_profile(solvers, "./results/overall")
-# compute_absolute_profile(solvers, "./results/overall")
-# compute_shifted_geometric_mean(solvers, "./results/overall", "benchmark")
+tmax = 10
+
+solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco"]
+get_overall_performance(solvers)
+compute_relative_profile(solvers, tmax,  "./results/overall")
+compute_absolute_profile(solvers, tmax, "./results/overall")
+compute_shifted_geometric_mean(solvers, tmax, "./results/overall", "benchmark")
+
+solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco", "qoco_custom"]
+get_overall_performance(solvers)
+compute_relative_profile(solvers, tmax, "./results/overall_custom")
+compute_absolute_profile(solvers, tmax, "./results/overall_custom")
+compute_shifted_geometric_mean_custom(solvers, tmax, "./results/overall_custom", "benchmark_custom")
 plotall()
-# export_figures()
+export_figures()
