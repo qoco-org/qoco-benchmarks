@@ -86,10 +86,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
     try:
         for i in range(N):
             sol = prob.solve(
-                solver=cp.CLARABEL,
-                tol_gap_abs=tol,
-                tol_gap_rel=tol,
-                tol_feas=tol,
+                solver=cp.CLARABEL, tol_gap_abs=tol, tol_gap_rel=tol, tol_feas=tol,
             )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0.0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
@@ -130,12 +127,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
     solve_time = np.inf
     try:
         for i in range(N):
-            sol = prob.solve(
-                solver=cp.ECOS,
-                abstol=tol,
-                reltol=tol,
-                feastol=tol,
-            )
+            sol = prob.solve(solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol,)
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         if prob.status == "optimal":

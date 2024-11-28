@@ -10,7 +10,6 @@ def run_lcvx(regen_solver, ninstances, nruns):
     Nlist = [15, 50, 75, 100, 125, 150, 200, 250, 300, 350]
 
     var_list = []
-    solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
     ecos_res = {}
     qoco_res = {}
@@ -46,14 +45,3 @@ def run_lcvx(regen_solver, ninstances, nruns):
     df_mosek.to_csv("results/lcvx/mosek.csv")
     df_gurobi.to_csv("results/lcvx/gurobi.csv")
     df_ecos.to_csv("results/lcvx/ecos.csv")
-
-
-# compute_performance_profiles(solvers, "./results/lcvx")
-# df_perf = pd.read_csv("./results/lcvx/performance_profiles.csv")
-# for s in solvers:
-#     plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
-# plt.legend(loc="best")
-# plt.ylabel(r"$\rho_{s}$")
-# plt.xlabel(r"$\tau$")
-# plt.grid()
-# plt.xscale("log")

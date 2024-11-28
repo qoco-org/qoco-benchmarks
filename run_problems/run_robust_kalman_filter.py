@@ -46,14 +46,3 @@ def run_robust_kalman_filter(regen_solver, ninstances, nruns):
     df_mosek.to_csv("results/robust_kalman_filter/mosek.csv")
     df_gurobi.to_csv("results/robust_kalman_filter/gurobi.csv")
     df_ecos.to_csv("results/robust_kalman_filter/ecos.csv")
-
-
-# compute_performance_profiles(solvers, "./results/robust_kalman_filter")
-# df_perf = pd.read_csv("./results/robust_kalman_filter/performance_profiles.csv")
-# for s in solvers:
-#     plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
-# plt.legend(loc="best")
-# plt.ylabel(r"$\rho_{s}$")
-# plt.xlabel(r"$\tau$")
-# plt.grid()
-# plt.xscale("log")

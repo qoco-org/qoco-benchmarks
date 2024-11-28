@@ -9,7 +9,6 @@ def run_portfolio(regen_solver, ninstances, nruns):
 
     Nlist = [2, 4, 6, 8, 10, 15, 20, 25, 30, 35]
     var_list = []
-    solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
     ecos_res = {}
     qoco_res = {}
@@ -45,14 +44,3 @@ def run_portfolio(regen_solver, ninstances, nruns):
     df_mosek.to_csv("results/portfolio/mosek.csv")
     df_gurobi.to_csv("results/portfolio/gurobi.csv")
     df_ecos.to_csv("results/portfolio/ecos.csv")
-
-
-# compute_performance_profiles(solvers, "./results/robust_kalman_filter")
-# df_perf = pd.read_csv("./results/robust_kalman_filter/performance_profiles.csv")
-# for s in solvers:
-#     plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
-# plt.legend(loc="best")
-# plt.ylabel(r"$\rho_{s}$")
-# plt.xlabel(r"$\tau$")
-# plt.grid()
-# plt.xscale("log")

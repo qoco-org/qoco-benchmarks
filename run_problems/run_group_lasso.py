@@ -9,7 +9,6 @@ def run_group_lasso(regen_solver, ninstances, nruns):
 
     Nlist = [1, 2, 3, 4, 5, 8, 10, 12, 14, 16]
     var_list = []
-    solvers = ["clarabel", "ecos", "qoco_custom", "qoco", "mosek", "gurobi"]
     clarabel_res = {}
     ecos_res = {}
     qoco_res = {}
@@ -44,14 +43,3 @@ def run_group_lasso(regen_solver, ninstances, nruns):
     df_mosek.to_csv("results/group_lasso/mosek.csv")
     df_gurobi.to_csv("results/group_lasso/gurobi.csv")
     df_ecos.to_csv("results/group_lasso/ecos.csv")
-
-
-# compute_performance_profiles(solvers, "./results/robust_kalman_filter")
-# df_perf = pd.read_csv("./results/robust_kalman_filter/performance_profiles.csv")
-# for s in solvers:
-#     plt.plot(df_perf["tau"].values, df_perf[s].values, label=s)
-# plt.legend(loc="best")
-# plt.ylabel(r"$\rho_{s}$")
-# plt.xlabel(r"$\tau$")
-# plt.grid()
-# plt.xscale("log")

@@ -23,7 +23,7 @@ for file_path in directory.iterdir():
         mat = scipy.io.loadmat(file_path)
         problem_name = file_path.stem
         print(file_path)
-        if len(mat["lb"]) > 500:
+        if len(mat["lb"]) > 5000:
             continue
 
         # QOCO
@@ -50,42 +50,15 @@ for file_path in directory.iterdir():
         if A is not None:
             con += [A @ x == b]
         if G is not None:
-            con += [G @ x == h]
+            con += [G @ x <= h]
         prob = cp.Problem(obj, con)
         solve_dict_gurobi[problem_name] = gurobi_solve(prob, 1e-7, N=1)
 
         # Mosek
-        # x = cp.Variable(n)
-        # obj = cp.Minimize(0.5 * cp.quad_form(x, P, True) + c.T @ x)
-        # con = [A @ x == b, G @ x <= h]
-        # prob = cp.Problem(obj, con)
         solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
 
-        # if (res_qoco.status == 'QOCO_SOLVED'):
-        #     print(abs(res_qoco.obj - OPT_COST_MAP[problem_name]) / abs(OPT_COST_MAP[problem_name]))
-
         ## ECOS
-        # x = cp.Variable(n)
-        # obj = cp.Minimize(0.5*cp.quad_form(x, P, True) + q.T @ x)
-        # con = [lb <= x, x <= ub, rl <= Amm@x, Amm@x <= ru]
-        # prob = cp.Problem(obj, con)
-        # try:
-        #     obj = prob.solve(solver=cp.ECOS, verbose=True)
-        #     solve_dict_ecos[problem_name] = {
-        #         "status": "Solved",
-        #         "setup_time": np.nan,
-        #         "solve_time": prob.solver_stats.solve_time,
-        #         "run_time": prob.solver_stats.solve_time,
-        #         "obj": obj,
-        #     }
-        # except:
-        #     solve_dict_ecos[problem_name] = {
-        #         "status": "FAILED",
-        #         "setup_time": np.nan,
-        #         "solve_time": np.nan,
-        #         "run_time": np.nan,
-        #         "obj": obj,
-        #     }
+        solve_dict_ecos[problem_name] = ecos_solve(prob, 1e-7, N=1)
 
         # Clarabel
         P, c, A, b, p, m, cones = parse_mm_clarabel(mat)
@@ -108,11 +81,10 @@ df_qoco = pd.DataFrame(solve_dict_qoco).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_gurobi = pd.DataFrame(solve_dict_gurobi).T
 df_mosek = pd.DataFrame(solve_dict_mosek).T
-# df_ecos = pd.DataFrame(solve_dict_ecos).T
+df_ecos = pd.DataFrame(solve_dict_ecos).T
 
 df_qoco.to_csv("results/maros/qoco.csv")
 df_clarabel.to_csv("results/maros/clarabel.csv")
 df_gurobi.to_csv("results/maros/gurobi.csv")
 df_mosek.to_csv("results/maros/mosek.csv")
-
-# df_ecos.to_csv("results/mm_ecos.csv")
+df_ecos.to_csv("results/maros/ecos.csv")
