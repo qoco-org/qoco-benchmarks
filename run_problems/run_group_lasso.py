@@ -1,10 +1,9 @@
 from problems.group_lasso import group_lasso
 from solvers.solvers import *
 import pandas as pd
-from matplotlib import pyplot as plt
 
 
-def run_group_lasso(regen_solver, ninstances, nruns):
+def run_group_lasso(ninstances, nruns):
     np.random.seed(123)
 
     Nlist = [1, 2, 3, 4, 5, 8, 10, 12, 14, 16]
@@ -27,7 +26,7 @@ def run_group_lasso(regen_solver, ninstances, nruns):
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
             if N <= 5:
                 qoco_custom_res[name] = qoco_custom_solve(
-                    prob, "./generated_solvers", name, regen_solver, nruns
+                    prob, "./generated_solvers", name, nruns
                 )
 
     df_qoco = pd.DataFrame(qoco_res).T

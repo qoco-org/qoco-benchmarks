@@ -3,7 +3,7 @@ from solvers.solvers import *
 import pandas as pd
 
 
-def run_robust_kalman_filter(regen_solver, ninstances, nruns):
+def run_robust_kalman_filter(ninstances, nruns):
     np.random.seed(123)
 
     Nlist = [25, 50, 75, 125, 175, 225, 300, 375, 450, 500]
@@ -29,7 +29,6 @@ def run_robust_kalman_filter(regen_solver, ninstances, nruns):
                     prob,
                     "./generated_solvers",
                     "robust_kalman_filter_" + str(N),
-                    regen_solver,
                     nruns,
                 )
 

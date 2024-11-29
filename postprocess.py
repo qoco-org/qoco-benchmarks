@@ -16,7 +16,7 @@ def get_overall_performance(solvers):
     else:
         dir = "./results/overall"
         nprob = 200
-    
+
     os.makedirs(dir, exist_ok=True)
 
     # Loop over all solvers.
@@ -172,6 +172,7 @@ def compute_shifted_geometric_mean(solvers, tmax, dir, name):
     f.write("\end{tabular}\n")
     f.close()
 
+
 def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
     t = {}
     status = {}
@@ -211,11 +212,25 @@ def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
     )
     f.write(
         "  Shifted GM & \\textbf{%.1f} & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
-        % (rs["qoco_custom"], rs["qoco"], rs["clarabel"], rs["ecos"], rs["gurobi"], rs["mosek"])
+        % (
+            rs["qoco_custom"],
+            rs["qoco"],
+            rs["clarabel"],
+            rs["ecos"],
+            rs["gurobi"],
+            rs["mosek"],
+        )
     )
     f.write(
         "  Failure Rate (\%%) & %.1f & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \hline \n"
-        % (fail["qoco_custom"], fail["qoco"], fail["clarabel"], fail["ecos"], fail["gurobi"], fail["mosek"])
+        % (
+            fail["qoco_custom"],
+            fail["qoco"],
+            fail["clarabel"],
+            fail["ecos"],
+            fail["gurobi"],
+            fail["mosek"],
+        )
     )
     f.write("\end{tabular}\n")
     f.close()

@@ -1,10 +1,9 @@
 from problems.oscillating_masses import oscillating_masses
 from solvers.solvers import *
 import pandas as pd
-from matplotlib import pyplot as plt
 
 
-def run_oscillating_masses(regen_solver, ninstances, nruns):
+def run_oscillating_masses(ninstances, nruns):
     np.random.seed(123)
 
     Nlist = [8, 20, 32, 44, 56, 76, 96, 116, 136, 156]
@@ -33,7 +32,6 @@ def run_oscillating_masses(regen_solver, ninstances, nruns):
                     prob,
                     "./generated_solvers",
                     "oscillating_masses_" + str(N),
-                    regen_solver,
                     nruns,
                 )
             if N <= 20:

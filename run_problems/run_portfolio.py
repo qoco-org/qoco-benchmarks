@@ -1,10 +1,9 @@
 from problems.portfolio import portfolio
 from solvers.solvers import *
 import pandas as pd
-from matplotlib import pyplot as plt
 
 
-def run_portfolio(regen_solver, ninstances, nruns):
+def run_portfolio(ninstances, nruns):
     np.random.seed(123)
 
     Nlist = [2, 4, 6, 8, 10, 15, 20, 25, 30, 35]
@@ -28,7 +27,7 @@ def run_portfolio(regen_solver, ninstances, nruns):
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
             if N <= 10:
                 qoco_custom_res[name] = qoco_custom_solve(
-                    prob, "./generated_solvers", name, regen_solver, nruns
+                    prob, "./generated_solvers", name, nruns
                 )
 
     df_qoco = pd.DataFrame(qoco_res).T
