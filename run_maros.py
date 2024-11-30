@@ -24,22 +24,7 @@ for file_path in directory.iterdir():
         if len(mat["lb"]) > 5000:
             continue
 
-        list = [
-            "QSHIP08S",
-            "QSHIP04L",
-            "QSHIP04S",
-            "QSC205",
-            "QFORPLAN",
-            "QPCBOEI1",
-            "QPILOTNO",
-            "QSIERRA",
-            "QSHIP08L",
-            "QSHIP12S",
-            "QPCBOEI2",
-            "YAO",
-            "QGFRDXPN",
-            "QBRANDY",
-        ]
+        list = ["YAO"]
         # if problem_name not in list:
         #     continue
 
@@ -58,16 +43,16 @@ for file_path in directory.iterdir():
         solve_dict_qoco[problem_name] = qoco_solve(prob, 1e-7, N=1)
 
         # Gurobi
-        # solve_dict_gurobi[problem_name] = gurobi_solve(prob, 1e-7, N=1)
+        solve_dict_gurobi[problem_name] = gurobi_solve(prob, 1e-7, N=1)
 
-        # # Mosek
-        # solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
+        # Mosek
+        solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
 
-        # ## ECOS
-        # solve_dict_ecos[problem_name] = ecos_solve(prob, 1e-7, N=1)
+        # ECOS
+        solve_dict_ecos[problem_name] = ecos_solve(prob, 1e-7, N=1)
 
-        # # Clarabel
-        # solve_dict_clarabel[problem_name] = clarabel_solve(prob, 1e-7, N=1)
+        # Clarabel
+        solve_dict_clarabel[problem_name] = clarabel_solve(prob, 1e-7, N=1)
 
 df_qoco = pd.DataFrame(solve_dict_qoco).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
@@ -76,7 +61,7 @@ df_mosek = pd.DataFrame(solve_dict_mosek).T
 df_ecos = pd.DataFrame(solve_dict_ecos).T
 
 df_qoco.to_csv("results/maros/qoco.csv")
-# df_clarabel.to_csv("results/maros/clarabel.csv")
-# df_gurobi.to_csv("results/maros/gurobi.csv")
-# df_mosek.to_csv("results/maros/mosek.csv")
-# df_ecos.to_csv("results/maros/ecos.csv")
+df_clarabel.to_csv("results/maros/clarabel.csv")
+df_gurobi.to_csv("results/maros/gurobi.csv")
+df_mosek.to_csv("results/maros/mosek.csv")
+df_ecos.to_csv("results/maros/ecos.csv")

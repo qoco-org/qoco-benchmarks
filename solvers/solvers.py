@@ -179,7 +179,26 @@ def qoco_solve(prob, tol=1e-7, N=10):
     b = b if p > 0 else None
 
     prob_qoco = qoco.QOCO()
-    prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol)
+    prob_qoco.setup(
+        n,
+        m,
+        p,
+        P,
+        c,
+        A,
+        b,
+        G,
+        h,
+        l,
+        nsoc,
+        q,
+        abstol=tol,
+        reltol=tol,
+        ruiz_iters=0,
+        verbose=False,
+        iter_ref_iters=3,
+        kkt_dynamic_reg=1e-8,
+    )
 
     for i in range(N):
         res_qoco = prob_qoco.solve()

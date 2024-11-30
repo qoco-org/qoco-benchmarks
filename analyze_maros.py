@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
 from postprocess import *
+from plotall import plotall
 
 solvers = ["qoco", "clarabel", "ecos", "gurobi", "mosek"]
 
@@ -54,3 +55,4 @@ tmax = 100
 compute_relative_profile(solvers, tmax, "./results/maros")
 compute_absolute_profile(solvers, tmax, "./results/maros")
 compute_shifted_geometric_mean(solvers, tmax, "./results/maros", "maros")
+plotall()
