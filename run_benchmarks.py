@@ -15,7 +15,7 @@ run_portfolio(ninstances, nruns)
 run_oscillating_masses(ninstances, nruns)
 run_group_lasso(ninstances, nruns)
 
-tmax = 10
+tmax = 10.01
 
 solvers = ["clarabel", "ecos", "gurobi", "mosek", "qoco"]
 get_overall_performance(solvers)

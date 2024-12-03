@@ -34,7 +34,7 @@ def get_overall_performance(solvers):
 
 # Function is from osqp_benchmarks (https://github.com/osqp/osqp_benchmarks/blob/master/utils/benchmark.py#L61)
 # Computes relative performannce profile and saves data to .csv in dir.
-def compute_relative_profile(solvers, tmax, dir):
+def compute_relative_profile(solvers, tmax, dir, xrange=(0, 2)):
     t = {}
     status = {}
     for s in solvers:
@@ -67,7 +67,7 @@ def compute_relative_profile(solvers, tmax, dir):
 
     # Compute curve for all solvers
     n_tau = 1000
-    tau_vec = np.logspace(0, 2, n_tau)
+    tau_vec = np.logspace(xrange[0], xrange[1], n_tau)
     rho = {"tau": tau_vec}
 
     for s in solvers:
@@ -86,7 +86,7 @@ def compute_relative_profile(solvers, tmax, dir):
 
 
 # Computes absolute performannce profile and saves data to .csv in dir.
-def compute_absolute_profile(solvers, tmax, dir):
+def compute_absolute_profile(solvers, tmax, dir, xrange=(-4.3, 1)):
     t = {}
     status = {}
     for s in solvers:
@@ -105,7 +105,7 @@ def compute_absolute_profile(solvers, tmax, dir):
 
     # Compute curve for all solvers
     n_tau = 1000
-    tau_vec = np.logspace(-4.3, 1, n_tau)
+    tau_vec = np.logspace(xrange[0], xrange[1], n_tau)
     rho = {"tau": tau_vec}
 
     for s in solvers:
