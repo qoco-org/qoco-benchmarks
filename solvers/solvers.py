@@ -194,10 +194,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
         q,
         abstol=tol,
         reltol=tol,
-        ruiz_iters=0,
         verbose=False,
-        iter_ref_iters=1,
-        kkt_dynamic_reg=1e-8,
     )
 
     for i in range(N):
