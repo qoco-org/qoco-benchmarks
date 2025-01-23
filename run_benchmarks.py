@@ -31,4 +31,4 @@ compute_shifted_geometric_mean_custom(
     solvers, tmax, "./results/overall_custom", "benchmark_custom"
 )
 plotall()
-export_figures()
+# export_figures()

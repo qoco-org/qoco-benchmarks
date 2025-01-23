@@ -30,7 +30,7 @@ def parse_maros(mm_data):
     P = mm_data["Q"]
     c = np.squeeze(mm_data["c"], axis=1)
 
-    Amm = mm_data["A"]
+    Amm = mm_data["A"].tocsc()
     rl = np.squeeze(mm_data["rl"], axis=1)
     ru = np.squeeze(mm_data["ru"], axis=1)
     lb = np.squeeze(mm_data["lb"], axis=1)

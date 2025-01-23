@@ -1,0 +1,7 @@
+qoco
+qocogen
+gurobipy=11.0.0
+mosek
+cvxpy
+pandas
+matplotlib
