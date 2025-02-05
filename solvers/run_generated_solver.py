@@ -15,7 +15,7 @@ def run_generated_qoco(solver_dir, nruns, P, A, G, c, b, h):
     os.system(
         "cd "
         + solver_dir
-        + "/build && cmake -DQOCO_CUSTOM_BUILD_TYPE:STR=Release -DENABLE_PRINTING:BOOL=TRUE .. && make -j5 && ./runtest && cd ../.."
+        + "/build && cmake -DQOCO_CUSTOM_BUILD_TYPE:STR=Release .. && make -j5 && ./runtest && cd ../.."
     )
     with open(solver_dir + "/build/result.bin", "rb") as file:
         # Read the unsigned int (4 bytes)
