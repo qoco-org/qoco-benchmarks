@@ -4,14 +4,17 @@ from problems.lcvx import lcvx
 from problems.oscillating_masses import oscillating_masses
 from problems.robust_kalman_filter import robust_kalman_filter
 
-import qoco
+import qocogen
 import numpy as np
 from solvers.cvxpy_to_qoco import convert
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 def call_generate(obj, name):
-    obj.generate_solver("./generated_solvers", name)
+    n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(obj)
+    qocogen.generate_solver(
+        n, m, p, P, c, A, b, G, h, l, nsoc, q, "./generated_solvers", name
+    )
 
 
 def generate_lcvx(Nlist):
@@ -20,9 +23,9 @@ def generate_lcvx(Nlist):
         name = "lcvx_" + str(N)
         prob = lcvx(N)
         n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-        prob_qoco = qoco.QOCO()
-        prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-        prob_qoco.generate_solver("./generated_solvers", name)
+        qocogen.generate_solver(
+            n, m, p, P, c, A, b, G, h, l, nsoc, q, "./generated_solvers", name
+        )
 
 
 def generate_oscillating_masses(Nlist):
@@ -31,9 +34,9 @@ def generate_oscillating_masses(Nlist):
         name = "oscillating_masses_" + str(N)
         prob, x0, Q, R, A, B, umax, xmax = oscillating_masses(N)
         n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-        prob_qoco = qoco.QOCO()
-        prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-        prob_qoco.generate_solver("./generated_solvers", name)
+        qocogen.generate_solver(
+            n, m, p, P, c, A, b, G, h, l, nsoc, q, "./generated_solvers", name
+        )
 
 
 def generate_robust_kalman_filter(Nlist):
@@ -42,9 +45,9 @@ def generate_robust_kalman_filter(Nlist):
         name = "robust_kalman_filter_" + str(N)
         prob = robust_kalman_filter(N)
         n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-        prob_qoco = qoco.QOCO()
-        prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-        prob_qoco.generate_solver("./generated_solvers", name)
+        qocogen.generate_solver(
+            n, m, p, P, c, A, b, G, h, l, nsoc, q, "./generated_solvers", name
+        )
 
 
 def generate_portfolio(Nlist, ninstances):
@@ -56,10 +59,7 @@ def generate_portfolio(Nlist, ninstances):
             name = "portfolio_N_" + str(N) + "_i_" + str(i)
             names.append(name)
             prob = portfolio(N)
-            n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-            prob_qoco = qoco.QOCO()
-            prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-            problems.append(prob_qoco)
+            problems.append(prob)
 
     with ThreadPoolExecutor() as executor:
         futures = [
@@ -80,10 +80,7 @@ def generate_group_lasso(Nlist, ninstances):
             name = "group_lasso_N_" + str(N) + "_i_" + str(i)
             names.append(name)
             prob = group_lasso(N)
-            n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
-            prob_qoco = qoco.QOCO()
-            prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-            problems.append(prob_qoco)
+            problems.append(prob)
 
     with ThreadPoolExecutor() as executor:
         futures = [
