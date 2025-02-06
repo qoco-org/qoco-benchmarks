@@ -18,28 +18,19 @@ def run_generated_qoco(solver_dir, nruns, P, A, G, c, b, h):
         + "/build && cmake -DQOCO_CUSTOM_BUILD_TYPE:STR=Release .. && make -j5 && ./runtest && cd ../.."
     )
     with open(solver_dir + "/build/result.bin", "rb") as file:
-        # Read the unsigned int (4 bytes)
         solved = struct.unpack("B", file.read(1))[0]
-
-        # Read the first double (8 bytes)
+        iters = struct.unpack("I", file.read(4))[0]
         obj = struct.unpack("d", file.read(8))[0]
-
-        # Read the second double (8 bytes)
         runtime_sec = struct.unpack("d", file.read(8))[0]
-    return solved, obj, runtime_sec
+    return solved, iters, obj, runtime_sec
 
 
 def run_generated_cvxgen(solver_dir, x0, Q, R, A, B, umax, xmax, nruns):
     create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax)
     os.system("cd " + solver_dir + " && make -j5 && ./testsolver")
     with open(solver_dir + "/result.bin", "rb") as file:
-        # Read the unsigned int (4 bytes)
         solved = struct.unpack("B", file.read(1))[0]
-
-        # Read the first double (8 bytes)
         obj = struct.unpack("d", file.read(8))[0]
-
-        # Read the second double (8 bytes)
         runtime_sec = struct.unpack("d", file.read(8))[0]
     return solved, obj, runtime_sec
 
@@ -47,7 +38,6 @@ def run_generated_cvxgen(solver_dir, x0, Q, R, A, B, umax, xmax, nruns):
 def create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax):
     if os.path.isfile(solver_dir + "/testsolver.c"):
         os.remove(solver_dir + "/testsolver.c")
-    # time.sleep(1)
 
     f = open(solver_dir + "/testsolver.c", "a")
     f.write("#include <stdio.h>\n")
@@ -84,7 +74,7 @@ def create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax):
     f.write("   fwrite(&solve_time_sec, sizeof(double), 1, file);\n")
     f.write("   fclose(file);\n")
     f.write('   printf("\\nobj: %.17g", work.optval);\n')
-    f.write("}")
+    f.write("}\n\n")
 
     f.write("void load_default_data() {\n")
     n, m = B.shape
@@ -150,6 +140,7 @@ def create_qoco_runtest(solver_dir, nruns, P, A, G, c, b, h):
     f.write('   printf("\\nSolvetime: %.9f ms", 1e3 * solve_time_sec);\n')
     f.write('   FILE *file = fopen("result.bin", "wb");\n')
     f.write("   fwrite(&work.sol.status, sizeof(unsigned char), 1, file);\n")
+    f.write("   fwrite(&work.sol.iters, sizeof(int), 1, file);\n")
     f.write("   fwrite(&work.sol.obj, sizeof(double), 1, file);\n")
     f.write("   fwrite(&solve_time_sec, sizeof(double), 1, file);\n")
     f.write("   fclose(file);\n")

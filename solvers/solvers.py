@@ -23,14 +23,27 @@ def gurobi_solve(prob, tol=1e-7, N=10):
             sol = prob.solve(solver=cp.GUROBI, env=env)
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
-        res = {
-            "size": get_problem_size(prob),
-            "status": prob.status,
-            "setup_time": setup_time,
-            "solve_time": solve_time,
-            "run_time": setup_time + solve_time,
-            "obj": sol,
-        }
+        if prob.status == "optimal":
+            res = {
+                "size": get_problem_size(prob),
+                "status": prob.status,
+                "setup_time": setup_time,
+                "solve_time": solve_time,
+                "run_time": setup_time + solve_time,
+                "obj": sol,
+                "iters": prob.solver_stats.num_iters
+            }
+        else:
+            res = {
+                "size": get_problem_size(prob),
+                "status": prob.status,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+                "iters": np.nan
+
+            }
     except:
         res = {
             "size": get_problem_size(prob),
@@ -39,6 +52,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
 
@@ -58,16 +72,29 @@ def mosek_solve(prob, tol=1e-7, N=10):
                     "MSK_IPAR_PRESOLVE_USE": 0,
                 },
             )
-            setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
+            setup_time = np.minimum(prob.solver_stats.setup_time or 0.0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
-        res = {
-            "size": get_problem_size(prob),
-            "status": prob.status,
-            "setup_time": setup_time,
-            "solve_time": solve_time,
-            "run_time": setup_time + solve_time,
-            "obj": sol,
-        }
+
+        if prob.status == "optimal":
+            res = {
+                "size": get_problem_size(prob),
+                "status": prob.status,
+                "setup_time": setup_time,
+                "solve_time": solve_time,
+                "run_time": setup_time + solve_time,
+                "obj": sol,
+                "iters": prob.solver_stats.num_iters
+            }
+        else:
+            res = {
+                "size": get_problem_size(prob),
+                "status": prob.status,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+                "iters": np.nan
+            }
     except:
         res = {
             "size": get_problem_size(prob),
@@ -76,6 +103,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
 
@@ -102,6 +130,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
+                "iters": prob.solver_stats.num_iters
             }
         else:
             res = {
@@ -111,6 +140,8 @@ def clarabel_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
+                "iters": np.nan
+
             }
     except:
         res = {
@@ -120,6 +151,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
 
@@ -146,6 +178,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
+                "iters": prob.solver_stats.num_iters
             }
         else:
             res = {
@@ -155,6 +188,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
+                "iters": np.nan
             }
     except:
         res = {
@@ -164,6 +198,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
 
@@ -209,6 +244,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
             "solve_time": solve_time,
             "run_time": setup_time + solve_time,
             "obj": res_qoco.obj,
+            "iters": res_qoco.iters
         }
     else:
         res = {
@@ -218,6 +254,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
 
@@ -226,7 +263,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
-    codegen_solved, codegen_obj, runtime_sec = run_generated_qoco(
+    codegen_solved, codegen_iters, codegen_obj, runtime_sec = run_generated_qoco(
         custom_solver_dir + "/" + solver_name, nruns, P, A, G, c, b, h
     )
 
@@ -238,6 +275,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
             "solve_time": runtime_sec,
             "run_time": runtime_sec,
             "obj": codegen_obj,
+            "iters": codegen_iters
         }
     else:
         res = {
@@ -247,5 +285,6 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
+            "iters": np.nan
         }
     return res
