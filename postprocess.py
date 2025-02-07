@@ -1,6 +1,7 @@
 import os, shutil
 import pandas as pd
 import numpy as np
+import re
 
 SOLUTION_PRESENT = ["QOCO_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
 
@@ -233,4 +234,110 @@ def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
         )
     )
     f.write("\end{tabular}\n")
+    f.close()
+
+
+def make_table(solvers, dir, name, caption):
+    f = open(os.path.join("./plots", name + "_detail_table.tex"), "w")
+    ns = len(solvers)
+    f.write("\\scriptsize\n")
+    f.write("\\begin{longtable}{lc||%s||%s||}\n" % (ns * "c", ns * "c"))
+    f.write("\\captionsetup{labelfont=bf}\n")
+    f.write("\\caption{\\bf %s} \\\ \n" % caption)
+    f.write(
+        " & &  \\multicolumn{%i}{c||}{\\underline{Iterations}} & \\multicolumn{%i}{c||}{\\underline{Solver Runtime (s)}}\\\[2ex] \n"
+        % (ns, ns)
+    )
+    f.write("Problem & Size ")
+
+    for solver in solvers:
+        solver = re.sub(r"_", r"\_", solver)
+        f.write("& \\textsc{%s} " % solver)
+    for solver in solvers:
+        solver = re.sub(r"_", r"\_", solver)
+        f.write("& \\textsc{%s} " % solver)
+    f.write("\\\[1ex]\n")
+    f.write("\\hline\n")
+    f.write("\\endhead\n")
+
+    df = pd.read_csv(os.path.join(dir, solvers[0] + ".csv"))
+    prob_names = df["Unnamed: 0"]
+    prob_sizes = df["size"]
+
+    row = 0
+    for name in prob_names:
+        iter_winner = [""]
+        time_winner = ""
+        min_iter = np.inf
+        min_time = np.inf
+
+        # Compute iter and time winners.
+        for s in solvers:
+            path = os.path.join(dir, s + ".csv")
+            with open(path, "rb") as fp:
+                df = pd.read_csv(path)
+                data = df.iloc[row] if row < df.shape[0] else None
+
+                # Guards against instances where solver failed and iterations counts are not available
+                if (
+                    data is not None
+                    and data["status"] in SOLUTION_PRESENT
+                    and "iters" in data.keys()
+                    and not np.isnan(data["iters"])
+                ):
+                    if int(data["iters"]) < min_iter:
+                        iter_winner = []
+                        iter_winner.append(s)
+                        min_iter = int(data["iters"])
+                    elif int(data["iters"]) == min_iter:
+                        iter_winner.append(s)
+
+                if data is not None and data["status"] in SOLUTION_PRESENT:
+                    if data["run_time"] < min_time:
+                        time_winner = s
+                        min_time = data["run_time"]
+
+        name = re.sub(r"_", r"\_", name)
+        f.write("\\textsc{%s} & %i " % (name, prob_sizes[row]))
+        # Write iter stats.
+        for s in solvers:
+            path = os.path.join(dir, s + ".csv")
+            with open(path, "rb") as fp:
+                df = pd.read_csv(path)
+
+                # Data corrensponding to name.
+                data = df.iloc[row] if row < df.shape[0] else None
+                # Guards against instances where solver failed and iterations counts are not available
+                if (
+                    data is None
+                    or data["status"] not in SOLUTION_PRESENT
+                    or "iters" not in data.keys()
+                    or np.isnan(data["iters"])
+                ):
+                    f.write("& -")
+                else:
+                    f.write("& ")
+                    if s in iter_winner:
+                        f.write(" \\winner ")
+                    f.write("%i " % int(data["iters"]))
+
+        # Write runtime stats.
+        for s in solvers:
+            path = os.path.join(dir, s + ".csv")
+            with open(path, "rb") as fp:
+                df = pd.read_csv(path)
+                # Data corrensponding to name.
+                data = df.iloc[row] if row < df.shape[0] else None
+                # Guards against instances where solver failed
+                if data is None or data["status"] not in SOLUTION_PRESENT:
+                    f.write("& -")
+                else:
+                    f.write("& ")
+                    if s == time_winner:
+                        f.write(" \\winner ")
+                    f.write("%.5f " % data["run_time"])
+
+        f.write("\\\ \n")
+        row += 1
+    f.write("\\end{longtable}\n")
     f.close()

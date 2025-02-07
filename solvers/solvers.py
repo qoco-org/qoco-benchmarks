@@ -31,7 +31,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
-                "iters": prob.solver_stats.num_iters
+                "iters": prob.solver_stats.num_iters,
             }
         else:
             res = {
@@ -41,8 +41,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
-                "iters": np.nan
-
+                "iters": np.nan,
             }
     except:
         res = {
@@ -52,7 +51,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res
 
@@ -83,7 +82,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
-                "iters": prob.solver_stats.num_iters
+                "iters": prob.solver_stats.num_iters,
             }
         else:
             res = {
@@ -93,7 +92,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
-                "iters": np.nan
+                "iters": np.nan,
             }
     except:
         res = {
@@ -103,7 +102,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res
 
@@ -130,7 +129,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
-                "iters": prob.solver_stats.num_iters
+                "iters": prob.solver_stats.num_iters,
             }
         else:
             res = {
@@ -140,8 +139,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
-                "iters": np.nan
-
+                "iters": np.nan,
             }
     except:
         res = {
@@ -151,7 +149,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res
 
@@ -178,7 +176,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
                 "solve_time": solve_time,
                 "run_time": setup_time + solve_time,
                 "obj": sol,
-                "iters": prob.solver_stats.num_iters
+                "iters": prob.solver_stats.num_iters,
             }
         else:
             res = {
@@ -188,7 +186,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
                 "solve_time": np.nan,
                 "run_time": np.nan,
                 "obj": np.nan,
-                "iters": np.nan
+                "iters": np.nan,
             }
     except:
         res = {
@@ -198,7 +196,7 @@ def ecos_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res
 
@@ -244,7 +242,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
             "solve_time": solve_time,
             "run_time": setup_time + solve_time,
             "obj": res_qoco.obj,
-            "iters": res_qoco.iters
+            "iters": res_qoco.iters,
         }
     else:
         res = {
@@ -254,7 +252,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res
 
@@ -275,7 +273,7 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
             "solve_time": runtime_sec,
             "run_time": runtime_sec,
             "obj": codegen_obj,
-            "iters": codegen_iters
+            "iters": codegen_iters,
         }
     else:
         res = {
@@ -285,6 +283,6 @@ def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
             "solve_time": np.nan,
             "run_time": np.nan,
             "obj": np.nan,
-            "iters": np.nan
+            "iters": np.nan,
         }
     return res

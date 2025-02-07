@@ -56,5 +56,12 @@ tmax = 100.01
 compute_relative_profile(solvers, tmax, "./results/maros")
 compute_absolute_profile(solvers, tmax, "./results/maros", xrange=(-5, 2))
 compute_shifted_geometric_mean(solvers, tmax, "./results/maros", "maros")
+make_table(
+    solvers,
+    "./results/maros",
+    "maros",
+    "Iterations and solver runtimes for Maros–Mészáros problems",
+)
+
 plotall()
 # export_figures()
