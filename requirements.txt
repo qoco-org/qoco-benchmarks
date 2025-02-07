@@ -1,7 +1,8 @@
 qoco
 qocogen
-gurobipy=11.0.0
-mosek
+gurobipy==11.0.0
+mosek==10.2.13
+ecos
 cvxpy
 pandas
 matplotlib
