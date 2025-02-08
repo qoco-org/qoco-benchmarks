@@ -1,0 +1,209 @@
+\scriptsize
+\begin{longtable}{lc||ccccccc||ccccccc||}
+\captionsetup{labelfont=bf}
+\caption{\bf Iterations and solver runtimes for oscillating masses problems} \\ 
+ & &  \multicolumn{7}{c||}{\underline{Iterations}} & \multicolumn{7}{c||}{\underline{Solver Runtime (s)}}\\[2ex] 
+Problem & Size & \textsc{clarabel} & \textsc{ecos} & \textsc{gurobi} & \textsc{mosek} & \textsc{qoco} & \textsc{qoco\_custom} & \textsc{cvxgen} & \textsc{clarabel} & \textsc{ecos} & \textsc{gurobi} & \textsc{mosek} & \textsc{qoco} & \textsc{qoco\_custom} & \textsc{cvxgen} \\[1ex]
+\hline
+\endhead
+\textsc{oscillating\_masses\_N\_8\_i\_0} & 1344 &  \winner 5 & 13 & 9 & 10 &  \winner 5 & 7 & -& 0.00048 & 0.00112 & 0.00322 & 0.00365 & 0.00027 & 0.00016 &  \winner 0.00015 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_1} & 1344 &  \winner 5 & 14 & 9 & 10 &  \winner 5 & 7 & -& 0.00048 & 0.00115 & 0.00319 & 0.00356 & 0.00028 & 0.00016 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_2} & 1344 &  \winner 5 & 17 & 9 & 12 & 6 & 7 & -& 0.00048 & 0.00142 & 0.00318 & 0.00417 & 0.00031 & 0.00016 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_3} & 1344 &  \winner 5 & 14 & 9 & 11 &  \winner 5 & 7 & -& 0.00048 & 0.00132 & 0.00347 & 0.00401 & 0.00030 & 0.00017 &  \winner 0.00014 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_4} & 1344 &  \winner 5 & 12 & 10 & 11 & 6 & 7 & -& 0.00053 & 0.00113 & 0.00357 & 0.00432 & 0.00033 & 0.00017 &  \winner 0.00016 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_5} & 1344 &  \winner 5 & 12 & 9 & 10 & 6 & 7 & -& 0.00052 & 0.00112 & 0.00347 & 0.00383 & 0.00033 & 0.00016 &  \winner 0.00014 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_6} & 1344 & 10 & 13 & 10 & 12 &  \winner 7 & 9 & -& 0.00092 & 0.00124 & 0.00360 & 0.00462 & 0.00037 &  \winner 0.00022 & 0.00022 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_7} & 1344 &  \winner 5 & 13 & 12 & 11 & 6 & 7 & -& 0.00053 & 0.00107 & 0.00354 & 0.00431 & 0.00036 & 0.00017 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_8} & 1344 &  \winner 5 & 14 & 8 & 11 &  \winner 5 & 7 & -& 0.00048 & 0.00114 & 0.00311 & 0.00372 & 0.00027 & 0.00016 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_9} & 1344 &  \winner 5 & 15 & 9 & 11 & 6 & 7 & -& 0.00049 & 0.00119 & 0.00319 & 0.00382 & 0.00031 & 0.00016 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_10} & 1344 &  \winner 5 & 14 & 8 & 13 &  \winner 5 & 7 & -& 0.00048 & 0.00118 & 0.00307 & 0.00451 & 0.00028 & 0.00017 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_11} & 1344 &  \winner 5 & 13 & 10 & 12 & 6 & 7 & -& 0.00048 & 0.00111 & 0.00333 & 0.00406 & 0.00031 & 0.00016 &  \winner 0.00014 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_12} & 1344 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00047 & 0.00117 & 0.00333 & 0.00452 & 0.00030 & 0.00016 &  \winner 0.00015 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_13} & 1344 &  \winner 5 & 12 & 9 & 10 & 6 & 7 & -& 0.00049 & 0.00101 & 0.00325 & 0.00358 & 0.00031 & 0.00017 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_14} & 1344 &  \winner 5 & 12 & 9 & 10 &  \winner 5 & 7 & -& 0.00048 & 0.00112 & 0.00347 & 0.00356 & 0.00030 & 0.00017 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_15} & 1344 &  \winner 5 & 13 & 9 & 10 & 6 & 7 & -& 0.00052 & 0.00124 & 0.00348 & 0.00380 & 0.00033 & 0.00016 &  \winner 0.00016 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_16} & 1344 &  \winner 6 & 14 & 10 & 11 &  \winner 6 & 8 & -& 0.00060 & 0.00132 & 0.00358 & 0.00407 & 0.00033 & 0.00020 &  \winner 0.00018 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_17} & 1344 &  \winner 5 & 13 & 8 & 11 &  \winner 5 & 7 & -& 0.00052 & 0.00121 & 0.00339 & 0.00407 & 0.00030 & 0.00017 &  \winner 0.00014 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_18} & 1344 &  \winner 5 & 12 & 9 & 10 &  \winner 5 & 7 & -& 0.00052 & 0.00114 & 0.00345 & 0.00385 & 0.00030 & 0.00017 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_8\_i\_19} & 1344 &  \winner 5 & 12 & 9 & 11 & 6 & 7 & -& 0.00053 & 0.00114 & 0.00349 & 0.00432 & 0.00035 & 0.00016 &  \winner 0.00013 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_0} & 3312 &  \winner 5 & 15 & 9 & 12 & 6 & 7 & -& 0.00126 & 0.00335 & 0.00563 & 0.01530 & 0.00079 & 0.00042 &  \winner 0.00041 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_1} & 3312 &  \winner 5 & 14 & 10 & 13 & 6 & 7 & -& 0.00132 & 0.00280 & 0.00543 & 0.01599 & 0.00073 & 0.00046 &  \winner 0.00041 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_2} & 3312 &  \winner 5 & 15 & 10 & 13 & 6 & 7 & -& 0.00117 & 0.00291 & 0.00554 & 0.01475 & 0.00074 & 0.00043 &  \winner 0.00040 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_3} & 3312 &  \winner 7 & 14 & 12 & 13 &  \winner 7 & 8 & -& 0.00151 & 0.00285 & 0.00586 & 0.01479 & 0.00084 & 0.00049 &  \winner 0.00046 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_4} & 3312 &  \winner 7 & 14 & 9 & 14 &  \winner 7 & 9 & -& 0.00157 & 0.00284 & 0.00514 & 0.01550 & 0.00081 &  \winner 0.00054 & 0.00057 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_5} & 3312 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00115 & 0.00267 & 0.00518 & 0.01367 & 0.00075 & 0.00046 &  \winner 0.00035 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_6} & 3312 &  \winner 5 & 16 & 10 & 12 & 6 & 7 & -& 0.00114 & 0.00355 & 0.00597 & 0.01386 & 0.00091 &  \winner 0.00043 & 0.00045 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_7} & 3312 &  \winner 5 & 14 & 9 & 13 &  \winner 5 & 7 & -& 0.00126 & 0.00314 & 0.00561 & 0.01584 & 0.00080 & 0.00046 &  \winner 0.00038 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_8} & 3312 &  \winner 5 & 13 & 9 & 12 & 6 & 7 & -& 0.00127 & 0.00261 & 0.00519 & 0.01522 & 0.00076 & 0.00047 &  \winner 0.00041 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_9} & 3312 &  \winner 5 & 16 & 10 & 13 & 6 & 7 & -& 0.00114 & 0.00354 & 0.00547 & 0.01406 & 0.00081 & 0.00047 &  \winner 0.00035 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_10} & 3312 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00126 & 0.00280 & 0.00511 & 0.01482 & 0.00072 & 0.00046 &  \winner 0.00035 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_11} & 3312 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00116 & 0.00286 & 0.00515 & 0.01387 & 0.00073 & 0.00042 &  \winner 0.00039 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_12} & 3312 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00116 & 0.00294 & 0.00520 & 0.01572 & 0.00073 & 0.00043 &  \winner 0.00041 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_13} & 3312 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00115 & 0.00270 & 0.00516 & 0.01456 & 0.00073 & 0.00042 &  \winner 0.00035 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_14} & 3312 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00115 & 0.00290 & 0.00506 & 0.01451 & 0.00077 & 0.00046 &  \winner 0.00035 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_15} & 3312 &  \winner 5 & 13 & 9 & 12 & 6 & 7 & -& 0.00117 & 0.00260 & 0.00517 & 0.01441 & 0.00072 & 0.00043 &  \winner 0.00036 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_16} & 3312 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00112 & 0.00310 & 0.00497 & 0.01491 & 0.00078 & 0.00046 &  \winner 0.00038 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_17} & 3312 &  \winner 5 & 15 & 10 & 13 & 6 & 7 & -& 0.00129 & 0.00334 & 0.00592 & 0.01590 & 0.00078 & 0.00046 &  \winner 0.00044 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_18} & 3312 &  \winner 5 & 15 & 9 & 14 & 6 & 7 & -& 0.00117 & 0.00286 & 0.00505 & 0.01589 & 0.00072 & 0.00043 &  \winner 0.00038 \\ 
+\textsc{oscillating\_masses\_N\_20\_i\_19} & 3312 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00116 & 0.00306 & 0.00516 & 0.01498 & 0.00072 & 0.00046 &  \winner 0.00044 \\ 
+\textsc{oscillating\_masses\_N\_32\_i\_0} & 5280 &  \winner 5 & 14 & 10 & 13 & 6 & 7 & -& 0.00201 & 0.00447 & 0.00738 & 0.01967 & 0.00114 &  \winner 0.00074 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_1} & 5280 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00179 & 0.00446 & 0.00708 & 0.01956 & 0.00116 &  \winner 0.00082 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_2} & 5280 &  \winner 5 & 15 & 9 & 12 & 6 & 7 & -& 0.00179 & 0.00468 & 0.00696 & 0.01878 & 0.00115 &  \winner 0.00075 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_3} & 5280 &  \winner 7 & 13 & 11 & 12 &  \winner 7 & 8 & -& 0.00227 & 0.00413 & 0.00783 & 0.01768 & 0.00128 &  \winner 0.00093 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_4} & 5280 & 9 & 15 & 10 & 14 &  \winner 8 & 10 & -& 0.00283 & 0.00484 & 0.00757 & 0.02148 & 0.00142 &  \winner 0.00115 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_5} & 5280 &  \winner 5 & 15 & 9 & 11 & 6 & 7 & -& 0.00183 & 0.00514 & 0.00760 & 0.01891 & 0.00127 &  \winner 0.00075 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_6} & 5280 &  \winner 6 & 14 & 10 & 11 &  \winner 6 & 7 & -& 0.00227 & 0.00472 & 0.00739 & 0.01696 & 0.00128 &  \winner 0.00082 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_7} & 5280 &  \winner 6 & 15 & 11 & 12 & 7 & 8 & -& 0.00229 & 0.00517 & 0.00848 & 0.01915 & 0.00141 &  \winner 0.00086 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_8} & 5280 &  \winner 5 & 16 & 9 & 13 & 6 & 7 & -& 0.00188 & 0.00500 & 0.00694 & 0.01990 & 0.00115 &  \winner 0.00075 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_9} & 5280 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00179 & 0.00448 & 0.00686 & 0.01786 & 0.00117 &  \winner 0.00075 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_10} & 5280 &  \winner 6 & 15 & 10 & 13 &  \winner 6 & 7 & -& 0.00209 & 0.00481 & 0.00747 & 0.01895 & 0.00116 &  \winner 0.00075 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_11} & 5280 &  \winner 5 & 13 & 9 & 12 & 6 & 7 & -& 0.00179 & 0.00420 & 0.00753 & 0.01728 & 0.00128 &  \winner 0.00084 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_12} & 5280 &  \winner 5 & 15 & 9 & 11 & 6 & 7 & -& 0.00175 & 0.00449 & 0.00701 & 0.01663 & 0.00120 &  \winner 0.00082 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_13} & 5280 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00181 & 0.00523 & 0.00759 & 0.02102 & 0.00127 &  \winner 0.00082 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_14} & 5280 &  \winner 6 & 16 & 10 & 11 &  \winner 6 & 7 & -& 0.00226 & 0.00545 & 0.00819 & 0.01770 & 0.00126 &  \winner 0.00084 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_15} & 5280 &  \winner 5 & 16 & 9 & 13 & 6 & 7 & -& 0.00199 & 0.00490 & 0.00700 & 0.01924 & 0.00114 &  \winner 0.00081 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_16} & 5280 &  \winner 5 & 15 & 9 & 14 & 6 & 7 & -& 0.00178 & 0.00463 & 0.00691 & 0.02019 & 0.00115 &  \winner 0.00076 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_17} & 5280 &  \winner 5 & 15 & 10 & 12 & 6 & 7 & -& 0.00184 & 0.00474 & 0.00738 & 0.01911 & 0.00116 &  \winner 0.00073 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_18} & 5280 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00182 & 0.00472 & 0.00697 & 0.01944 & 0.00116 &  \winner 0.00078 & -\\ 
+\textsc{oscillating\_masses\_N\_32\_i\_19} & 5280 &  \winner 5 & 15 & 10 & 12 & 6 & 7 & -& 0.00185 & 0.00470 & 0.00741 & 0.01765 & 0.00116 &  \winner 0.00083 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_0} & 7248 &  \winner 5 & 15 & 9 & 12 & 6 & 7 & -& 0.00233 & 0.00712 & 0.00929 & 0.02430 & 0.00174 &  \winner 0.00112 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_1} & 7248 &  \winner 6 & 16 & 10 & 12 &  \winner 6 & 8 & -& 0.00318 & 0.00745 & 0.00933 & 0.02427 & 0.00172 &  \winner 0.00137 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_2} & 7248 &  \winner 6 & 15 & 11 & 14 &  \winner 6 & 8 & -& 0.00319 & 0.00702 & 0.01051 & 0.02993 & 0.00175 &  \winner 0.00137 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_3} & 7248 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00281 & 0.00689 & 0.00927 & 0.02723 & 0.00175 &  \winner 0.00122 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_4} & 7248 &  \winner 5 & 16 & 9 & 13 & 6 & 8 & -& 0.00275 & 0.00713 & 0.00930 & 0.02906 & 0.00174 &  \winner 0.00128 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_5} & 7248 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00253 & 0.00583 & 0.00881 & 0.02433 & 0.00159 &  \winner 0.00120 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_6} & 7248 &  \winner 6 & 15 & 11 & 13 & 7 & 8 & -& 0.00291 & 0.00666 & 0.00966 & 0.02793 & 0.00178 &  \winner 0.00138 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_7} & 7248 &  \winner 5 & 15 & 9 & 12 & 6 & 7 & -& 0.00247 & 0.00666 & 0.00867 & 0.02590 & 0.00161 &  \winner 0.00111 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_8} & 7248 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00246 & 0.00726 & 0.00900 & 0.02749 & 0.00172 &  \winner 0.00113 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_9} & 7248 &  \winner 5 & 15 & 9 & 12 & 6 & 7 & -& 0.00261 & 0.00651 & 0.00857 & 0.02498 & 0.00162 &  \winner 0.00114 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_10} & 7248 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00258 & 0.00630 & 0.00839 & 0.02672 & 0.00158 &  \winner 0.00121 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_11} & 7248 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00253 & 0.00618 & 0.00849 & 0.02435 & 0.00158 &  \winner 0.00122 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_12} & 7248 &  \winner 5 & 16 & 9 & 13 & 6 & 8 & -& 0.00247 & 0.00665 & 0.00854 & 0.02743 & 0.00159 &  \winner 0.00126 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_13} & 7248 &  \winner 5 & 14 & 9 & 12 & 6 & 8 & -& 0.00255 & 0.00630 & 0.00852 & 0.02577 & 0.00159 &  \winner 0.00123 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_14} & 7248 &  \winner 5 & 16 & 9 & 12 & 6 & 7 & -& 0.00252 & 0.00684 & 0.00856 & 0.02425 & 0.00161 &  \winner 0.00120 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_15} & 7248 &  \winner 5 & 14 & 9 & 15 & 6 & 7 & -& 0.00245 & 0.00668 & 0.00931 & 0.03104 & 0.00174 &  \winner 0.00122 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_16} & 7248 &  \winner 5 & 16 & 9 & 13 & 6 & 7 & -& 0.00276 & 0.00748 & 0.00930 & 0.02913 & 0.00178 &  \winner 0.00121 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_17} & 7248 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00279 & 0.00631 & 0.00863 & 0.02760 & 0.00160 &  \winner 0.00113 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_18} & 7248 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00255 & 0.00593 & 0.00858 & 0.02731 & 0.00158 &  \winner 0.00121 & -\\ 
+\textsc{oscillating\_masses\_N\_44\_i\_19} & 7248 &  \winner 5 & 14 & 9 & 13 & 6 & 7 & -& 0.00278 & 0.00618 & 0.00933 & 0.02778 & 0.00172 &  \winner 0.00120 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_0} & 9216 &  \winner 5 & 15 & 9 & 14 & 6 & 8 & -& 0.00353 & 0.00900 & 0.00958 & 0.03493 & 0.00221 &  \winner 0.00169 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_1} & 9216 &  \winner 5 & 16 & 9 & 12 & 6 & 7 & -& 0.00311 & 0.00885 & 0.00918 & 0.03078 & 0.00204 &  \winner 0.00161 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_2} & 9216 &  \winner 5 & 16 & 9 & 12 & 6 & 7 & -& 0.00298 & 0.00836 & 0.00917 & 0.03033 & 0.00197 &  \winner 0.00151 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_3} & 9216 &  \winner 5 & 15 & 9 & 14 & 6 & 7 & -& 0.00326 & 0.00819 & 0.00915 & 0.03585 & 0.00201 &  \winner 0.00160 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_4} & 9216 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00321 & 0.00805 & 0.00938 & 0.03244 & 0.00201 &  \winner 0.00161 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_5} & 9216 &  \winner 7 & 16 & 11 & 13 &  \winner 7 & 8 & -& 0.00402 & 0.00836 & 0.01034 & 0.03272 & 0.00227 &  \winner 0.00183 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_6} & 9216 &  \winner 5 & 14 & 9 & 12 & 6 & 8 & -& 0.00321 & 0.00777 & 0.00943 & 0.03261 & 0.00202 &  \winner 0.00168 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_7} & 9216 &  \winner 5 & 19 & 10 & 14 & 6 & 7 & -& 0.00318 & 0.01004 & 0.00980 & 0.03549 & 0.00204 &  \winner 0.00147 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_8} & 9216 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00314 & 0.00771 & 0.00947 & 0.03157 & 0.00199 &  \winner 0.00151 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_9} & 9216 &  \winner 6 & 16 & 9 & 13 & 7 & 9 & -& 0.00397 & 0.00863 & 0.00945 & 0.03404 & 0.00229 &  \winner 0.00189 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_10} & 9216 &  \winner 5 & 19 & 9 & 12 & 6 & 7 & -& 0.00319 & 0.01027 & 0.00926 & 0.03211 & 0.00203 &  \winner 0.00160 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_11} & 9216 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00348 & 0.00789 & 0.00924 & 0.03222 & 0.00203 &  \winner 0.00152 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_12} & 9216 &  \winner 5 & 15 & 9 & 13 & 6 & 7 & -& 0.00312 & 0.00903 & 0.00928 & 0.03334 & 0.00225 &  \winner 0.00160 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_13} & 9216 &  \winner 5 & 14 & 9 & 12 & 6 & 7 & -& 0.00350 & 0.00769 & 0.00912 & 0.03069 & 0.00208 &  \winner 0.00149 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_14} & 9216 &  \winner 5 & 15 & 9 & 12 & 6 & 8 & -& 0.00317 & 0.00798 & 0.00918 & 0.03092 & 0.00201 &  \winner 0.00181 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_15} & 9216 &  \winner 6 & 14 & 11 & 13 &  \winner 6 & 8 & -& 0.00358 & 0.00754 & 0.01030 & 0.03479 & 0.00205 &  \winner 0.00183 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_16} & 9216 &  \winner 5 & 16 & 9 & 13 & 6 & 7 & -& 0.00324 & 0.00850 & 0.00912 & 0.03321 & 0.00204 &  \winner 0.00160 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_17} & 9216 &  \winner 6 & 15 & 10 & 14 & 7 & 8 & -& 0.00362 & 0.00908 & 0.01059 & 0.03600 & 0.00251 &  \winner 0.00182 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_18} & 9216 &  \winner 5 & 16 & 9 & 13 & 6 & 8 & -& 0.00352 & 0.01001 & 0.00998 & 0.03398 & 0.00221 &  \winner 0.00183 & -\\ 
+\textsc{oscillating\_masses\_N\_56\_i\_19} & 9216 &  \winner 7 & 16 & 10 & 16 &  \winner 7 & 10 & -& 0.00475 & 0.00873 & 0.01031 & 0.03897 & 0.00226 &  \winner 0.00203 & -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_0} & 12496 &  \winner 5 & 16 & 9 & 12 & 6 & -& -& 0.00467 & 0.01150 & 0.01164 & 0.04245 &  \winner 0.00285 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_1} & 12496 &  \winner 6 & 15 & 10 & 13 &  \winner 6 & -& -& 0.00491 & 0.01084 & 0.01262 & 0.04700 &  \winner 0.00276 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_2} & 12496 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00425 & 0.01116 & 0.01199 & 0.04766 &  \winner 0.00281 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_3} & 12496 &  \winner 5 & 14 & 9 & 13 & 6 & -& -& 0.00478 & 0.01015 & 0.01186 & 0.04511 &  \winner 0.00284 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_4} & 12496 &  \winner 5 & 14 & 9 & 13 & 6 & -& -& 0.00474 & 0.01167 & 0.01178 & 0.04646 &  \winner 0.00310 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_5} & 12496 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00424 & 0.01111 & 0.01182 & 0.04444 &  \winner 0.00281 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_6} & 12496 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00414 & 0.01150 & 0.01197 & 0.04935 &  \winner 0.00281 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_7} & 12496 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00433 & 0.01098 & 0.01171 & 0.04817 &  \winner 0.00282 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_8} & 12496 &  \winner 6 & 14 & 10 & 12 &  \winner 6 & -& -& 0.00487 & 0.01059 & 0.01360 & 0.04222 &  \winner 0.00308 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_9} & 12496 &  \winner 5 & 14 & 10 & 13 & 6 & -& -& 0.00437 & 0.01022 & 0.01256 & 0.04714 &  \winner 0.00291 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_10} & 12496 &  \winner 6 & 15 & 10 & 12 &  \winner 6 & -& -& 0.00462 & 0.01099 & 0.01267 & 0.04466 &  \winner 0.00282 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_11} & 12496 &  \winner 5 & 14 & 9 & 12 & 6 & -& -& 0.00433 & 0.01166 & 0.01174 & 0.04441 &  \winner 0.00305 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_12} & 12496 &  \winner 7 & 15 & 10 & 14 &  \winner 7 & -& -& 0.00620 & 0.01257 & 0.01278 & 0.05155 &  \winner 0.00303 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_13} & 12496 &  \winner 7 & 17 & 12 & 14 &  \winner 7 & -& -& 0.00618 & 0.01259 & 0.01396 & 0.04685 &  \winner 0.00346 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_14} & 12496 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00480 & 0.01265 & 0.01248 & 0.05135 &  \winner 0.00307 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_15} & 12496 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00480 & 0.01318 & 0.01267 & 0.04694 &  \winner 0.00313 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_16} & 12496 &  \winner 5 & 15 & 9 & 11 & 6 & -& -& 0.00479 & 0.01110 & 0.01172 & 0.04100 &  \winner 0.00280 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_17} & 12496 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00437 & 0.01143 & 0.01186 & 0.04687 &  \winner 0.00281 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_18} & 12496 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00423 & 0.01176 & 0.01185 & 0.04608 &  \winner 0.00280 & -& -\\ 
+\textsc{oscillating\_masses\_N\_76\_i\_19} & 12496 &  \winner 5 & 15 & 9 & 12 & 6 & -& -& 0.00422 & 0.01070 & 0.01181 & 0.04384 &  \winner 0.00276 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_0} & 15776 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00529 & 0.01372 & 0.01385 & 0.05644 &  \winner 0.00357 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_1} & 15776 &  \winner 6 & 16 & 11 & 13 & 7 & -& -& 0.00626 & 0.01677 & 0.01662 & 0.05806 &  \winner 0.00443 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_2} & 15776 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00535 & 0.01454 & 0.01370 & 0.05882 &  \winner 0.00353 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_3} & 15776 &  \winner 5 & 17 & 9 & 13 & 6 & -& -& 0.00598 & 0.01624 & 0.01406 & 0.06259 &  \winner 0.00389 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_4} & 15776 &  \winner 5 & 13 & 13 & 12 & 6 & -& -& 0.00523 & 0.01197 & 0.01854 & 0.05409 &  \winner 0.00379 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_5} & 15776 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00551 & 0.01396 & 0.01375 & 0.06292 &  \winner 0.00357 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_6} & 15776 &  \winner 5 & 14 & 9 & 13 & 6 & -& -& 0.00595 & 0.01354 & 0.01507 & 0.05849 &  \winner 0.00389 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_7} & 15776 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00548 & 0.01440 & 0.01405 & 0.05842 &  \winner 0.00345 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_8} & 15776 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00560 & 0.01490 & 0.01376 & 0.05886 &  \winner 0.00352 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_9} & 15776 &  \winner 5 & 15 & 9 & 12 & 6 & -& -& 0.00547 & 0.01379 & 0.01393 & 0.05617 &  \winner 0.00358 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_10} & 15776 &  \winner 6 & 14 & 10 & 14 &  \winner 6 & -& -& 0.00611 & 0.01321 & 0.01477 & 0.05996 &  \winner 0.00357 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_11} & 15776 &  \winner 6 & 15 & 10 & 11 &  \winner 6 & -& -& 0.00613 & 0.01374 & 0.01460 & 0.05223 &  \winner 0.00354 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_12} & 15776 &  \winner 5 & 17 & 9 & 13 & 6 & -& -& 0.00595 & 0.01757 & 0.01467 & 0.05559 &  \winner 0.00392 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_13} & 15776 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00604 & 0.01563 & 0.01471 & 0.06443 &  \winner 0.00389 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_14} & 15776 &  \winner 5 & 17 & 9 & 13 & 6 & -& -& 0.00603 & 0.01563 & 0.01381 & 0.05772 &  \winner 0.00381 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_15} & 15776 &  \winner 6 & 15 & 11 & 12 & 7 & -& -& 0.00605 & 0.01589 & 0.01675 & 0.05484 &  \winner 0.00430 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_16} & 15776 &  \winner 5 & 14 & 10 & 14 & 6 & -& -& 0.00610 & 0.01325 & 0.01590 & 0.06272 &  \winner 0.00364 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_17} & 15776 &  \winner 5 & 16 & 9 & 15 & 6 & -& -& 0.00526 & 0.01473 & 0.01379 & 0.06408 &  \winner 0.00360 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_18} & 15776 &  \winner 5 & 14 & 9 & 12 & 6 & -& -& 0.00523 & 0.01474 & 0.01496 & 0.05456 &  \winner 0.00393 & -& -\\ 
+\textsc{oscillating\_masses\_N\_96\_i\_19} & 15776 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00597 & 0.01481 & 0.01377 & 0.05631 &  \winner 0.00350 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_0} & 19056 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00671 & 0.01880 & 0.01667 & 0.06900 &  \winner 0.00486 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_1} & 19056 &  \winner 6 & 14 & 10 & 12 &  \winner 6 & -& -& 0.00812 & 0.01788 & 0.01747 & 0.06961 &  \winner 0.00478 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_2} & 19056 &  \winner 5 & 15 & 9 & 12 & 6 & -& -& 0.00737 & 0.01761 & 0.01630 & 0.06590 &  \winner 0.00473 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_3} & 19056 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00645 & 0.01838 & 0.01725 & 0.06617 &  \winner 0.00476 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_4} & 19056 &  \winner 5 & 15 & 10 & 12 & 6 & -& -& 0.00720 & 0.01716 & 0.01708 & 0.06778 &  \winner 0.00433 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_5} & 19056 &  \winner 6 & 16 & 10 & 12 & 7 & -& -& 0.00818 & 0.01778 & 0.01716 & 0.07179 &  \winner 0.00479 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_6} & 19056 &  \winner 6 & 14 & 10 & 10 &  \winner 6 & -& -& 0.00666 & 0.01579 & 0.01713 & 0.05689 &  \winner 0.00435 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_7} & 19056 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00672 & 0.01898 & 0.01726 & 0.07045 &  \winner 0.00482 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_8} & 19056 &  \winner 7 & 17 & 11 & 14 &  \winner 7 & -& -& 0.00980 & 0.01982 & 0.01834 & 0.07346 &  \winner 0.00486 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_9} & 19056 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00669 & 0.01745 & 0.01613 & 0.07645 &  \winner 0.00484 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_10} & 19056 &  \winner 5 & 14 & 10 & 13 & 6 & -& -& 0.00654 & 0.01597 & 0.01718 & 0.06617 &  \winner 0.00432 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_11} & 19056 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00630 & 0.01764 & 0.01671 & 0.07040 &  \winner 0.00444 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_12} & 19056 &  \winner 5 & 16 & 9 & 12 & 6 & -& -& 0.00649 & 0.01782 & 0.01650 & 0.06261 &  \winner 0.00433 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_13} & 19056 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00641 & 0.01707 & 0.01622 & 0.07189 &  \winner 0.00436 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_14} & 19056 &  \winner 6 & 15 & 10 & 13 & 7 & -& -& 0.00761 & 0.01675 & 0.01816 & 0.07122 &  \winner 0.00493 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_15} & 19056 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00661 & 0.01782 & 0.01620 & 0.07248 &  \winner 0.00432 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_16} & 19056 &  \winner 5 & 14 & 9 & 14 & 6 & -& -& 0.00644 & 0.01564 & 0.01593 & 0.07191 &  \winner 0.00437 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_17} & 19056 &  \winner 5 & 16 & 9 & 14 & 6 & -& -& 0.00641 & 0.02069 & 0.01639 & 0.07427 &  \winner 0.00476 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_18} & 19056 &  \winner 5 & 15 & 10 & 12 & 6 & -& -& 0.00722 & 0.01761 & 0.01731 & 0.06528 &  \winner 0.00431 & -& -\\ 
+\textsc{oscillating\_masses\_N\_116\_i\_19} & 19056 &  \winner 5 & 16 & 9 & 14 & 6 & -& -& 0.00648 & 0.01806 & 0.01624 & 0.07418 &  \winner 0.00439 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_0} & 22336 &  \winner 5 & 16 & 9 & 14 & 6 & -& -& 0.00762 & 0.02085 & 0.01846 & 0.08650 &  \winner 0.00556 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_1} & 22336 &  \winner 5 & 15 & 10 & 12 & 6 & -& -& 0.00766 & 0.01995 & 0.01958 & 0.07832 &  \winner 0.00508 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_2} & 22336 &  \winner 5 & 14 & 9 & 12 & 6 & -& -& 0.00767 & 0.01906 & 0.01917 & 0.08306 &  \winner 0.00519 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_3} & 22336 &  \winner 5 & 16 & 10 & 13 & 6 & -& -& 0.00768 & 0.02080 & 0.01968 & 0.08280 &  \winner 0.00510 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_4} & 22336 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00743 & 0.02033 & 0.01862 & 0.08305 &  \winner 0.00525 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_5} & 22336 &  \winner 5 & 16 & 10 & 12 & 6 & -& -& 0.00788 & 0.02063 & 0.02123 & 0.07955 &  \winner 0.00561 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_6} & 22336 &  \winner 5 & 15 & 10 & 14 & 6 & -& -& 0.00769 & 0.01970 & 0.01978 & 0.08696 &  \winner 0.00569 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_7} & 22336 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00847 & 0.02004 & 0.01871 & 0.08769 &  \winner 0.00518 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_8} & 22336 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00766 & 0.02050 & 0.01845 & 0.08619 &  \winner 0.00529 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_9} & 22336 &  \winner 5 & 14 & 9 & 12 & 6 & -& -& 0.00743 & 0.01821 & 0.01841 & 0.07907 &  \winner 0.00526 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_10} & 22336 &  \winner 6 & 14 & 10 & 13 &  \winner 6 & -& -& 0.00957 & 0.01855 & 0.01977 & 0.08380 &  \winner 0.00508 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_11} & 22336 &  \winner 6 & 15 & 10 & 14 &  \winner 6 & -& -& 0.00879 & 0.01998 & 0.02099 & 0.08875 &  \winner 0.00519 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_12} & 22336 &  \winner 5 & 15 & 9 & 12 & 6 & -& -& 0.00776 & 0.02018 & 0.01868 & 0.07460 &  \winner 0.00509 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_13} & 22336 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00782 & 0.02259 & 0.01849 & 0.08638 &  \winner 0.00561 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_14} & 22336 &  \winner 5 & 16 & 9 & 14 & 6 & -& -& 0.00845 & 0.02105 & 0.01856 & 0.08991 &  \winner 0.00525 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_15} & 22336 &  \winner 6 & 15 & 9 & 12 &  \winner 6 & -& -& 0.00866 & 0.02231 & 0.01985 & 0.07427 &  \winner 0.00571 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_16} & 22336 &  \winner 6 & 16 & 10 & 12 &  \winner 6 & -& -& 0.00858 & 0.02078 & 0.01953 & 0.07545 &  \winner 0.00525 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_17} & 22336 &  \winner 6 & 16 & 10 & 12 &  \winner 6 & -& -& 0.00827 & 0.02339 & 0.01970 & 0.07394 &  \winner 0.00564 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_18} & 22336 &  \winner 5 & 17 & 9 & 13 & 6 & -& -& 0.00847 & 0.02513 & 0.01977 & 0.08299 &  \winner 0.00572 & -& -\\ 
+\textsc{oscillating\_masses\_N\_136\_i\_19} & 22336 &  \winner 6 & 16 & 9 & 12 &  \winner 6 & -& -& 0.00943 & 0.02148 & 0.01974 & 0.07460 &  \winner 0.00571 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_0} & 25616 &  \winner 6 & 15 & 10 & 14 & 7 & -& -& 0.01024 & 0.02285 & 0.02226 & 0.10505 &  \winner 0.00642 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_1} & 25616 &  \winner 6 & 14 & 10 & 12 &  \winner 6 & -& -& 0.00960 & 0.02091 & 0.02164 & 0.08497 &  \winner 0.00606 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_2} & 25616 & 7 & 20 & 12 & 14 &  \winner 6 & -& -& 0.01135 & 0.03041 & 0.02360 & 0.09760 &  \winner 0.00593 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_3} & 25616 &  \winner 5 & 16 & 9 & 14 & 6 & -& -& 0.00886 & 0.02441 & 0.02100 & 0.09383 &  \winner 0.00588 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_4} & 25616 &  \winner 6 & 16 & 10 & 13 &  \winner 6 & -& -& 0.00988 & 0.02408 & 0.02201 & 0.08979 &  \winner 0.00654 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_5} & 25616 &  \winner 5 & 16 & 9 & 12 & 6 & -& -& 0.00868 & 0.02485 & 0.02068 & 0.08494 &  \winner 0.00661 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_6} & 25616 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00909 & 0.02564 & 0.02196 & 0.08940 &  \winner 0.00657 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_7} & 25616 &  \winner 5 & 16 & 9 & 13 & 6 & -& -& 0.00950 & 0.02398 & 0.02121 & 0.08904 &  \winner 0.00597 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_8} & 25616 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00861 & 0.02296 & 0.02103 & 0.09586 &  \winner 0.00658 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_9} & 25616 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00872 & 0.02311 & 0.02034 & 0.10168 &  \winner 0.00615 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_10} & 25616 &  \winner 6 & 15 & 10 & 13 &  \winner 6 & -& -& 0.01000 & 0.02399 & 0.02103 & 0.09439 &  \winner 0.00614 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_11} & 25616 &  \winner 5 & 17 & 9 & 13 & 6 & -& -& 0.00951 & 0.02583 & 0.02152 & 0.09065 &  \winner 0.00682 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_12} & 25616 &  \winner 5 & 15 & 9 & 14 & 6 & -& -& 0.00868 & 0.02290 & 0.01981 & 0.09953 &  \winner 0.00587 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_13} & 25616 &  \winner 5 & 14 & 9 & 12 & 6 & -& -& 0.00873 & 0.02134 & 0.02066 & 0.08583 &  \winner 0.00600 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_14} & 25616 &  \winner 6 & 16 & 9 & 11 &  \winner 6 & -& -& 0.00978 & 0.02387 & 0.01953 & 0.07818 &  \winner 0.00586 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_15} & 25616 &  \winner 5 & 14 & 9 & 14 & 6 & -& -& 0.00969 & 0.02213 & 0.02120 & 0.09476 &  \winner 0.00604 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_16} & 25616 &  \winner 6 & 13 & 11 & 11 &  \winner 6 & -& -& 0.00981 & 0.02055 & 0.02340 & 0.07927 &  \winner 0.00651 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_17} & 25616 &  \winner 5 & 17 & 9 & 14 & 6 & -& -& 0.00875 & 0.02563 & 0.02169 & 0.10320 &  \winner 0.00616 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_18} & 25616 &  \winner 7 & 16 & 13 & 13 & 8 & -& -& 0.01138 & 0.02680 & 0.02531 & 0.09493 &  \winner 0.00800 & -& -\\ 
+\textsc{oscillating\_masses\_N\_156\_i\_19} & 25616 &  \winner 5 & 15 & 9 & 13 & 6 & -& -& 0.00988 & 0.02296 & 0.01989 & 0.09549 &  \winner 0.00593 & -& -\\ 
+\end{longtable}
