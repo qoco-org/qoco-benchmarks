@@ -4,7 +4,6 @@ import numpy as np
 
 
 def oscillating_masses(T):
-
     dt = 0.25
     n = 4
 

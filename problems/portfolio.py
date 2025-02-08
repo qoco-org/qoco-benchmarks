@@ -4,7 +4,6 @@ from scipy import sparse
 
 
 def portfolio(k):
-
     n = 100 * k
     F = sparse.random(n, k, density=0.5, data_rvs=np.random.randn, format="csc")
     D = sparse.diags(np.random.rand(n) * np.sqrt(k), format="csc")

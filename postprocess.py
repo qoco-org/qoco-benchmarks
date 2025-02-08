@@ -5,8 +5,6 @@ import re
 
 SOLUTION_PRESENT = ["QOCO_SOLVED", "solved", "Solved", "Status.PIQP_SOLVED", "optimal"]
 
-timelimit = 100
-
 
 # Creates directory ./results/overall and for each solver generates a .csv that concatanates the results from all the problems solved.
 # Need this to compute overall performance plots.

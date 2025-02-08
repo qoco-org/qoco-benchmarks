@@ -9,8 +9,8 @@ import warnings
 import signal
 
 
-MAX_TIME = 300
-VERBOSE = True
+MAX_TIME = 1200
+VERBOSE = False
 
 
 class TimeoutException(Exception):  # Custom exception class

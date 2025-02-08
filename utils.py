@@ -46,7 +46,9 @@ def parse_maros(mm_data):
     uineq = ru[ineq_idx]
     lineq = rl[ineq_idx]
 
-    G = sp.sparse.vstack((sp.sparse.identity(n), -sp.sparse.identity(n), Aineq, -Aineq)).tocsc()
+    G = sp.sparse.vstack(
+        (sp.sparse.identity(n), -sp.sparse.identity(n), Aineq, -Aineq)
+    ).tocsc()
 
     h = np.hstack((ub, -lb, uineq, -lineq))
 

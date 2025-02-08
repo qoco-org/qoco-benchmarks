@@ -4,7 +4,6 @@ from scipy import sparse
 
 
 def group_lasso(ngroups):
-
     group_size = 10
     n = ngroups * group_size
     m = 25 * n

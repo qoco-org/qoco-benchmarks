@@ -17,9 +17,11 @@ for file_path in directory.iterdir():
     if file_path.is_file():
         mat = scipy.io.loadmat(file_path)
         problem_name = file_path.stem
-        print(file_path)
-        # if len(mat["lb"]) <= 10000:
-        #     continue
+        print(problem_name)
+
+        # List of problems for ECOS and MOSEK to skip. Both require linear objectives and for problems in this list, 
+        # cvxpy returns SIGKILL when parsing problem into one with linear objective.
+        skip_probs = ["CONT-300"]
 
         # Set up CVXPY problem.
         n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_maros(mat)
@@ -38,21 +40,47 @@ for file_path in directory.iterdir():
         # Gurobi
         solve_dict_gurobi[problem_name] = gurobi_solve(prob, 1e-7, N=1)
 
+        # Clarabel
+        solve_dict_clarabel[problem_name] = clarabel_solve(prob, 1e-7, N=1)
+
+        if problem_name in skip_probs:
+            fail = {
+                "size": get_problem_size(prob),
+                "status": np.nan,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+                "iters": np.nan,
+            }
+            solve_dict_mosek[problem_name] = fail
+            solve_dict_ecos[problem_name] = fail
+            continue
+
         # Mosek
         solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
 
         # ECOS
         solve_dict_ecos[problem_name] = ecos_solve(prob, 1e-7, N=1)
 
-        # Clarabel
-        solve_dict_clarabel[problem_name] = clarabel_solve(prob, 1e-7, N=1)
+        # Incrementally save data in case of failure.
+        df_qoco = pd.DataFrame(solve_dict_qoco).T
+        df_clarabel = pd.DataFrame(solve_dict_clarabel).T
+        df_gurobi = pd.DataFrame(solve_dict_gurobi).T
+        df_mosek = pd.DataFrame(solve_dict_mosek).T
+        df_ecos = pd.DataFrame(solve_dict_ecos).T
+        df_qoco.to_csv("results/maros/qoco.csv")
+        df_clarabel.to_csv("results/maros/clarabel.csv")
+        df_gurobi.to_csv("results/maros/gurobi.csv")
+        df_mosek.to_csv("results/maros/mosek.csv")
+        df_ecos.to_csv("results/maros/ecos.csv")
 
+# Save data at the end since the continue will skip over the final data save in the loop, since the last problem is CONT-300.
 df_qoco = pd.DataFrame(solve_dict_qoco).T
 df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_gurobi = pd.DataFrame(solve_dict_gurobi).T
 df_mosek = pd.DataFrame(solve_dict_mosek).T
 df_ecos = pd.DataFrame(solve_dict_ecos).T
-
 df_qoco.to_csv("results/maros/qoco.csv")
 df_clarabel.to_csv("results/maros/clarabel.csv")
 df_gurobi.to_csv("results/maros/gurobi.csv")
