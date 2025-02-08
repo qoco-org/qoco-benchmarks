@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
 from postprocess import *
-from plotall import plotall
+from plotall import *
 from utils import *
 
 solvers = ["qoco", "clarabel", "ecos", "gurobi", "mosek"]
@@ -52,7 +52,7 @@ qoco_failed = df_qoco.iloc[idx]["Unnamed: 0"].values
 print("QOCO Failed:", qoco_failed)
 
 # Plot performance profile
-tmax = 100.01
+tmax = 300.01
 compute_relative_profile(solvers, tmax, "./results/maros")
 compute_absolute_profile(solvers, tmax, "./results/maros", xrange=(-5, 2))
 compute_shifted_geometric_mean(solvers, tmax, "./results/maros", "maros")
@@ -63,5 +63,5 @@ make_table(
     "Iterations and solver runtimes for Maros–Mészáros problems",
 )
 
-plotall()
+plot_maros()
 # export_figures()

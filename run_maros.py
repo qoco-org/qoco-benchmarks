@@ -7,9 +7,6 @@ from solvers.solvers import *
 from utils import parse_maros
 
 
-high_acc = 1e-7
-low_acc = 1e-5
-
 solve_dict_qoco = {}
 solve_dict_clarabel = {}
 solve_dict_gurobi = {}
@@ -20,12 +17,8 @@ for file_path in directory.iterdir():
     if file_path.is_file():
         mat = scipy.io.loadmat(file_path)
         problem_name = file_path.stem
-        # print(file_path)
-        if len(mat["lb"]) > 5000:
-            continue
-
-        list = ["YAO"]
-        # if problem_name not in list:
+        print(file_path)
+        # if len(mat["lb"]) <= 10000:
         #     continue
 
         # Set up CVXPY problem.

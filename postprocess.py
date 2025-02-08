@@ -163,7 +163,7 @@ def compute_shifted_geometric_mean(solvers, tmax, dir, name):
         "   & \\textbf{QOCO} & \\textbf{Clarabel} & \\textbf{ECOS} & \\textbf{Gurobi} & \\textbf{Mosek} \\\ \\hline\n"
     )
     f.write(
-        "  Shifted GM & \\textbf{%.1f} & %.1f & %.1f & %.1f & %.1f \\\ \n"
+        "  Shifted GM & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
         % (rs["qoco"], rs["clarabel"], rs["ecos"], rs["gurobi"], rs["mosek"])
     )
     f.write(
@@ -212,7 +212,7 @@ def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
         "    & \\textbf{QOCO Custom}   & \\textbf{QOCO} & \\textbf{Clarabel} & \\textbf{ECOS} & \\textbf{Gurobi} & \\textbf{Mosek} \\\ \\hline\n"
     )
     f.write(
-        "  Shifted GM & \\textbf{%.1f} & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
+        "  Shifted GM & %.1f & %.1f & %.1f & %.1f & %.1f & %.1f \\\ \n"
         % (
             rs["qoco_custom"],
             rs["qoco"],

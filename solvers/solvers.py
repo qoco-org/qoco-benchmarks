@@ -6,6 +6,19 @@ from solvers.cvxpy_to_qoco import *
 from solvers.run_generated_solver import *
 from solvers.problem_size import get_problem_size
 import warnings
+import signal
+
+
+MAX_TIME = 300
+VERBOSE = True
+
+
+class TimeoutException(Exception):  # Custom exception class
+    pass
+
+
+def timeout_handler(signum, frame):  # Custom signal handler
+    raise TimeoutException
 
 
 def gurobi_solve(prob, tol=1e-7, N=10):
@@ -20,7 +33,7 @@ def gurobi_solve(prob, tol=1e-7, N=10):
     env.setParam("Presolve", 0)
     try:
         for i in range(N):
-            sol = prob.solve(solver=cp.GUROBI, env=env)
+            sol = prob.solve(verbose=VERBOSE, solver=cp.GUROBI, env=env)
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
         if prob.status == "optimal":
@@ -62,6 +75,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
     try:
         for i in range(N):
             sol = prob.solve(
+                verbose=VERBOSE,
                 solver=cp.MOSEK,
                 mosek_params={
                     "MSK_DPAR_INTPNT_CO_TOL_PFEAS": tol,
@@ -69,6 +83,7 @@ def mosek_solve(prob, tol=1e-7, N=10):
                     "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_MU_RED": tol,
                     "MSK_IPAR_PRESOLVE_USE": 0,
+                    "MSK_DPAR_OPTIMIZER_MAX_TIME": MAX_TIME,
                 },
             )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0.0, setup_time)
@@ -113,6 +128,7 @@ def clarabel_solve(prob, tol=1e-7, N=10):
     try:
         for i in range(N):
             sol = prob.solve(
+                verbose=VERBOSE,
                 solver=cp.CLARABEL,
                 tol_gap_abs=tol,
                 tol_gap_rel=tol,
@@ -156,11 +172,14 @@ def clarabel_solve(prob, tol=1e-7, N=10):
 
 def ecos_solve(prob, tol=1e-7, N=10):
     warnings.simplefilter(action="ignore", category=FutureWarning)
+    signal.signal(signal.SIGALRM, timeout_handler)
     setup_time = np.inf
     solve_time = np.inf
     try:
         for i in range(N):
+            signal.alarm(MAX_TIME)
             sol = prob.solve(
+                verbose=VERBOSE,
                 solver=cp.ECOS,
                 abstol=tol,
                 reltol=tol,
@@ -198,6 +217,8 @@ def ecos_solve(prob, tol=1e-7, N=10):
             "obj": np.nan,
             "iters": np.nan,
         }
+    else:
+        signal.alarm(0)
     return res
 
 
@@ -227,7 +248,7 @@ def qoco_solve(prob, tol=1e-7, N=10):
         q,
         abstol=tol,
         reltol=tol,
-        verbose=False,
+        verbose=VERBOSE,
     )
 
     for i in range(N):
