@@ -54,7 +54,7 @@ print("QOCO Failed:", qoco_failed)
 # Plot performance profile
 tmax = 1200.01
 compute_relative_profile(solvers, tmax, "./results/maros", xrange=(0, 3.1))
-compute_absolute_profile(solvers, tmax, "./results/maros", xrange=(-5, 2))
+compute_absolute_profile(solvers, tmax, "./results/maros", xrange=(-5, 3))
 compute_shifted_geometric_mean(solvers, tmax, "./results/maros", "maros")
 make_table(
     solvers,
@@ -64,4 +64,4 @@ make_table(
 )
 
 plot_maros()
-# export_figures()
+export_figures()
