@@ -21,7 +21,11 @@ for file_path in directory.iterdir():
 
         # List of problems for ECOS and MOSEK to skip. Both require linear objectives and for problems in this list, 
         # cvxpy returns SIGKILL when parsing problem into one with linear objective.
-        skip_probs = ["CONT-300"]
+        skip_probs = ["BOYD2", "CONT-300"]
+
+        # cvxpy can parse these for ecos but ecos takes over 20 mins to solve these problems.
+        # Since we cannot impose a time limit on ecos in settings, we skip these problems
+        ecos_skip = ["CVXQP1_L", "CVXQP2_L", "CVXQP3_L"] 
 
         # Set up CVXPY problem.
         n, m, p, P, c, A, b, G, h, l, nsoc, q = parse_maros(mat)
@@ -61,6 +65,18 @@ for file_path in directory.iterdir():
         solve_dict_mosek[problem_name] = mosek_solve(prob, 1e-7, N=1)
 
         # ECOS
+        if problem_name in ecos_skip:
+            fail = {
+                "size": get_problem_size(prob),
+                "status": np.nan,
+                "setup_time": np.nan,
+                "solve_time": np.nan,
+                "run_time": np.nan,
+                "obj": np.nan,
+                "iters": np.nan,
+            }
+            solve_dict_ecos[problem_name] = fail
+            continue
         solve_dict_ecos[problem_name] = ecos_solve(prob, 1e-7, N=1)
 
         # Incrementally save data in case of failure.
