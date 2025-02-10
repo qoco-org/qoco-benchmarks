@@ -16,7 +16,7 @@ python run_maros.py && python analyze_maros.py
 ```
 
 
-To run the benchmark problems and generate plots run
+To run the benchmark problems, first create an empty directory called `generated_solvers/` in the root of this repository then run
 
 ```
 python generate_solvers.py && python run_benchmarks.py
