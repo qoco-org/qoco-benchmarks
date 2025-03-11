@@ -82,7 +82,7 @@ def lcvx(T):
         con += [s[k] <= mu2 * (1.0 - (z[k] - z0))]
         con += [np.log(m0 - a * rho2 * k * dt) <= z[k]]
         con += [z[k] <= np.log(m0 - a * rho1 * k * dt)]
-        con += [u[2, k] >= cp.norm(u[:, k]) * np.cos(tvc_max)]
+        con += [u[2, k] >= s[k] * np.cos(tvc_max)]
 
     prob = cp.Problem(cp.Minimize(obj), con)
     return prob
