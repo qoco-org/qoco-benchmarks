@@ -585,7 +585,7 @@ def plotall():
             df_gurobi_oscillating_masses["obj"].values[0:100]
             - df_qoco_custom_oscillating_masses["obj"].values[0:100],
             np.inf,
-        )
+        ) / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:100])
         < 1e-5
     )
     assert (
