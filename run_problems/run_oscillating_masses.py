@@ -63,6 +63,7 @@ def run_oscillating_masses(ninstances, nruns):
                         "setup_time": None,
                         "solve_time": runtime_sec,
                         "run_time": runtime_sec,
+                        "iters": iters,
                         "obj": obj,
                     }
 
