@@ -30,9 +30,10 @@ def run_generated_cvxgen(solver_dir, x0, Q, R, A, B, umax, xmax, nruns):
     os.system("cd " + solver_dir + " && make -j5 && ./testsolver")
     with open(solver_dir + "/result.bin", "rb") as file:
         solved = struct.unpack("B", file.read(1))[0]
+        iters = struct.unpack("I", file.read(4))[0]
         obj = struct.unpack("d", file.read(8))[0]
         runtime_sec = struct.unpack("d", file.read(8))[0]
-    return solved, obj, runtime_sec
+    return solved, iters, obj, runtime_sec
 
 
 def create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax):
@@ -55,12 +56,13 @@ def create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax):
     f.write("   settings.resid_tol = 1e-7;\n")
     f.write("   settings.eps = 1e-7;\n")
     f.write("   double N = %i;\n" % nruns)
+    f.write("   int iters = 0;\n")
     f.write("   double solve_time_sec = 1e10;\n")
     f.write("   for (int i = 0; i < N; ++i) {\n")
     f.write("       struct timespec start, end;\n")
     f.write("       clock_gettime(CLOCK_MONOTONIC, &start);\n")
     f.write("       load_default_data();\n")
-    f.write("       solve();\n")
+    f.write("       iters = solve();\n")
     f.write("       clock_gettime(CLOCK_MONOTONIC, &end);\n")
     f.write(
         "       double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;\n"
@@ -70,6 +72,7 @@ def create_cvxgen_runtest(solver_dir, nruns, x0, Q, R, A, B, umax, xmax):
     f.write('   printf("\\nSolvetime: %.9f ms", 1e3 * solve_time_sec);\n')
     f.write('   FILE *file = fopen("result.bin", "wb");\n')
     f.write("   fwrite(&work.converged, sizeof(unsigned char), 1, file);\n")
+    f.write("   fwrite(&iters, sizeof(int), 1, file);\n")
     f.write("   fwrite(&work.optval, sizeof(double), 1, file);\n")
     f.write("   fwrite(&solve_time_sec, sizeof(double), 1, file);\n")
     f.write("   fclose(file);\n")

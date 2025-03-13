@@ -35,7 +35,7 @@ def run_oscillating_masses(ninstances, nruns):
                     nruns,
                 )
             if N <= 20:
-                solved, obj, runtime_sec = run_generated_cvxgen(
+                solved, iters, obj, runtime_sec = run_generated_cvxgen(
                     "./cvxgen/generated_solvers/" + "oscillating_masses_" + str(N),
                     x0,
                     Q,
@@ -53,6 +53,7 @@ def run_oscillating_masses(ninstances, nruns):
                         "setup_time": None,
                         "solve_time": runtime_sec,
                         "run_time": runtime_sec,
+                        "iters": iters,
                         "obj": obj,
                     }
                 else:
