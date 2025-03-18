@@ -22,3 +22,14 @@ To run the benchmark problems, first create an empty directory called `generated
 python generate_solvers.py && python run_benchmarks.py
 ```
 Before running the benchmark problems, the user must generate the cvxgen solvers using the problem files in the `cvxgen/problems/` directory and place them in a directory called `generated_solvers/` within the `cvxgen/` directory.
+
+## Citing
+```
+@article{chari2025qoco,
+  author      = {Chari, Govind M and A{\c{c}}{\i}kme{\c{s}}e, Beh{\c{c}}et},
+  title       = {Custom Solver Generation for Quadratic Objective Second-Order Cone Programs},
+  journal     = {In Review},
+  year        = {2025},
+  url         = {https://arxiv.org/abs/2503.12658},
+}
+```
