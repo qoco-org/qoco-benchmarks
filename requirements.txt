@@ -1,5 +1,5 @@
-qoco
-qocogen
+qoco==0.1.3
+qocogen==0.1.4
 gurobipy==11.0.0
 mosek==10.2.13
 ecos
