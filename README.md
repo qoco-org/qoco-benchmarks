@@ -1,6 +1,9 @@
 # QOCO Benchmarks
+<p align="center">
+  <a href="https://arxiv.org/abs/2503.12658"><img src="http://img.shields.io/badge/arXiv-2503.12658-B31B1B.svg"/></a>
+</p>
 
-This repository was used to generated the numerical results in the paper titled "Custom Solver Generation for Quadratic Objective Second-Order Cone Programs"
+This repository was used to generated the numerical results in the paper titled [QOCO: A Quadratic Objective Conic Optimizer with Custom Solver Generation](https://arxiv.org/abs/2503.12658).
 
 To run benchmarks, first create a python virtual environment and install the requirements with
 
