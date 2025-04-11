@@ -2,7 +2,7 @@
 
 This repository was used to generated the numerical results in the paper titled [QOCO: A Quadratic Objective Conic Optimizer with Custom Solver Generation](https://arxiv.org/abs/2503.12658).
 
-To run benchmarks, first create a python virtual environment and install the requirements with
+To run benchmarks, first create a python 3.12 virtual environment and install the requirements with
 
 ```
 pip install -r requirements.txt
