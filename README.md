@@ -17,7 +17,7 @@ python run_maros.py && python analyze_maros.py
 
 Before running the benchmark problems, the user must generate the cvxgen solvers using the problem files in the `cvxgen/problems/` directory and place them in a directory called `generated_solvers/` within the `cvxgen/` directory.
 
-To run the benchmark problems, run
+To run the benchmark problems, create a directory titled `generated_solvers/` in the root of the repository then run
 
 ```
 python generate_solvers.py && python run_benchmarks.py
