@@ -15,7 +15,7 @@ To run the Maros-Meszaros problems and generate plots run
 python run_maros.py && python analyze_maros.py
 ```
 
-Before running the benchmark problems, the user must generate the cvxgen solvers using the problem files in the `cvxgen/problems/` directory and place them in a directory called `generated_solvers/` within the `cvxgen/` directory.
+Before running the benchmark problems, the user must generate the cvxgen solvers using the problem files in the `cvxgen/problems/` directory and place them in a directory called `generated_solvers/` within the `cvxgen/` directory (If you have already extracted the `cvxgen.tar.gz` archive file, this step can be skipped).
 
 To run the benchmark problems, create a directory titled `generated_solvers/` in the root of the repository then run
 
