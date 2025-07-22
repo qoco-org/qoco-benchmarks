@@ -30,7 +30,6 @@ def gurobi_solve(prob, tol=1e-7, N=10):
     env.setParam("BarQCPConvTol", tol)
     env.setParam("FeasibilityTol", tol)
     env.setParam("OptimalityTol", tol)
-    env.setParam("Presolve", 0)
     try:
         for i in range(N):
             sol = prob.solve(verbose=VERBOSE, solver=cp.GUROBI, env=env)
@@ -82,7 +81,6 @@ def mosek_solve(prob, tol=1e-7, N=10):
                     "MSK_DPAR_INTPNT_CO_TOL_DFEAS": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_MU_RED": tol,
-                    "MSK_IPAR_PRESOLVE_USE": 0,
                     "MSK_DPAR_OPTIMIZER_MAX_TIME": MAX_TIME,
                 },
             )

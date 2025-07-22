@@ -1,8 +1,9 @@
-qoco==0.1.3
-qocogen==0.1.4
-gurobipy==11.0.0
-mosek==10.2.13
+qoco
+qocogen
+gurobipy
+mosek
 ecos
 cvxpy
 pandas
 matplotlib
+h5py
