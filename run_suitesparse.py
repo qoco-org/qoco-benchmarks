@@ -8,6 +8,10 @@ from scipy import sparse
 
 problem_types = ["huber", "lasso"]
 
+# Dont include Springer_ESOC, Rucci_Rucci1, Bates_sls.
+# skip = ["ANSYS_Delor64K", "ANSYS_Delor295K", "ANSYS_Delor338K", "NYPA_Maragal_6", "NYPA_Maragal_7", "NYPA_Maragal_8", "Pereyra_landmark", "Springer_ESOC", "Rucci_Rucci1", "Bates_sls"]
+skip = ["ANSYS_Delor64K", "ANSYS_Delor295K", "ANSYS_Delor338K", "Springer_ESOC", "Rucci_Rucci1", "Bates_sls"]
+
 solve_dict_qoco = {}
 solve_dict_clarabel = {}
 solve_dict_gurobi = {}
@@ -31,15 +35,19 @@ for file_path in directory.iterdir():
             n = len(Ap)-1
             m = len(b)
             A = sparse.csc_matrix((Ax, Ai, Ap), shape=(m,n))
-
+            f.close()
+            if file_path.stem in skip:
+                continue
             x = cp.Variable(n)
+            obj = 0
             if problem_type == "huber":
-                prob = cp.Problem(cp.Minimize(cp.sum(cp.huber(A@x-b))), [])
+                obj = cp.sum(cp.huber(A@x-b))
             elif problem_type == "lasso":
                 lam = np.linalg.norm(A.T@b, np.inf)
-                prob = cp.Problem(cp.Minimize(cp.sum_squares(A@x-b) + lam * cp.norm(x, 1)), [])
+                obj = cp.sum_squares(A@x-b) + lam * cp.norm(x, 1)
             else:
                 raise ValueError
+            prob = cp.Problem(cp.Minimize(obj), [])
 
             # QOCO
             solve_dict_qoco[problem_name] = qoco_solve(prob, 1e-7, N=1)

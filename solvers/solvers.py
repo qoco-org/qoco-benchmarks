@@ -7,10 +7,11 @@ from solvers.run_generated_solver import *
 from solvers.problem_size import get_problem_size
 import warnings
 import signal
+from numpy import int32
 
 
 MAX_TIME = 1200
-VERBOSE = False
+VERBOSE = True
 
 
 class TimeoutException(Exception):  # Custom exception class
@@ -229,6 +230,17 @@ def qoco_solve(prob, tol=1e-7, N=10):
     h = h if m > 0 else None
     A = A if p > 0 else None
     b = b if p > 0 else None
+
+    # Cast row indices and column pointer arrays to int32.
+    if P is not None:
+        P.indices = P.indices.astype(int32)
+        P.indptr = P.indptr.astype(int32)
+    if A is not None:
+        A.indices = A.indices.astype(int32)
+        A.indptr = A.indptr.astype(int32)
+    if G is not None:
+        G.indices = G.indices.astype(int32)
+        G.indptr = G.indptr.astype(int32)
 
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(

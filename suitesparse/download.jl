@@ -38,7 +38,7 @@ for problem in list
             (m, n) = size(A)
             new_problem =  Dict("A" => A, "name" => md.data.name)
             try
-                new_problem["b"] = float(md.b)
+                new_problem["b"] = float(md.b[:])
                 print("Storing also b\n")
             catch e
                 print("No field b. Creating random one.\n")
