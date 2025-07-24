@@ -103,7 +103,7 @@ plt.xlabel("Performance ratio", usetex=True)
 plt.grid()
 plt.xscale("log")
 plt.title("Performance Ratio", usetex=True)
-strFile = "plots/suitesparse_relative_profile.png"
+strFile = "plots/suitesparse_relative_profile.pdf"
 if os.path.isfile(strFile):
     os.remove(strFile)
 plt.savefig(strFile)
@@ -147,7 +147,7 @@ plt.xlabel("Solvetime t [seconds]", usetex=True)
 plt.grid()
 plt.xscale("log")
 plt.title("Solution Time Profile", usetex=True)
-strFile = "plots/suitesparse_absolute_profile.png"
+strFile = "plots/suitesparse_absolute_profile.pdf"
 if os.path.isfile(strFile):
     os.remove(strFile)
 plt.savefig(strFile)
