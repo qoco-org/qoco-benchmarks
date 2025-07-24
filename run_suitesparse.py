@@ -10,7 +10,14 @@ problem_types = ["huber", "lasso"]
 
 # Dont include Springer_ESOC, Rucci_Rucci1, Bates_sls.
 # skip = ["ANSYS_Delor64K", "ANSYS_Delor295K", "ANSYS_Delor338K", "NYPA_Maragal_6", "NYPA_Maragal_7", "NYPA_Maragal_8", "Pereyra_landmark", "Springer_ESOC", "Rucci_Rucci1", "Bates_sls"]
-skip = ["ANSYS_Delor64K", "ANSYS_Delor295K", "ANSYS_Delor338K", "Springer_ESOC", "Rucci_Rucci1", "Bates_sls"]
+skip = [
+    "ANSYS_Delor64K",
+    "ANSYS_Delor295K",
+    "ANSYS_Delor338K",
+    "Springer_ESOC",
+    "Rucci_Rucci1",
+    "Bates_sls",
+]
 
 solve_dict_qoco = {}
 solve_dict_clarabel = {}
@@ -21,30 +28,30 @@ directory = Path("suitesparse/data")
 for file_path in directory.iterdir():
     for problem_type in problem_types:
         if file_path.is_file():
-            f = h5py.File(file_path, 'r')
+            f = h5py.File(file_path, "r")
 
             problem_name = file_path.stem + "_" + problem_type
             print(problem_name)
 
             # Set up CVXPY problem.
-            Ax = f['A']['data'][:]
-            Ai = f['A']['ir'][:]
-            Ap = f['A']['jc'][:]
-            b = f['b'][:]
+            Ax = f["A"]["data"][:]
+            Ai = f["A"]["ir"][:]
+            Ap = f["A"]["jc"][:]
+            b = f["b"][:]
 
-            n = len(Ap)-1
+            n = len(Ap) - 1
             m = len(b)
-            A = sparse.csc_matrix((Ax, Ai, Ap), shape=(m,n))
+            A = sparse.csc_matrix((Ax, Ai, Ap), shape=(m, n))
             f.close()
             if file_path.stem in skip:
                 continue
             x = cp.Variable(n)
             obj = 0
             if problem_type == "huber":
-                obj = cp.sum(cp.huber(A@x-b))
+                obj = cp.sum(cp.huber(A @ x - b))
             elif problem_type == "lasso":
-                lam = np.linalg.norm(A.T@b, np.inf)
-                obj = cp.sum_squares(A@x-b) + lam * cp.norm(x, 1)
+                lam = np.linalg.norm(A.T @ b, np.inf)
+                obj = cp.sum_squares(A @ x - b) + lam * cp.norm(x, 1)
             else:
                 raise ValueError
             prob = cp.Problem(cp.Minimize(obj), [])

@@ -29,10 +29,7 @@ def run_oscillating_masses(ninstances, nruns):
             ecos_res[name] = ecos_solve(prob, 1e-7, nruns)
             if N <= 56:
                 qoco_custom_res[name] = qoco_custom_solve(
-                    prob,
-                    "./generated_solvers",
-                    "oscillating_masses_" + str(N),
-                    nruns,
+                    prob, "./generated_solvers", "oscillating_masses_" + str(N), nruns,
                 )
             if N <= 20:
                 solved, iters, obj, runtime_sec = run_generated_cvxgen(

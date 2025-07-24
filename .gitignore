@@ -3,3 +3,4 @@ test/
 test.py
 generated_solvers/
 suitesparse/data/
+.vscode/
