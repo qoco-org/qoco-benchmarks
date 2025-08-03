@@ -11,7 +11,7 @@ from numpy import int32
 
 
 MAX_TIME = 1200
-VERBOSE = True
+VERBOSE = False
 
 
 class TimeoutException(Exception):  # Custom exception class
