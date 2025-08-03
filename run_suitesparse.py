@@ -11,9 +11,6 @@ problem_types = ["huber", "lasso"]
 # Dont include Springer_ESOC, Rucci_Rucci1, Bates_sls.
 # skip = ["ANSYS_Delor64K", "ANSYS_Delor295K", "ANSYS_Delor338K", "NYPA_Maragal_6", "NYPA_Maragal_7", "NYPA_Maragal_8", "Pereyra_landmark", "Springer_ESOC", "Rucci_Rucci1", "Bates_sls"]
 skip = [
-    "ANSYS_Delor64K",
-    "ANSYS_Delor295K",
-    "ANSYS_Delor338K",
     "Springer_ESOC",
     "Rucci_Rucci1",
     "Bates_sls",
