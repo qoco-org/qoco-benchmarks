@@ -41,11 +41,11 @@ for file_path in directory.iterdir():
         df_gurobi = pd.DataFrame(solve_dict_gurobi).T
         df_mosek = pd.DataFrame(solve_dict_mosek).T
         df_ecos = pd.DataFrame(solve_dict_ecos).T
-        df_qoco.to_csv("results/maros/qoco.csv")
-        df_clarabel.to_csv("results/maros/clarabel.csv")
-        df_gurobi.to_csv("results/maros/gurobi.csv")
-        df_mosek.to_csv("results/maros/mosek.csv")
-        df_ecos.to_csv("results/maros/ecos.csv")
+        df_qoco.to_csv("results/mpc/qoco.csv")
+        df_clarabel.to_csv("results/mpc/clarabel.csv")
+        df_gurobi.to_csv("results/mpc/gurobi.csv")
+        df_mosek.to_csv("results/mpc/mosek.csv")
+        df_ecos.to_csv("results/mpc/ecos.csv")
 
 # Save data at the end since the continue will skip over the final data save in the loop, since the last problem is CONT-300.
 df_qoco = pd.DataFrame(solve_dict_qoco).T
@@ -53,8 +53,8 @@ df_clarabel = pd.DataFrame(solve_dict_clarabel).T
 df_gurobi = pd.DataFrame(solve_dict_gurobi).T
 df_mosek = pd.DataFrame(solve_dict_mosek).T
 df_ecos = pd.DataFrame(solve_dict_ecos).T
-df_qoco.to_csv("results/maros/qoco.csv")
-df_clarabel.to_csv("results/maros/clarabel.csv")
-df_gurobi.to_csv("results/maros/gurobi.csv")
-df_mosek.to_csv("results/maros/mosek.csv")
-df_ecos.to_csv("results/maros/ecos.csv")
+df_qoco.to_csv("results/mpc/qoco.csv")
+df_clarabel.to_csv("results/mpc/clarabel.csv")
+df_gurobi.to_csv("results/mpc/gurobi.csv")
+df_mosek.to_csv("results/mpc/mosek.csv")
+df_ecos.to_csv("results/mpc/ecos.csv")
