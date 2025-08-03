@@ -42,19 +42,39 @@ def plotall():
     plt.figure(figsize=(8.5, 11))
     plt.subplot(321)
     plt.plot(
-        clarabel_size, clarabel_time, "o-", color="darkviolet", label="Clarabel",
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
     )
     plt.plot(
-        ecos_size, ecos_time, "o-", color="mediumseagreen", label="ECOS",
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
     )
     plt.plot(
-        gurobi_size, gurobi_time, "o-", color="coral", label="Gurobi",
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
-        mosek_size, mosek_time, "o-", color="firebrick", label="Mosek",
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
     )
     plt.plot(
-        qoco_size, qoco_time, "X-", color="royalblue", label="QOCO",
+        qoco_size,
+        qoco_time,
+        "X-",
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
@@ -82,19 +102,39 @@ def plotall():
 
     plt.subplot(322)
     plt.plot(
-        clarabel_size, clarabel_time, "o-", color="darkviolet", label="Clarabel",
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
     )
     plt.plot(
-        ecos_size, ecos_time, "o-", color="mediumseagreen", label="ECOS",
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
     )
     plt.plot(
-        gurobi_size, gurobi_time, "o-", color="coral", label="Gurobi",
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
-        mosek_size, mosek_time, "o-", color="firebrick", label="Mosek",
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
     )
     plt.plot(
-        qoco_size, qoco_time, "X-", color="royalblue", label="QOCO",
+        qoco_size,
+        qoco_time,
+        "X-",
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
@@ -124,19 +164,39 @@ def plotall():
 
     plt.subplot(323)
     plt.plot(
-        clarabel_size, clarabel_time, "o-", color="darkviolet", label="Clarabel",
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
     )
     plt.plot(
-        ecos_size, ecos_time, "o-", color="mediumseagreen", label="ECOS",
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
     )
     plt.plot(
-        gurobi_size, gurobi_time, "o-", color="coral", label="Gurobi",
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
-        mosek_size, mosek_time, "o-", color="firebrick", label="Mosek",
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
     )
     plt.plot(
-        qoco_size, qoco_time, "X-", color="royalblue", label="QOCO",
+        qoco_size,
+        qoco_time,
+        "X-",
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
@@ -166,19 +226,39 @@ def plotall():
     pos = ax.get_position()
     xright = pos.x0
     plt.plot(
-        clarabel_size, clarabel_time, "o-", color="darkviolet", label="Clarabel",
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
     )
     plt.plot(
-        ecos_size, ecos_time, "o-", color="mediumseagreen", label="ECOS",
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
     )
     plt.plot(
-        gurobi_size, gurobi_time, "o-", color="coral", label="Gurobi",
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
-        mosek_size, mosek_time, "o-", color="firebrick", label="Mosek",
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
     )
     plt.plot(
-        qoco_size, qoco_time, "X-", color="royalblue", label="QOCO",
+        qoco_size,
+        qoco_time,
+        "X-",
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
@@ -218,22 +298,46 @@ def plotall():
 
     ax = plt.subplot(325)
     plt.plot(
-        clarabel_size, clarabel_time, "o-", color="darkviolet", label="Clarabel",
+        clarabel_size,
+        clarabel_time,
+        "o-",
+        color="darkviolet",
+        label="Clarabel",
     )
     plt.plot(
-        cvxgen_size, cvxgen_time, "o-", color="olive", label="CVXGEN",
+        cvxgen_size,
+        cvxgen_time,
+        "o-",
+        color="olive",
+        label="CVXGEN",
     )
     plt.plot(
-        ecos_size, ecos_time, "o-", color="mediumseagreen", label="ECOS",
+        ecos_size,
+        ecos_time,
+        "o-",
+        color="mediumseagreen",
+        label="ECOS",
     )
     plt.plot(
-        gurobi_size, gurobi_time, "o-", color="coral", label="Gurobi",
+        gurobi_size,
+        gurobi_time,
+        "o-",
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
-        mosek_size, mosek_time, "o-", color="firebrick", label="Mosek",
+        mosek_size,
+        mosek_time,
+        "o-",
+        color="firebrick",
+        label="Mosek",
     )
     plt.plot(
-        qoco_size, qoco_time, "X-", color="royalblue", label="QOCO",
+        qoco_size,
+        qoco_time,
+        "X-",
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         qoco_custom_size,
@@ -243,7 +347,10 @@ def plotall():
         label="QOCO Custom",
     )
     plt.plot(
-        cvxgen_size, cvxgen_time, "o-", color="olive",
+        cvxgen_size,
+        cvxgen_time,
+        "o-",
+        color="olive",
     )
     plt.yscale("log")
     plt.title("Oscillating Masses", usetex=True)
@@ -274,7 +381,10 @@ def plotall():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -283,7 +393,10 @@ def plotall():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
 
     plt.legend(loc="lower right")
@@ -312,7 +425,10 @@ def plotall():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -321,7 +437,10 @@ def plotall():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
 
     plt.legend(loc="lower right")
@@ -351,7 +470,10 @@ def plotall():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -360,7 +482,10 @@ def plotall():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -395,7 +520,10 @@ def plotall():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -404,7 +532,10 @@ def plotall():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -494,7 +625,10 @@ def plot_maros():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -503,7 +637,10 @@ def plot_maros():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
 
     plt.legend(loc="lower right")
@@ -532,7 +669,10 @@ def plot_maros():
         label="ECOS",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+        df_perf["tau"].values,
+        df_perf["gurobi"].values,
+        color="coral",
+        label="Gurobi",
     )
     plt.plot(
         df_perf["tau"].values,
@@ -541,7 +681,10 @@ def plot_maros():
         label="Mosek",
     )
     plt.plot(
-        df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+        df_perf["tau"].values,
+        df_perf["qoco"].values,
+        color="royalblue",
+        label="QOCO",
     )
 
     plt.legend(loc="lower right")

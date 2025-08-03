@@ -178,7 +178,11 @@ def ecos_solve(prob, tol=1e-7, N=10):
         for i in range(N):
             signal.alarm(MAX_TIME)
             sol = prob.solve(
-                verbose=VERBOSE, solver=cp.ECOS, abstol=tol, reltol=tol, feastol=tol,
+                verbose=VERBOSE,
+                solver=cp.ECOS,
+                abstol=tol,
+                reltol=tol,
+                feastol=tol,
             )
             setup_time = np.minimum(prob.solver_stats.setup_time or 0, setup_time)
             solve_time = np.minimum(prob.solver_stats.solve_time, solve_time)
@@ -240,7 +244,21 @@ def qoco_solve(prob, tol=1e-7, N=10):
 
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(
-        n, m, p, P, c, A, b, G, h, l, nsoc, q, abstol=tol, reltol=tol, verbose=VERBOSE,
+        n,
+        m,
+        p,
+        P,
+        c,
+        A,
+        b,
+        G,
+        h,
+        l,
+        nsoc,
+        q,
+        abstol=tol,
+        reltol=tol,
+        verbose=VERBOSE,
     )
 
     for i in range(N):

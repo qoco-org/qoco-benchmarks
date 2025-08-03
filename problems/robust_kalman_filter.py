@@ -19,8 +19,8 @@ def robust_kalman_filter(n):
     A[2, 2] = 1 - gamma * delt
     A[3, 3] = 1 - gamma * delt
 
-    B[0, 0] = delt ** 2 / 2
-    B[1, 1] = delt ** 2 / 2
+    B[0, 0] = delt**2 / 2
+    B[1, 1] = delt**2 / 2
     B[2, 0] = delt
     B[3, 1] = delt
 

@@ -73,16 +73,28 @@ plt.plot(
     label="Clarabel",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["ecos"].values, color="mediumseagreen", label="ECOS",
+    df_perf["tau"].values,
+    df_perf["ecos"].values,
+    color="mediumseagreen",
+    label="ECOS",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+    df_perf["tau"].values,
+    df_perf["gurobi"].values,
+    color="coral",
+    label="Gurobi",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["mosek"].values, color="firebrick", label="Mosek",
+    df_perf["tau"].values,
+    df_perf["mosek"].values,
+    color="firebrick",
+    label="Mosek",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+    df_perf["tau"].values,
+    df_perf["qoco"].values,
+    color="royalblue",
+    label="QOCO",
 )
 
 plt.legend(loc="lower right")
@@ -105,16 +117,28 @@ plt.plot(
     label="Clarabel",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["ecos"].values, color="mediumseagreen", label="ECOS",
+    df_perf["tau"].values,
+    df_perf["ecos"].values,
+    color="mediumseagreen",
+    label="ECOS",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["gurobi"].values, color="coral", label="Gurobi",
+    df_perf["tau"].values,
+    df_perf["gurobi"].values,
+    color="coral",
+    label="Gurobi",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["mosek"].values, color="firebrick", label="Mosek",
+    df_perf["tau"].values,
+    df_perf["mosek"].values,
+    color="firebrick",
+    label="Mosek",
 )
 plt.plot(
-    df_perf["tau"].values, df_perf["qoco"].values, color="royalblue", label="QOCO",
+    df_perf["tau"].values,
+    df_perf["qoco"].values,
+    color="royalblue",
+    label="QOCO",
 )
 
 plt.legend(loc="lower right")
