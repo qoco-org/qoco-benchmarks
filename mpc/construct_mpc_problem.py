@@ -68,11 +68,11 @@ def construct_mpc_problem(mat):
             
             idx = np.where(np.isfinite(ymin))[0]
             if len(idx) > 0:
-                con += [ymin[idx] <= y[:,idx]]
+                con += [ymin[idx] <= y[idx,i]]
 
             idx = np.where(np.isfinite(ymax))[0]
             if len(idx) > 0:
-                con += [y[:,idx] <= ymax[idx]]
+                con += [y[idx,i] <= ymax[idx]]
 
     if has_outputs and len(dmin) > 0:
         M = csc_matrix(M)
