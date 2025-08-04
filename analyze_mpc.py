@@ -53,10 +53,10 @@ qoco_failed = df_qoco.iloc[idx]["Unnamed: 0"].values
 print("QOCO Failed:", qoco_failed)
 
 # Plot performance profile
-tmax = 1.01
-compute_relative_profile(solvers, tmax, "./results/mpc", xrange=(0, 1.1))
-compute_absolute_profile(solvers, tmax, "./results/mpc", xrange=(-5, 0.1))
-compute_shifted_geometric_mean(solvers, tmax, "./results/mpc", "mpc")
+tmax = 0.51
+compute_relative_profile(solvers, tmax, "./results/mpc", xrange=(0, 2.3))
+compute_absolute_profile(solvers, tmax, "./results/mpc", xrange=(-5, -1))
+compute_shifted_geometric_mean_custom(solvers, tmax, "./results/mpc", "mpc")
 make_table(
     solvers,
     "./results/mpc",
