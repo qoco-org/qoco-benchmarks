@@ -5,9 +5,10 @@ from postprocess import *
 from plotall import *
 from utils import *
 
-solvers = ["qoco", "clarabel", "ecos", "gurobi", "mosek"]
+solvers = ["qoco", "qoco_custom", "clarabel", "ecos", "gurobi", "mosek"]
 
 df_qoco = pd.read_csv("./results/mpc/qoco.csv")
+df_qoco_custom = pd.read_csv("./results/mpc/qoco_custom.csv")
 df_clarabel = pd.read_csv("./results/mpc/clarabel.csv")
 df_ecos = pd.read_csv("./results/mpc/ecos.csv")
 df_gurobi = pd.read_csv("./results/mpc/gurobi.csv")
@@ -96,6 +97,12 @@ plt.plot(
     color="royalblue",
     label="QOCO",
 )
+plt.plot(
+    df_perf["tau"].values,
+    df_perf["qoco_custom"].values,
+    color="mediumvioletred",
+    label="QOCO Custom",
+)
 
 plt.legend(loc="lower right")
 plt.ylabel("Ratio of problem solved", usetex=True)
@@ -139,6 +146,12 @@ plt.plot(
     df_perf["qoco"].values,
     color="royalblue",
     label="QOCO",
+)
+plt.plot(
+    df_perf["tau"].values,
+    df_perf["qoco_custom"].values,
+    color="mediumvioletred",
+    label="QOCO Custom",
 )
 
 plt.legend(loc="lower right")

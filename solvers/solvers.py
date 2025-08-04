@@ -290,6 +290,15 @@ def qoco_solve(prob, tol=1e-7, N=10):
 
 def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
+    if P is not None:
+        P.indices = P.indices.astype(int32)
+        P.indptr = P.indptr.astype(int32)
+    if A is not None:
+        A.indices = A.indices.astype(int32)
+        A.indptr = A.indptr.astype(int32)
+    if G is not None:
+        G.indices = G.indices.astype(int32)
+        G.indptr = G.indptr.astype(int32)
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     codegen_solved, codegen_iters, codegen_obj, runtime_sec = run_generated_qoco(
