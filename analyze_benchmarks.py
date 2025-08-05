@@ -1,4 +1,4 @@
-from plotall import plotall
+from plotall import *
 from postprocess import *
 
 tmax = 10.01

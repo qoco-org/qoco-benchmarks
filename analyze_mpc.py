@@ -63,104 +63,11 @@ make_table(
     "mpc",
     "Iterations and solver runtimes for mpc problems",
 )
+plot_performance_curves("mpc",custom=True)
 
-# Plot performance profiles
-df_perf = pd.read_csv("./results/mpc/relative_profile.csv")
-plt.figure(dpi=200)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["clarabel"].values,
-    color="darkviolet",
-    label="Clarabel",
+idx = np.where(~np.isnan(df_qoco_custom["obj"].values) == True)
+relerror = np.abs(df_gurobi["obj"].values[idx]- df_qoco_custom["obj"].values[idx]) / np.abs(df_gurobi["obj"].values[idx])
+assert (
+    np.linalg.norm(relerror,np.inf)
+    < 1e-3
 )
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["ecos"].values,
-    color="mediumseagreen",
-    label="ECOS",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["gurobi"].values,
-    color="coral",
-    label="Gurobi",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["mosek"].values,
-    color="firebrick",
-    label="Mosek",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["qoco"].values,
-    color="royalblue",
-    label="QOCO",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["qoco_custom"].values,
-    color="mediumvioletred",
-    label="QOCO Custom",
-)
-
-plt.legend(loc="lower right")
-plt.ylabel("Ratio of problem solved", usetex=True)
-plt.xlabel("Performance ratio", usetex=True)
-plt.grid()
-plt.xscale("log")
-plt.title("Performance Ratio", usetex=True)
-strFile = "plots/mpc_relative_profile.pdf"
-if os.path.isfile(strFile):
-    os.remove(strFile)
-plt.savefig(strFile)
-
-df_perf = pd.read_csv("./results/mpc/absolute_profile.csv")
-plt.figure(dpi=200)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["clarabel"].values,
-    color="darkviolet",
-    label="Clarabel",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["ecos"].values,
-    color="mediumseagreen",
-    label="ECOS",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["gurobi"].values,
-    color="coral",
-    label="Gurobi",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["mosek"].values,
-    color="firebrick",
-    label="Mosek",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["qoco"].values,
-    color="royalblue",
-    label="QOCO",
-)
-plt.plot(
-    df_perf["tau"].values,
-    df_perf["qoco_custom"].values,
-    color="mediumvioletred",
-    label="QOCO Custom",
-)
-
-plt.legend(loc="lower right")
-plt.ylabel("Fraction of problem solved within t", usetex=True)
-plt.xlabel("Solvetime t [seconds]", usetex=True)
-plt.grid()
-plt.xscale("log")
-plt.title("Solution Time Profile", usetex=True)
-strFile = "plots/mpc_absolute_profile.pdf"
-if os.path.isfile(strFile):
-    os.remove(strFile)
-plt.savefig(strFile)
