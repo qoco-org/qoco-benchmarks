@@ -23,7 +23,7 @@ def get_overall_performance(solvers):
         overall_df = pd.DataFrame()
         # Loop over all problems
         for item in os.listdir("./results"):
-            if item == "overall" or item == "overall_custom" or item == "maros":
+            if item == "overall" or item == "overall_custom" or item == "maros" or item == "suitesparse" or item == "mpc":
                 continue
             item_path = os.path.join("./results", item)
             df = pd.read_csv(os.path.join(item_path, s + ".csv"))[0:nprob]
