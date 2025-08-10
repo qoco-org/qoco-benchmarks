@@ -1,8 +1,10 @@
-qoco==0.1.3
-qocogen==0.1.4
+qoco==0.1.6
+qocogen==0.1.9
 gurobipy==11.0.0
 mosek==10.2.13
+clarabel==0.10.0
+cvxpy==1.6.0
 ecos
-cvxpy
 pandas
 matplotlib
+h5py

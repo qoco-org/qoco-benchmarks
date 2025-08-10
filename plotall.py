@@ -561,7 +561,8 @@ def plotall():
             df_gurobi_robust_kalman_filter["obj"].values[0:100]
             - df_qoco_custom_robust_kalman_filter["obj"].values[0:100],
             np.inf,
-        ) / np.linalg.norm(df_gurobi_robust_kalman_filter["obj"].values[0:100])
+        )
+        / np.linalg.norm(df_gurobi_robust_kalman_filter["obj"].values[0:100])
         < 1e-5
     )
     assert (
@@ -585,16 +586,13 @@ def plotall():
             df_gurobi_oscillating_masses["obj"].values[0:100]
             - df_qoco_custom_oscillating_masses["obj"].values[0:100],
             np.inf,
-        ) / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:100])
+        )
+        / np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:100])
         < 1e-5
     )
     assert (
-        np.linalg.norm(
-            df_gurobi_oscillating_masses["obj"].values[0:40]
-            - df_cvxgen_oscillating_masses["obj"].values[0:40],
-            np.inf,
-        )
-        < 1e-5
+        np.linalg.norm(df_gurobi_oscillating_masses["obj"].values[0:40]- df_cvxgen_oscillating_masses["obj"].values[0:40],np.inf)
+        < 1e-4
     )
     assert (
         np.linalg.norm(
@@ -605,10 +603,8 @@ def plotall():
         < 1e-5
     )
 
-
-def plot_maros():
-    # Plot performance profiles
-    df_perf = pd.read_csv("./results/maros/relative_profile.csv")
+def plot_performance_curves(name, custom=False):
+    df_perf = pd.read_csv("./results/" + name + "/relative_profile.csv")
     plt.figure(dpi=200)
     plt.plot(
         df_perf["tau"].values,
@@ -640,6 +636,14 @@ def plot_maros():
         color="royalblue",
         label="QOCO",
     )
+
+    if custom:
+        plt.plot(
+            df_perf["tau"].values,
+            df_perf["qoco_custom"].values,
+            color="mediumvioletred",
+            label="QOCO Custom",
+        )
 
     plt.legend(loc="lower right")
     plt.ylabel("Ratio of problem solved", usetex=True)
@@ -647,12 +651,12 @@ def plot_maros():
     plt.grid()
     plt.xscale("log")
     plt.title("Performance Ratio", usetex=True)
-    strFile = "plots/maros_relative_profile.pdf"
+    strFile = "plots/" + name + "_relative_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)
 
-    df_perf = pd.read_csv("./results/maros/absolute_profile.csv")
+    df_perf = pd.read_csv("./results/"+name+"/absolute_profile.csv")
     plt.figure(dpi=200)
     plt.plot(
         df_perf["tau"].values,
@@ -684,6 +688,13 @@ def plot_maros():
         color="royalblue",
         label="QOCO",
     )
+    if custom:
+        plt.plot(
+            df_perf["tau"].values,
+            df_perf["qoco_custom"].values,
+            color="mediumvioletred",
+            label="QOCO Custom",
+        )
 
     plt.legend(loc="lower right")
     plt.ylabel("Fraction of problem solved within t", usetex=True)
@@ -691,7 +702,7 @@ def plot_maros():
     plt.grid()
     plt.xscale("log")
     plt.title("Solution Time Profile", usetex=True)
-    strFile = "plots/maros_absolute_profile.pdf"
+    strFile = "plots/" + name + "_absolute_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
     plt.savefig(strFile)

@@ -1,0 +1,73 @@
+\scriptsize
+\begin{longtable}{lc||cccccc||cccccc||}
+\captionsetup{labelfont=bf}
+\caption{\bf Iterations and solver runtimes for mpc problems} \\ 
+ & &  \multicolumn{6}{c||}{\underline{Iterations}} & \multicolumn{6}{c||}{\underline{Solver Runtime (s)}}\\[2ex] 
+Problem & Size & \textsc{qoco} & \textsc{qoco\_custom} & \textsc{clarabel} & \textsc{ecos} & \textsc{gurobi} & \textsc{mosek} & \textsc{qoco} & \textsc{qoco\_custom} & \textsc{clarabel} & \textsc{ecos} & \textsc{gurobi} & \textsc{mosek} \\[1ex]
+\hline
+\endhead
+\textsc{forcesExample\_3} & 189 &  \winner 9 &  \winner 9 &  \winner 9 & 17 & 10 &  \winner 9 & 0.00009 &  \winner 0.00003 & 0.00014 & 0.00029 & 0.00194 & 0.00050 \\ 
+\textsc{spacecraft\_1} & 1137 &  \winner 9 &  \winner 9 &  \winner 9 & 16 & 10 & 13 & 0.00039 &  \winner 0.00018 & 0.00074 & 0.00110 & 0.00217 & 0.00167 \\ 
+\textsc{dcMotor\_4} & 5514 &  \winner 8 &  \winner 8 &  \winner 8 & 17 & 13 & 17 & 0.00170 &  \winner 0.00084 & 0.00370 & 0.00677 & 0.00459 & 0.00823 \\ 
+\textsc{pendulum\_3} & 155 &  \winner 5 &  \winner 5 &  \winner 5 & 10 & 7 & 9 & 0.00005 &  \winner 0.00001 & 0.00008 & 0.00014 & 0.00191 & 0.00039 \\ 
+\textsc{forcesExample\_2} & 170 &  \winner 7 &  \winner 7 &  \winner 7 & 13 & 12 & 9 & 0.00006 &  \winner 0.00002 & 0.00010 & 0.00021 & 0.00188 & 0.00046 \\ 
+\textsc{binaryDistillationColumn\_2} & 2936 & 9 & 9 & 9 & 17 & 12 &  \winner 8 & 0.00085 &  \winner 0.00043 & 0.00164 & 0.00269 & 0.00288 & 0.00251 \\ 
+\textsc{quadcopter\_2} & 3172 &  \winner 7 &  \winner 7 &  \winner 7 & 13 & 14 & 11 & 0.00105 &  \winner 0.00050 & 0.00180 & 0.00274 & 0.00353 & 0.00469 \\ 
+\textsc{pendulum\_1} & 435 & 6 & 6 &  \winner 5 & 12 & 10 & 14 & 0.00012 &  \winner 0.00004 & 0.00020 & 0.00041 & 0.00209 & 0.00091 \\ 
+\textsc{shell\_3} & 739 &  \winner 10 &  \winner 10 & 12 & 18 & 13 & 14 & 0.00045 &  \winner 0.00018 & 0.00085 & 0.00139 & 0.00218 & 0.00113 \\ 
+\textsc{fiordosExample\_3} & 119 & 10 & 10 &  \winner 8 & -& 10 & 12 & 0.00006 &  \winner 0.00002 & 0.00009 & -& 0.00191 & 0.00039 \\ 
+\textsc{fiordosExample\_1} & 119 & 8 & 8 &  \winner 7 & 12 & 13 & 10 & 0.00005 &  \winner 0.00001 & 0.00008 & 0.00014 & 0.00193 & 0.00037 \\ 
+\textsc{aircraft\_11} & 636 & 11 & 11 & 12 & 23 &  \winner 9 & 14 & 0.00026 &  \winner 0.00010 & 0.00054 & 0.00097 & 0.00203 & 0.00099 \\ 
+\textsc{tripleInvertedPendulum\_3} & 2919 &  \winner 8 &  \winner 8 &  \winner 8 & 19 & 14 & 12 & 0.00079 &  \winner 0.00038 & 0.00299 & 0.00406 & 0.00317 & 0.00515 \\ 
+\textsc{robotArm\_1} & 276 &  \winner 5 &  \winner 5 &  \winner 5 & -& 9 & 14 & 0.00008 &  \winner 0.00002 & 0.00018 & -& 0.00196 & 0.00060 \\ 
+\textsc{aircraft\_12} & 636 & 11 & 11 & 12 & 23 &  \winner 9 & 14 & 0.00026 &  \winner 0.00011 & 0.00055 & 0.00093 & 0.00202 & 0.00100 \\ 
+\textsc{quadcopter\_5} & 3072 & -& -& 26 & -& 40 &  \winner 20 & -& -& 0.00705 & -&  \winner 0.00557 & 0.00596 \\ 
+\textsc{dcMotor\_2} & 1114 &  \winner 8 &  \winner 8 & 9 & 17 & 11 & 15 & 0.00036 &  \winner 0.00015 & 0.00099 & 0.00135 & 0.00235 & 0.00140 \\ 
+\textsc{springMass\_1} & 21239 &  \winner 10 &  \winner 10 & 12 & 24 & 17 & 40 & 0.00706 &  \winner 0.00452 & 0.03067 & 0.03561 & 0.01192 & 0.10089 \\ 
+\textsc{aircraft\_10} & 584 &  \winner 8 &  \winner 8 & 9 & 15 & 10 & 13 & 0.00020 &  \winner 0.00008 & 0.00041 & 0.00055 & 0.00204 & 0.00081 \\ 
+\textsc{doubleInvertedPendulum\_1} & 502 &  \winner 5 &  \winner 5 & 6 & 13 & 10 & 16 & 0.00012 &  \winner 0.00004 & 0.00031 & 0.00054 & 0.00211 & 0.00095 \\ 
+\textsc{springMass\_3} & 2144 &  \winner 5 &  \winner 5 & 7 & 21 & 10 & 21 & 0.00045 &  \winner 0.00019 & 0.00107 & 0.00307 & 0.00247 & 0.00548 \\ 
+\textsc{robotArm\_2} & 1056 &  \winner 10 &  \winner 10 &  \winner 10 & -& 13 & 21 & 0.00042 &  \winner 0.00019 & 0.00142 & -& 0.00230 & 0.00194 \\ 
+\textsc{ballOnPlate\_1} & 398 & 7 & 7 &  \winner 6 & 10 & 12 & 13 & 0.00014 &  \winner 0.00005 & 0.00023 & 0.00038 & 0.00200 & 0.00081 \\ 
+\textsc{aircraft\_13} & 3116 & 14 & 14 & 15 & 25 &  \winner 11 & 19 & 0.00141 &  \winner 0.00073 & 0.00334 & 0.00523 & 0.00276 & 0.00965 \\ 
+\textsc{aircraft\_3} & 464 &  \winner 7 &  \winner 7 &  \winner 7 & 14 & 16 & 12 & 0.00015 &  \winner 0.00005 & 0.00025 & 0.00048 & 0.00209 & 0.00070 \\ 
+\textsc{nonlinearCstr\_2} & 1164 &  \winner 9 &  \winner 9 & 10 & 17 & 11 & 11 & 0.00037 &  \winner 0.00016 & 0.00085 & 0.00112 & 0.00221 & 0.00164 \\ 
+\textsc{quadcopter\_6} & 1678 &  \winner 7 &  \winner 7 &  \winner 7 & 15 & 13 & 12 & 0.00055 &  \winner 0.00025 & 0.00103 & 0.00207 & 0.00265 & 0.00176 \\ 
+\textsc{quadcopter\_3} & 7912 &  \winner 7 &  \winner 7 &  \winner 7 & 13 & 14 & 12 & 0.00266 &  \winner 0.00138 & 0.00446 & 0.00676 & 0.00612 & 0.01181 \\ 
+\textsc{aircraft\_4} & 504 &  \winner 8 &  \winner 8 & 9 & 15 & 10 & 11 & 0.00018 &  \winner 0.00007 & 0.00035 & 0.00052 & 0.00203 & 0.00076 \\ 
+\textsc{toyExample\_1} & 199 &  \winner 6 &  \winner 6 & 7 & 18 & 9 & 11 & 0.00006 &  \winner 0.00002 & 0.00013 & 0.00031 & 0.00194 & 0.00054 \\ 
+\textsc{shell\_1} & 739 &  \winner 6 &  \winner 6 & 7 & 15 & 11 & 10 & 0.00028 &  \winner 0.00011 & 0.00056 & 0.00116 & 0.00216 & 0.00096 \\ 
+\textsc{helicopter\_2} & 1051 & 6 & 6 &  \winner 5 & 23 & 12 & 18 & 0.00032 &  \winner 0.00012 & 0.00068 & 0.00213 & 0.00256 & 0.00230 \\ 
+\textsc{aircraft\_2} & 524 &  \winner 8 &  \winner 8 & 9 & 17 & 10 & 13 & 0.00017 &  \winner 0.00007 & 0.00035 & 0.00053 & 0.00202 & 0.00085 \\ 
+\textsc{ballOnPlate\_2} & 398 & 7 & 7 &  \winner 6 & 12 & 10 & 14 & 0.00014 &  \winner 0.00005 & 0.00023 & 0.00044 & 0.00201 & 0.00083 \\ 
+\textsc{tripleInvertedPendulum\_2} & 2919 &  \winner 7 &  \winner 7 &  \winner 7 & 19 & 13 & 14 & 0.00073 &  \winner 0.00034 & 0.00265 & 0.00393 & 0.00312 & 0.00589 \\ 
+\textsc{forcesExample\_1} & 171 &  \winner 7 &  \winner 7 &  \winner 7 & 13 & 12 & 9 & 0.00006 &  \winner 0.00002 & 0.00010 & 0.00022 & 0.00198 & 0.00046 \\ 
+\textsc{fiordosExample\_2} & 139 &  \winner 7 &  \winner 7 & 8 & 15 & 11 & 10 & 0.00006 &  \winner 0.00002 & 0.00012 & 0.00019 & 0.00193 & 0.00040 \\ 
+\textsc{dcMotor\_6} & 1114 &  \winner 6 &  \winner 6 & 7 & 17 & 11 & 11 & 0.00030 &  \winner 0.00012 & 0.00110 & 0.00134 & 0.00236 & 0.00119 \\ 
+\textsc{binaryDistillationColumn\_1} & 2936 & 9 & 9 & 9 & 17 & 12 &  \winner 8 & 0.00085 &  \winner 0.00042 & 0.00162 & 0.00262 & 0.00285 & 0.00252 \\ 
+\textsc{dcMotor\_1} & 564 &  \winner 7 &  \winner 7 & 8 & 15 & 10 & 14 & 0.00018 &  \winner 0.00006 & 0.00048 & 0.00062 & 0.00207 & 0.00084 \\ 
+\textsc{ballOnPlate\_4} & 658 &  \winner 8 &  \winner 8 & 9 & 15 & 11 & 16 & 0.00024 &  \winner 0.00010 & 0.00053 & 0.00091 & 0.00208 & 0.00126 \\ 
+\textsc{doubleInvertedPendulum\_3} & 542 &  \winner 5 &  \winner 5 & 6 & 15 & 11 & 15 & 0.00013 &  \winner 0.00005 & 0.00033 & 0.00065 & 0.00208 & 0.00094 \\ 
+\textsc{quadcopter\_1} & 1592 &  \winner 7 &  \winner 7 &  \winner 7 & 12 & 13 & 9 & 0.00054 &  \winner 0.00023 & 0.00092 & 0.00136 & 0.00256 & 0.00137 \\ 
+\textsc{dcMotor\_5} & 1114 &  \winner 8 &  \winner 8 & 12 & 18 & 15 & 15 & 0.00036 &  \winner 0.00015 & 0.00161 & 0.00143 & 0.00241 & 0.00140 \\ 
+\textsc{shell\_2} & 1469 &  \winner 7 &  \winner 7 &  \winner 7 & 16 & 11 & 10 & 0.00062 &  \winner 0.00027 & 0.00113 & 0.00342 & 0.00269 & 0.00174 \\ 
+\textsc{dcMotor\_3} & 5514 &  \winner 8 &  \winner 8 & 10 & 21 & 15 & 20 & 0.00168 &  \winner 0.00083 & 0.00532 & 0.00803 & 0.00478 & 0.00868 \\ 
+\textsc{helicopter\_3} & 536 &  \winner 5 &  \winner 5 &  \winner 5 & 22 & 10 & 18 & 0.00015 &  \winner 0.00004 & 0.00034 & 0.00105 & 0.00210 & 0.00125 \\ 
+\textsc{quadcopter\_4} & 3172 &  \winner 10 &  \winner 10 &  \winner 10 & 15 & 15 & 16 & 0.00139 &  \winner 0.00069 & 0.00258 & 0.00383 & 0.00359 & 0.00554 \\ 
+\textsc{doubleInvertedPendulum\_2} & 502 &  \winner 8 &  \winner 8 & 9 & 16 & 12 & 18 & 0.00016 &  \winner 0.00007 & 0.00041 & 0.00063 & 0.00210 & 0.00101 \\ 
+\textsc{tripleInvertedPendulum\_1} & 2739 &  \winner 7 &  \winner 7 &  \winner 7 & 19 & 13 & 12 & 0.00067 &  \winner 0.00029 & 0.00250 & 0.00369 & 0.00305 & 0.00489 \\ 
+\textsc{springMass\_2} & 2159 &  \winner 6 &  \winner 6 & 7 & 21 & 10 & 21 & 0.00050 &  \winner 0.00022 & 0.00110 & 0.00303 & 0.00266 & 0.00665 \\ 
+\textsc{toyExample\_5} & 1909 &  \winner 9 &  \winner 9 & 11 & -& 17 & 16 & 0.00062 &  \winner 0.00029 & 0.00151 & -& 0.00312 & 0.00473 \\ 
+\textsc{toyExample\_3} & 199 &  \winner 6 &  \winner 6 & 12 & -& 8 & 15 & 0.00007 &  \winner 0.00002 & 0.00019 & -& 0.00193 & 0.00065 \\ 
+\textsc{helicopter\_1} & 201 &  \winner 4 &  \winner 4 &  \winner 4 & 21 & 8 & 13 & 0.00006 &  \winner 0.00001 & 0.00011 & 0.00034 & 0.00198 & 0.00049 \\ 
+\textsc{spacecraft\_2} & 1137 &  \winner 9 &  \winner 9 &  \winner 9 & 16 & 10 & 13 & 0.00042 &  \winner 0.00018 & 0.00073 & 0.00110 & 0.00214 & 0.00168 \\ 
+\textsc{forcesExample\_4} & 369 &  \winner 7 &  \winner 7 &  \winner 7 & 15 & 12 & 10 & 0.00012 &  \winner 0.00004 & 0.00020 & 0.00051 & 0.00208 & 0.00076 \\ 
+\textsc{toyExample\_2} & 389 &  \winner 6 &  \winner 6 &  \winner 6 & 18 & 10 & 11 & 0.00012 &  \winner 0.00004 & 0.00020 & 0.00061 & 0.00207 & 0.00080 \\ 
+\textsc{ballOnPlate\_3} & 398 &  \winner 7 &  \winner 7 &  \winner 7 & 14 & 9 & 14 & 0.00014 &  \winner 0.00005 & 0.00026 & 0.00052 & 0.00198 & 0.00084 \\ 
+\textsc{toyExample\_4} & 959 &  \winner 9 &  \winner 9 & 10 & -& 14 & 18 & 0.00034 &  \winner 0.00014 & 0.00071 & -& 0.00242 & 0.00217 \\ 
+\textsc{nonlinearCstr\_3} & 294 &  \winner 7 &  \winner 7 & 8 & 16 & 9 & 10 & 0.00009 &  \winner 0.00003 & 0.00019 & 0.00027 & 0.00190 & 0.00050 \\ 
+\textsc{nonlinearCstr\_1} & 1164 &  \winner 9 &  \winner 9 & 10 & 17 & 11 & 11 & 0.00037 &  \winner 0.00016 & 0.00085 & 0.00112 & 0.00222 & 0.00163 \\ 
+\textsc{springMass\_4} & 4279 &  \winner 7 &  \winner 7 &  \winner 7 & 22 & 10 & 23 & 0.00111 &  \winner 0.00055 & 0.00240 & 0.00637 & 0.00332 & 0.01068 \\ 
+\textsc{aircraft\_1} & 504 &  \winner 8 &  \winner 8 & 9 & 15 & 10 & 11 & 0.00018 &  \winner 0.00007 & 0.00036 & 0.00053 & 0.00202 & 0.00074 \\ 
+\textsc{pendulum\_2} & 432 &  \winner 8 &  \winner 8 &  \winner 8 & 13 & 14 & 15 & 0.00014 &  \winner 0.00005 & 0.00027 & 0.00045 & 0.00206 & 0.00095 \\ 
+\end{longtable}

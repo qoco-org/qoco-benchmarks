@@ -7,6 +7,7 @@ from solvers.run_generated_solver import *
 from solvers.problem_size import get_problem_size
 import warnings
 import signal
+from numpy import int32
 
 
 MAX_TIME = 1200
@@ -30,7 +31,6 @@ def gurobi_solve(prob, tol=1e-7, N=10):
     env.setParam("BarQCPConvTol", tol)
     env.setParam("FeasibilityTol", tol)
     env.setParam("OptimalityTol", tol)
-    env.setParam("Presolve", 0)
     try:
         for i in range(N):
             sol = prob.solve(verbose=VERBOSE, solver=cp.GUROBI, env=env)
@@ -82,7 +82,6 @@ def mosek_solve(prob, tol=1e-7, N=10):
                     "MSK_DPAR_INTPNT_CO_TOL_DFEAS": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": tol,
                     "MSK_DPAR_INTPNT_CO_TOL_MU_RED": tol,
-                    "MSK_IPAR_PRESOLVE_USE": 0,
                     "MSK_DPAR_OPTIMIZER_MAX_TIME": MAX_TIME,
                 },
             )
@@ -232,6 +231,17 @@ def qoco_solve(prob, tol=1e-7, N=10):
     A = A if p > 0 else None
     b = b if p > 0 else None
 
+    # Cast row indices and column pointer arrays to int32.
+    if P is not None:
+        P.indices = P.indices.astype(int32)
+        P.indptr = P.indptr.astype(int32)
+    if A is not None:
+        A.indices = A.indices.astype(int32)
+        A.indptr = A.indptr.astype(int32)
+    if G is not None:
+        G.indices = G.indices.astype(int32)
+        G.indptr = G.indptr.astype(int32)
+
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(
         n,
@@ -280,6 +290,15 @@ def qoco_solve(prob, tol=1e-7, N=10):
 
 def qoco_custom_solve(prob, custom_solver_dir, solver_name, nruns):
     n, m, p, P, c, A, b, G, h, l, nsoc, q = convert(prob)
+    if P is not None:
+        P.indices = P.indices.astype(int32)
+        P.indptr = P.indptr.astype(int32)
+    if A is not None:
+        A.indices = A.indices.astype(int32)
+        A.indptr = A.indptr.astype(int32)
+    if G is not None:
+        G.indices = G.indices.astype(int32)
+        G.indptr = G.indptr.astype(int32)
     prob_qoco = qoco.QOCO()
     prob_qoco.setup(n, m, p, P, c, A, b, G, h, l, nsoc, q)
     codegen_solved, codegen_iters, codegen_obj, runtime_sec = run_generated_qoco(

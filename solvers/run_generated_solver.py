@@ -1,6 +1,5 @@
 import os
 import struct
-import numpy as np
 
 
 def run_generated_qoco(solver_dir, nruns, P, A, G, c, b, h):

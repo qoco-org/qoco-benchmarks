@@ -62,6 +62,4 @@ make_table(
     "maros",
     "Iterations and solver runtimes for Maros–Mészáros problems",
 )
-
-plot_maros()
-export_figures()
+plot_performance_curves("maros")
