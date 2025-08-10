@@ -14,8 +14,15 @@ Before running the benchmark problems, the user must generate the cvxgen solvers
 To run the benchmark problems, create a directory titled `generated_solvers/` in the root of the repository then run
 
 ```
-python generate_solvers.py && python run_benchmarks.py
+python generate_benchmark_solvers.py && python run_benchmarks.py && python analyze_benchmarks.py
 ```
+
+To run the MPC problems, run
+
+```
+python generate_mpc_solvers.py && python run_mpc.py && python analyze_mpc.py
+```
+
 
 To run the Maros-Meszaros problems and generate plots run
 
@@ -23,7 +30,14 @@ To run the Maros-Meszaros problems and generate plots run
 python run_maros.py && python analyze_maros.py
 ```
 
-To generate the solvers for the benchmark problems, run the benchmarks, and run the Maros-Meszaros problems and generate all plots, run
+To run the SuiteSparse problems and generate plots run
+
+```
+python run_suitesparse.py && python analyze_suitesparse.py
+```
+
+
+To generate all solvers and run all benchmarks and generate all plots, run
 
 ```
 ./run_all.sh
