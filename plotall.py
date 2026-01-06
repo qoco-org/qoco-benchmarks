@@ -400,11 +400,11 @@ def plotall():
     )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Ratio of problem solved", usetex=True)
-    plt.xlabel("Performance ratio", usetex=True)
+    plt.ylabel("Ratio of problem solved", usetex=True, fontsize=14)
+    plt.xlabel("Performance ratio", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Performance Ratio", usetex=True)
+    plt.title("Performance Ratio", usetex=True, fontsize=14)
     strFile = "plots/benchmark_relative_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -444,11 +444,11 @@ def plotall():
     )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Fraction of problem solved within t", usetex=True)
-    plt.xlabel("Solvetime t [seconds]", usetex=True)
+    plt.ylabel("Fraction of problem solved within t", usetex=True, fontsize=14)
+    plt.xlabel("Solvetime t [seconds]", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Solution Time Profile", usetex=True)
+    plt.title("Solution Time Profile", usetex=True, fontsize=14)
     strFile = "plots/benchmark_absolute_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -495,11 +495,11 @@ def plotall():
     )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Ratio of problem solved", usetex=True)
-    plt.xlabel("Performance ratio", usetex=True)
+    plt.ylabel("Ratio of problem solved", usetex=True, fontsize=14)
+    plt.xlabel("Performance ratio", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Performance Ratio", usetex=True)
+    plt.title("Performance Ratio", usetex=True, fontsize=14)
     strFile = "plots/benchmark_custom_relative_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -545,11 +545,11 @@ def plotall():
     )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Fraction of problem solved within t", usetex=True)
-    plt.xlabel("Solvetime t [seconds]", usetex=True)
+    plt.ylabel("Fraction of problem solved within t", usetex=True, fontsize=14)
+    plt.xlabel("Solvetime t [seconds]", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Solution Time Profile", usetex=True)
+    plt.title("Solution Time Profile", usetex=True, fontsize=14)
     strFile = "plots/benchmark_custom_absolute_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -604,6 +604,7 @@ def plotall():
     )
 
 def plot_performance_curves(name, custom=False):
+    plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
     df_perf = pd.read_csv("./results/" + name + "/relative_profile.csv")
     plt.figure(dpi=200)
     plt.plot(
@@ -646,11 +647,11 @@ def plot_performance_curves(name, custom=False):
         )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Ratio of problem solved", usetex=True)
-    plt.xlabel("Performance ratio", usetex=True)
+    plt.ylabel("Ratio of problem solved", usetex=True, fontsize=14)
+    plt.xlabel("Performance ratio", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Performance Ratio", usetex=True)
+    plt.title("Performance Ratio", usetex=True, fontsize=14)
     strFile = "plots/" + name + "_relative_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
@@ -697,11 +698,11 @@ def plot_performance_curves(name, custom=False):
         )
 
     plt.legend(loc="lower right")
-    plt.ylabel("Fraction of problem solved within t", usetex=True)
-    plt.xlabel("Solvetime t [seconds]", usetex=True)
+    plt.ylabel("Fraction of problem solved within t", usetex=True, fontsize=14)
+    plt.xlabel("Solvetime t [seconds]", usetex=True, fontsize=14)
     plt.grid()
     plt.xscale("log")
-    plt.title("Solution Time Profile", usetex=True)
+    plt.title("Solution Time Profile", usetex=True, fontsize=14)
     strFile = "plots/" + name + "_absolute_profile.pdf"
     if os.path.isfile(strFile):
         os.remove(strFile)
