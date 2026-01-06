@@ -4,3 +4,4 @@ test.py
 generated_solvers/
 suitesparse/data/
 .vscode/
+benchmark_generate_dir/
