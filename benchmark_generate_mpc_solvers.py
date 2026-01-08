@@ -80,8 +80,8 @@ def benchmark_generate():
                 "size": get_problem_size(prob),
                 "codegen_time_s": round(codegen_time, 1),
                 "compile_time_s": round(compile_time, 1),
-                "code_size_kb": round(code_size_kb, 0),
-                "binary_size_kb": round(lib_size_kb, 0) if lib_size_kb else "",
+                "code_size_kb": round(code_size_kb),
+                "binary_size_kb": round(lib_size_kb) if lib_size_kb else "",
             })
 
     return rows
