@@ -5,3 +5,4 @@ generated_solvers/
 suitesparse/data/
 .vscode/
 benchmark_generate_dir/
+mpc-generated-solvers/

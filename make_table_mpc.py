@@ -4,48 +4,52 @@ from collections import defaultdict
 INPUT_CSV = "benchmark_generate_mpc.csv"
 OUTPUT_TEX = "codegen_table_mpc.tex"
 
-HEADERS = [
-    "name",
-    "size",
-    "codegen_time_s",
-    "compile_time_s",
-    "code_size_kb",
-    "binary_size_kb",
-]
-
-LATEX_HEADER = r"""
-\begin{table}[ht]
-\centering
-\footnotesize
-\begin{tabular}{lrrrrr}
-\toprule
-Problem & Size & Codegen Time (s) & Compile Time (s) & Code Size (KB) & Binary Size (KB) \\
-\midrule
-""".lstrip()
-
-LATEX_FOOTER = r"""
-\bottomrule
-\end{tabular}
-\captionsetup{labelfont=bf}
-\caption{ \bf Code generation time, compilation time, and resulting code and binary sizes for mpc problem instances.}
-\label{tab:codegen_compile_stats}
-\end{table}
-""".lstrip()
-
-
 def latex_escape(s: str) -> str:
     return s.replace("_", r"\_")
 
 
 def problem_group(name: str) -> str:
-    # everything up to "_N_"
-    return name.split("_N_")[0]
+    # everything before the first underscore
+    return name.split("_", 1)[0]
+
+
+LATEX_HEADER = r"""
+\footnotesize
+\begin{longtable}{lrrrrr}
+\caption{\bf Code generation time, compilation time, and resulting code and binary sizes for mpc problem instances.}
+\label{tab:codegen_stats_mpc} \\
+
+\toprule
+Problem & Size & Codegen Time (s) & Compile Time (s) & Code Size (KB) & Binary Size (KB) \\
+\midrule
+\endfirsthead
+
+\toprule
+Problem & Size & Codegen Time (s) & Compile Time (s) & Code Size (KB) & Binary Size (KB) \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{6}{r}{\footnotesize Continued on next page} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+""".lstrip()
+
+
+LATEX_FOOTER = r"""
+\end{longtable}
+""".lstrip()
 
 
 def main():
     with open(INPUT_CSV, newline="") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
+
+    # sort rows alphabetically by name
+    rows.sort(key=lambda r: r["name"])
 
     # group rows by problem family
     groups = defaultdict(list)
@@ -62,15 +66,14 @@ def main():
             first_group = False
 
             for r in group_rows:
-                line = (
+                f.write(
                     f"{latex_escape(r['name'])} & "
                     f"{r['size']} & "
                     f"{r['codegen_time_s']} & "
                     f"{r['compile_time_s']} & "
                     f"{r['code_size_kb']} & "
-                    f"{r['binary_size_kb']} \\\\"
+                    f"{r['binary_size_kb']} \\\\\n"
                 )
-                f.write(line + "\n")
 
         f.write(LATEX_FOOTER)
 

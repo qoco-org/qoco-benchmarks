@@ -127,7 +127,7 @@ if __name__ == "__main__":
     all_rows += benchmark_generate(Nom, "oscillating_masses")
 
     # ---- write CSV ----
-    output_csv = "benchmark_generate_results.csv"
+    output_csv = "benchmark_generate_benchmark_results.csv"
     with open(output_csv, "w", newline="") as f:
         writer = csv.DictWriter(
             f,
