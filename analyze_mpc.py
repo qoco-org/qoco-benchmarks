@@ -5,14 +5,16 @@ from postprocess import *
 from plotall import *
 from utils import *
 
+TYPE = "mpc_cm4"
+
 solvers = ["qoco", "qoco_custom", "clarabel", "ecos", "gurobi", "mosek"]
 
-df_qoco = pd.read_csv("./results/mpc/qoco.csv")
-df_qoco_custom = pd.read_csv("./results/mpc/qoco_custom.csv")
-df_clarabel = pd.read_csv("./results/mpc/clarabel.csv")
-df_ecos = pd.read_csv("./results/mpc/ecos.csv")
-df_gurobi = pd.read_csv("./results/mpc/gurobi.csv")
-df_mosek = pd.read_csv("./results/mpc/mosek.csv")
+df_qoco = pd.read_csv(f"./results/{TYPE}/qoco.csv")
+df_qoco_custom = pd.read_csv(f"./results/{TYPE}/qoco_custom.csv")
+df_clarabel = pd.read_csv(f"./results/{TYPE}/clarabel.csv")
+df_ecos = pd.read_csv(f"./results/{TYPE}/ecos.csv")
+df_gurobi = pd.read_csv(f"./results/{TYPE}/gurobi.csv")
+df_mosek = pd.read_csv(f"./results/{TYPE}/mosek.csv")
 
 num_prob = 0
 qoco_solved = 0
@@ -54,16 +56,16 @@ print("QOCO Failed:", qoco_failed)
 
 # Plot performance profile
 tmax = 0.51
-compute_relative_profile(solvers, tmax, "./results/mpc", xrange=(0, 2.3))
-compute_absolute_profile(solvers, tmax, "./results/mpc", xrange=(-5, -1))
-compute_shifted_geometric_mean_custom(solvers, tmax, "./results/mpc", "mpc")
+compute_relative_profile(solvers, tmax, f"./results/{TYPE}", xrange=(0, 2.3))
+compute_absolute_profile(solvers, tmax, f"./results/{TYPE}", xrange=(-5, -0.5))
+compute_shifted_geometric_mean_custom(solvers, tmax, f"./results/{TYPE}", f"{TYPE}")
 make_table(
     solvers,
-    "./results/mpc",
-    "mpc",
-    "Iterations and solver runtimes for mpc problems",
+    f"./results/{TYPE}",
+    f"{TYPE}",
+    "Iterations and solver runtimes for mpc problems on Raspberry Pi CM4",
 )
-plot_performance_curves("mpc",custom=True)
+plot_performance_curves(f"{TYPE}",custom=True)
 
 idx = np.where(~np.isnan(df_qoco_custom["obj"].values) == True)
 relerror = np.abs(df_gurobi["obj"].values[idx]- df_qoco_custom["obj"].values[idx]) / np.abs(df_gurobi["obj"].values[idx])

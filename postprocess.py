@@ -236,98 +236,108 @@ def compute_shifted_geometric_mean_custom(solvers, tmax, dir, name):
 
 
 def make_table(solvers, dir, name, caption):
-    f = open(os.path.join("./plots", name + "_detail_table.tex"), "w")
+    os.makedirs("./plots", exist_ok=True)
+    out_path = os.path.join("./plots", name + "_detail_table.tex")
+
+    # Load all solver CSVs once and index by problem name
+    dfs = {}
+    for s in solvers:
+        df = pd.read_csv(os.path.join(dir, s + ".csv"))
+        df = df.set_index("Unnamed: 0")
+        dfs[s] = df
+
+    # Use the first solver to define sorted problem order
+    base_df = dfs[solvers[0]].sort_index()
+    prob_names = base_df.index.tolist()
+    prob_sizes = base_df["size"].tolist()
+
     ns = len(solvers)
-    f.write("\\scriptsize\n")
-    f.write("\\begin{longtable}{lc||%s||%s||}\n" % (ns * "c", ns * "c"))
-    f.write("\\captionsetup{labelfont=bf}\n")
-    f.write("\\caption{\\bf %s} \\\ \n" % caption)
-    f.write(
-        " & &  \\multicolumn{%i}{c||}{\\underline{Iterations}} & \\multicolumn{%i}{c||}{\\underline{Solver Runtime (s)}}\\\[2ex] \n"
-        % (ns, ns)
-    )
-    f.write("Problem & Size ")
 
-    for solver in solvers:
-        solver = re.sub(r"_", r"\_", solver)
-        f.write("& \\textsc{%s} " % solver)
-    for solver in solvers:
-        solver = re.sub(r"_", r"\_", solver)
-        f.write("& \\textsc{%s} " % solver)
-    f.write("\\\[1ex]\n")
-    f.write("\\hline\n")
-    f.write("\\endhead\n")
+    with open(out_path, "w") as f:
+        f.write("\\scriptsize\n")
+        f.write("\\begin{longtable}{lc||%s||%s||}\n" % (ns * "c", ns * "c"))
+        f.write("\\captionsetup{labelfont=bf}\n")
+        f.write("\\caption{\\bf %s} \\\\ \n" % caption)
+        f.write(
+            " & & \\multicolumn{%i}{c||}{\\underline{Iterations}} "
+            "& \\multicolumn{%i}{c||}{\\underline{Solver Runtime (s)}}"
+            "\\\\[2ex]\n" % (ns, ns)
+        )
 
-    df = pd.read_csv(os.path.join(dir, solvers[0] + ".csv"))
-    prob_names = df["Unnamed: 0"]
-    prob_sizes = df["size"]
-
-    row = 0
-    for name in prob_names:
-        iter_winner = [""]
-        time_winner = ""
-        min_iter = np.inf
-        min_time = np.inf
-
-        # Compute iter and time winners.
+        f.write("Problem & Size ")
         for s in solvers:
-            path = os.path.join(dir, s + ".csv")
-            with open(path, "rb") as fp:
-                df = pd.read_csv(path)
-                data = df.iloc[row] if row < df.shape[0] else None
+            f.write("& \\textsc{%s} " % re.sub(r"_", r"\_", s))
+        for s in solvers:
+            f.write("& \\textsc{%s} " % re.sub(r"_", r"\_", s))
+        f.write("\\\\[1ex]\n")
+        f.write("\\hline\n")
+        f.write("\\endhead\n")
 
-                # Guards against instances where solver failed and iterations counts are not available
+        # Iterate over problems
+        for name, size in zip(prob_names, prob_sizes):
+            min_iter = np.inf
+            min_time = np.inf
+            iter_winners = []
+            time_winner = None
+
+            # Determine winners
+            for s in solvers:
+                df = dfs[s]
+                if name not in df.index:
+                    continue
+
+                data = df.loc[name]
+
                 if (
-                    data is not None
-                    and data["status"] in SOLUTION_PRESENT
-                    and "iters" in data.keys()
+                    data["status"] in SOLUTION_PRESENT
+                    and "iters" in data
                     and not np.isnan(data["iters"])
                 ):
-                    if int(data["iters"]) < min_iter:
-                        iter_winner = []
-                        iter_winner.append(s)
-                        min_iter = int(data["iters"])
-                    elif int(data["iters"]) == min_iter:
-                        iter_winner.append(s)
+                    it = int(data["iters"])
+                    if it < min_iter:
+                        min_iter = it
+                        iter_winners = [s]
+                    elif it == min_iter:
+                        iter_winners.append(s)
 
-                if data is not None and data["status"] in SOLUTION_PRESENT:
+                if data["status"] in SOLUTION_PRESENT:
                     if data["run_time"] < min_time:
-                        time_winner = s
                         min_time = data["run_time"]
+                        time_winner = s
 
-        name = re.sub(r"_", r"\_", name)
-        f.write("\\textsc{%s} & %i " % (name, prob_sizes[row]))
-        # Write iter stats.
-        for s in solvers:
-            path = os.path.join(dir, s + ".csv")
-            with open(path, "rb") as fp:
-                df = pd.read_csv(path)
+            # Write row header
+            tex_name = re.sub(r"_", r"\_", name)
+            f.write("\\textsc{%s} & %i " % (tex_name, size))
 
-                # Data corrensponding to name.
-                data = df.iloc[row] if row < df.shape[0] else None
-                # Guards against instances where solver failed and iterations counts are not available
+            # Write iteration columns
+            for s in solvers:
+                df = dfs[s]
+                if name not in df.index:
+                    f.write("& -")
+                    continue
+
+                data = df.loc[name]
                 if (
-                    data is None
-                    or data["status"] not in SOLUTION_PRESENT
-                    or "iters" not in data.keys()
+                    data["status"] not in SOLUTION_PRESENT
+                    or "iters" not in data
                     or np.isnan(data["iters"])
                 ):
                     f.write("& -")
                 else:
                     f.write("& ")
-                    if s in iter_winner:
+                    if s in iter_winners:
                         f.write(" \\winner ")
                     f.write("%i " % int(data["iters"]))
 
-        # Write runtime stats.
-        for s in solvers:
-            path = os.path.join(dir, s + ".csv")
-            with open(path, "rb") as fp:
-                df = pd.read_csv(path)
-                # Data corrensponding to name.
-                data = df.iloc[row] if row < df.shape[0] else None
-                # Guards against instances where solver failed
-                if data is None or data["status"] not in SOLUTION_PRESENT:
+            # Write runtime columns
+            for s in solvers:
+                df = dfs[s]
+                if name not in df.index:
+                    f.write("& -")
+                    continue
+
+                data = df.loc[name]
+                if data["status"] not in SOLUTION_PRESENT:
                     f.write("& -")
                 else:
                     f.write("& ")
@@ -335,7 +345,6 @@ def make_table(solvers, dir, name, caption):
                         f.write(" \\winner ")
                     f.write("%.5f " % data["run_time"])
 
-        f.write("\\\ \n")
-        row += 1
-    f.write("\\end{longtable}\n")
-    f.close()
+            f.write("\\\\\n")
+
+        f.write("\\end{longtable}\n")

@@ -109,22 +109,17 @@ if __name__ == "__main__":
 
     all_rows = []
 
-    # Ngl = [1]
-    Nport = [6]
-    # Nlcvx = [15]
-    # Nrkf = [25]
-    # Nom = [8]
-    # Ngl = [1, 2, 3, 4, 5]
-    # Nport = [2, 4, 6, 8, 10]
-    # Nlcvx = [15, 50, 75, 100, 125]
-    # Nrkf = [25, 50, 75, 125, 175]
-    # Nom = [8, 20, 32, 44, 56]
+    Ngl = [1, 2, 3, 4, 5]
+    Nport = [2, 4, 6, 8, 10]
+    Nlcvx = [15, 50, 75, 100, 125]
+    Nrkf = [25, 50, 75, 125, 175]
+    Nom = [8, 20, 32, 44, 56]
 
-    # all_rows += benchmark_generate(Ngl, "group_lasso")
+    all_rows += benchmark_generate(Ngl, "group_lasso")
     all_rows += benchmark_generate(Nport, "portfolio")
-    # all_rows += benchmark_generate(Nlcvx, "lcvx")
-    # all_rows += benchmark_generate(Nrkf, "robust_kalman_filter")
-    # all_rows += benchmark_generate(Nom, "oscillating_masses")
+    all_rows += benchmark_generate(Nlcvx, "lcvx")
+    all_rows += benchmark_generate(Nrkf, "robust_kalman_filter")
+    all_rows += benchmark_generate(Nom, "oscillating_masses")
 
     # ---- write CSV ----
     output_csv = "benchmark_generate_benchmark_results.csv"
