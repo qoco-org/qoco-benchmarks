@@ -53,7 +53,7 @@ print("QOCO Failed:", qoco_failed)
 
 # Plot performance profile
 tmax = 1200.01
-compute_relative_profile(solvers, tmax, "./results/suitesparse", xrange=(0, 3.1))
+compute_relative_profile(solvers, tmax, "./results/suitesparse", xrange=(0, np.log10(20)))
 compute_absolute_profile(solvers, tmax, "./results/suitesparse", xrange=(-5, 3))
 compute_shifted_geometric_mean(solvers, tmax, "./results/suitesparse", "suitesparse")
 make_table(
